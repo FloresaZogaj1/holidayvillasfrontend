@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Fonts */
+@font-face {
+  font-family: "NyghtSerif";
+  src: url("/fonts/NyghtSerif-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Argentum Sans";
+  src: url("/fonts/ArgentumSans-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+:root{
+  --bg:#0E1A16; --ink:#F6F3EC;
+  --card:#1F2A24; --line:#2B342F;
+  --accent:#E6D2A5; --accent-2:#7A6230;
+}
+body{background:var(--bg); color:var(--ink);}
+.btn-primary{
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+  color:#0D0F0E; border-radius:14px; font-weight:700;
+  transition:transform .2s ease, box-shadow .2s ease, filter .2s;
+}
+.btn-primary:hover{ transform:translateY(-1px); filter:saturate(1.05); }
+.card{ background:var(--card); border:1px solid var(--line); border-radius:16px; }
