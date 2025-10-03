@@ -117,36 +117,8 @@ export default function About() {
         </div>
       </section>
 
-      {/* VIDEO */}
-      <section className="py-16">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="aspect-video rounded-2xl overflow-hidden shadow-lux border border-line">
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/9iMGFqMmUFs"
-              title="Holiday Villas - Video prezantuese"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      </section>
+      
 
-      {/* GALERIA */}
-      <section className="py-16 bg-ink/[0.04]">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-display mb-8 text-accent text-center">
-            Galeria e atmosferës
-          </h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            {gallery.map((src, i) => (
-              <div key={i} className="rounded-2xl overflow-hidden shadow-lux border border-line group">
-                <img src={src} alt={`Galeria ${i + 1}`} className="h-56 w-full object-cover group-hover:scale-[1.02] transition-transform" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* TIMELINE */}
       <section className="py-16">

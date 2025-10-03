@@ -1,18 +1,20 @@
+// src/App.jsx
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import Rooms from "./pages/Rooms.jsx";
 import RoomDetails from "./pages/RoomDetails.jsx";
+import Gallery from "./pages/Gallery.jsx";
 
-function Page({ title }) {
-  return (
-    <div className="max-w-7xl mx-auto px-4 py-16">
-      <h1 className="font-display text-4xl">{title}</h1>
-      <p className="text-ink/70 mt-2">Përmbajtja do të vijë këtu.</p>
-    </div>
-  );
-}
+// 🆕 faqet reale
+import About from "./pages/About.jsx";
+import Services from "./pages/Services.jsx";
+import Testimonials from "./pages/Testimonials.jsx";
+import FAQ from "./pages/FAQ.jsx";
+import Accomodation from "./pages/Accomodation.jsx";
+import Contact from "./pages/Contact.jsx";
+import Blog from "./pages/Blog.jsx";
 
 export default function App() {
   return (
@@ -23,15 +25,18 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/rooms/:slug" element={<RoomDetails />} />
-          <Route path="/about" element={<Page title="Rreth Nesh" />} />
-          <Route path="/services" element={<Page title="Shërbimet" />} />
-          <Route path="/testimonials" element={<Page title="Dëshmitë" />} />
-          <Route path="/faq" element={<Page title="Pyetje & Përgjigje" />} />
-          <Route path="/accomodation" element={<Page title="Akomodimi" />} />
-          <Route path="/gallery" element={<Page title="Galeria" />} />
-          <Route path="/contact" element={<Page title="Kontakti" />} />
-          <Route path="/blog" element={<Page title="Blog" />} />
-          <Route path="*" element={<Page title="Faqja nuk u gjet" />} />
+          <Route path="/gallery" element={<Gallery />} />
+
+          {/* 🆕 faqet e tjera */}
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/testimonials" element={<Testimonials />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/accomodation" element={<Accomodation />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/blog" element={<Blog />} />
+
+          <Route path="*" element={<Blog title="Faqja nuk u gjet" empty />} />
         </Routes>
       </main>
       <Footer />

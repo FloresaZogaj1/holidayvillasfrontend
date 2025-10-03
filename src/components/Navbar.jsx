@@ -3,9 +3,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import logo from "../assets/Holiday - Colored.png";
 
-const linksLeft = [
-  { to: "/", label: "Ballina" },
-];
+const linksLeft = [{ to: "/", label: "Ballina" }];
 
 const hotelLinks = [
   { to: "/about", label: "Rreth Nesh" },
@@ -28,7 +26,7 @@ const NavItem = ({ to, children }) => (
       [
         "px-3 py-2 transition-colors",
         "text-[14px] md:text-[15px] font-normal tracking-[0.01em]",
-        isActive ? "text-ink" : "text-ink/80 hover:text-ink"
+        isActive ? "text-ink" : "text-ink/80 hover:text-ink",
       ].join(" ")
     }
   >
@@ -38,28 +36,50 @@ const NavItem = ({ to, children }) => (
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hotelOpen, setHotelOpen] = useState(false);
+  const [hotelOpen, setHotelOpen] = useState(false); // përdoret për desktop + mobile
   const [solid, setSolid] = useState(false);
   const location = useLocation();
   const drawerRef = useRef(null);
   const btnRef = useRef(null);
 
-  // mbyll menut kur ndryshon rrota
+  // Timers për dropdown delay
+  const openTimer = useRef(null);
+  const closeTimer = useRef(null);
+  const clearTimers = () => {
+    if (openTimer.current) { clearTimeout(openTimer.current); openTimer.current = null; }
+    if (closeTimer.current) { clearTimeout(closeTimer.current); closeTimer.current = null; }
+  };
+  const openWithDelay = (ms = 120) => {
+    clearTimers();
+    openTimer.current = setTimeout(() => setHotelOpen(true), ms);
+  };
+  const closeWithDelay = (ms = 220) => {
+    clearTimers();
+    closeTimer.current = setTimeout(() => setHotelOpen(false), ms);
+  };
+
+  // Mbyll menut kur ndryshon rrota
   useEffect(() => {
     setMenuOpen(false);
     setHotelOpen(false);
+    clearTimers();
   }, [location.pathname]);
 
-  // lock scroll kur drawer hapet
+  // Lock scroll kur drawer hapet
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = menuOpen ? "hidden" : prev || "";
     return () => (document.body.style.overflow = prev || "");
   }, [menuOpen]);
 
-  // close on Esc / click jashtë
+  // Close on Esc / click jashtë (drawer)
   useEffect(() => {
-    const onKey = (e) => e.key === "Escape" && setMenuOpen(false);
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        setMenuOpen(false);
+        closeWithDelay(0);
+      }
+    };
     const onClick = (e) => {
       if (!menuOpen) return;
       if (
@@ -79,13 +99,15 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
-  // navbar solid kur scroll > 40
+  // Navbar solid kur scroll > 40
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const labelBtn = "Resorti"; // ndrysho këtu emrin e menusë nëse dëshiron
 
   return (
     <header className="fixed top-0 inset-x-0 z-50">
@@ -95,29 +117,73 @@ export default function Navbar() {
             "mt-4 flex items-center justify-between rounded-2xl border shadow-lux transition-colors duration-200",
             solid
               ? "border-line/70 bg-card/90 backdrop-blur-md"
-              : "border-line/60 bg-[#0f1412]/35 backdrop-blur-md"
+              : "border-line/60 bg-[#0f1412]/35 backdrop-blur-md",
           ].join(" ")}
         >
           {/* Majtas (desktop) */}
           <div className="hidden md:flex items-center gap-8">
             {linksLeft.map((l) => (
-              <NavItem key={l.to} to={l.to}>{l.label}</NavItem>
+              <NavItem key={l.to} to={l.to}>
+                {l.label}
+              </NavItem>
             ))}
 
-            {/* Hoteli dropdown */}
-            <div className="relative group">
+            {/* Resorti dropdown (desktop): hover + click me delay */}
+            <div
+              className="relative"
+              onMouseEnter={() => openWithDelay(120)}
+              onMouseLeave={() => closeWithDelay(220)}
+            >
               <button
                 type="button"
                 className="px-3 py-2 inline-flex items-center gap-1 text-ink/80 hover:text-ink transition-colors text-[14px] md:text-[15px]"
+                aria-haspopup="menu"
+                aria-expanded={hotelOpen}
+                aria-controls="desktop-hotel-menu"
+                onClick={() => setHotelOpen((v) => !v)} // click toggle
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setHotelOpen((v) => !v);
+                  }
+                  if (e.key === "Escape") setHotelOpen(false);
+                  if (e.key === "ArrowDown") setHotelOpen(true);
+                }}
               >
-                Hoteli
-                <svg className="w-4 h-4 transition-transform group-hover:rotate-180" viewBox="0 0 20 20">
-                  <path fill="currentColor" d="M5.5 7.5 10 12l4.5-4.5"/>
+                {labelBtn}
+                <svg
+                  className={`w-4 h-4 transition-transform ${hotelOpen ? "rotate-180" : ""}`}
+                  viewBox="0 0 20 20"
+                >
+                  <path fill="currentColor" d="M5.5 7.5 10 12l4.5-4.5" />
                 </svg>
               </button>
-              <div className="absolute left-0 mt-3 hidden min-w-56 rounded-xl2 border border-line/60 bg-card/95 p-2 shadow-lux group-hover:block">
+
+              <div
+                id="desktop-hotel-menu"
+                role="menu"
+                tabIndex={-1}
+                className={`absolute left-0 mt-3 min-w-56 rounded-xl2 border border-line/60 bg-card/95 p-2 shadow-lux z-50 ${
+                  hotelOpen ? "block" : "hidden"
+                }`}
+                onMouseEnter={() => {
+                  clearTimers();
+                  setHotelOpen(true);
+                }}
+                onMouseLeave={() => closeWithDelay(220)}
+                onFocus={() => {
+                  clearTimers();
+                  setHotelOpen(true);
+                }}
+                onBlur={() => closeWithDelay(220)}
+              >
                 {hotelLinks.map((h) => (
-                  <Link key={h.to} to={h.to} className="block px-3 py-2 rounded-lg text-sm text-ink/85 hover:bg-white/5">
+                  <Link
+                    key={h.to}
+                    to={h.to}
+                    role="menuitem"
+                    className="block px-3 py-2 rounded-lg text-sm text-ink/85 hover:bg-white/5"
+                  >
                     {h.label}
                   </Link>
                 ))}
@@ -128,7 +194,11 @@ export default function Navbar() {
           {/* Brand në qendër (desktop) + left (mobile) */}
           <div className="flex items-center md:justify-center justify-between w-full md:w-auto">
             <Link to="/" className="flex items-center gap-2 md:gap-3">
-              <img src={logo} alt="Holiday Villas" className="h-9 w-auto md:h-14 rounded-full ring-1 ring-line/50" />
+              <img
+                src={logo}
+                alt="Holiday Villas"
+                className="h-9 w-auto md:h-14 rounded-full ring-1 ring-line/50"
+              />
               <span className="hidden md:inline-block font-display text-[34px] leading-none text-ink">
                 Holiday Villas
               </span>
@@ -159,16 +229,23 @@ export default function Navbar() {
           {/* Djathtas (desktop) */}
           <div className="hidden md:flex items-center gap-8">
             {linksRight.map((l) => (
-              <NavItem key={l.to} to={l.to}>{l.label}</NavItem>
+              <NavItem key={l.to} to={l.to}>
+                {l.label}
+              </NavItem>
             ))}
-            <Link to="/cart" className="inline-flex items-center px-2 py-2 text-ink/80 hover:text-ink" title="Shporta" aria-label="Shporta">
+            <Link
+              to="/cart"
+              className="inline-flex items-center px-2 py-2 text-ink/80 hover:text-ink"
+              title="Shporta"
+              aria-label="Shporta"
+            >
               <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path strokeWidth="2" d="M6 6h15l-1.5 9h-12z" />
                 <circle cx="9" cy="20" r="1.5" />
                 <circle cx="18" cy="20" r="1.5" />
               </svg>
             </Link>
-            <Link to="#booking" className="btn-primary">Rezervo</Link>
+            <Link to="/#book" className="btn-primary">Rezervo</Link>
           </div>
         </nav>
       </div>
@@ -208,15 +285,20 @@ export default function Navbar() {
                   aria-expanded={hotelOpen}
                   aria-controls="hotel-accordion"
                 >
-                  <span>Hoteli</span>
+                  <span>{labelBtn}</span>
                   <svg className={`h-4 w-4 transition-transform ${hotelOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
                   </svg>
                 </button>
-                <div id="hotel-accordion" className={`overflow-hidden transition-[max-height,opacity] duration-200 ${hotelOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}>
+                <div
+                  id="hotel-accordion"
+                  className={`overflow-hidden transition-[max-height,opacity] duration-200 ${hotelOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+                >
                   <div className="pl-3 pb-2 space-y-1">
-                    {hotelLinks.map(h => (
-                      <Link key={h.to} to={h.to} className="block py-2 hover:text-accent" onClick={() => setMenuOpen(false)}>{h.label}</Link>
+                    {hotelLinks.map((h) => (
+                      <Link key={h.to} to={h.to} className="block py-2 hover:text-accent" onClick={() => setMenuOpen(false)}>
+                        {h.label}
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -225,11 +307,9 @@ export default function Navbar() {
               <div className="border-t border-line/60">
                 <Link to="/rooms" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>Villa</Link>
               </div>
-
               <div className="border-t border-line/60">
                 <Link to="/gallery" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>Galeria</Link>
               </div>
-
               <div className="border-t border-line/60">
                 <Link to="/contact" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>Kontakti</Link>
               </div>
