@@ -13,8 +13,15 @@ import gallery7 from "../assets/2_7.jpg";
 import gallery8 from "../assets/2_8.jpg";
 import gallery9 from "../assets/2_9.jpg";
 import gallery10 from "../assets/2_10.jpg";
+import prem from "../assets/3_2.jpg";
+import preme from "../assets/3_7.jpg";
+import vipe from "../assets/Artboard 1 copy 3.png"
 
 export default function Home() {
+  // ====== Foto të dedikuara për secilën kartë ======
+  const premiumImages = [prem, preme, gallery3];
+  const vipImages = [vipe, gallery9, gallery10];
+
   return (
     <>
       {/* HERO SECTION */}
@@ -100,17 +107,17 @@ export default function Home() {
           </p>
 
           <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((i) => (
+            {premiumImages.map((src, i) => (
               <article key={i} className="card overflow-hidden shine-wrap flex flex-col">
                 <img
-                  src={`https://picsum.photos/seed/premium${i}/600/400`}
-                  alt={`Villë Premium ${i}`}
+                  src={src}
+                  alt={`Villë Premium ${i + 1}`}
                   className="w-full h-48 sm:h-56 md:h-64 object-cover"
                   loading="lazy"
                 />
                 <div className="p-4 sm:p-5">
                   <h3 className="text-base sm:text-lg font-semibold mb-1">
-                    Villë Premium {i}
+                    Villë Premium {i + 1}
                   </h3>
                   <p className="text-xs sm:text-sm text-ink/70 mb-2">
                     70m² · deri në 5 mysafirë
@@ -131,23 +138,23 @@ export default function Home() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-display mb-4 sm:mb-6 md:mb-8">
             Vilat VIP
           </h2>
-          <p className="text-ink/70 text-sm sm:text-base max-w-3xl mb-6">
+        <p className="text-ink/70 text-sm sm:text-base max-w-3xl mb-6">
             Ekskluzive, luksoze dhe me shërbime të personalizuara — për një
             përvojë unike dhe memorabile.
           </p>
 
           <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            {[1, 2, 3].map((i) => (
+            {vipImages.map((src, i) => (
               <article key={i} className="card overflow-hidden shine-wrap flex flex-col">
                 <img
-                  src={`https://picsum.photos/seed/vip${i}/600/400`}
-                  alt={`Villë VIP ${i}`}
+                  src={src}
+                  alt={`Villë VIP ${i + 1}`}
                   className="w-full h-48 sm:h-56 md:h-64 object-cover"
                   loading="lazy"
                 />
                 <div className="p-4 sm:p-5">
                   <h3 className="text-base sm:text-lg font-semibold mb-1">
-                    Villë VIP {i}
+                    Villë VIP {i + 1}
                   </h3>
                   <p className="text-xs sm:text-sm text-ink/70 mb-2">
                     100m² · deri në 8 mysafirë
