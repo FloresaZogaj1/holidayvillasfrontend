@@ -1,22 +1,51 @@
-const posts = [
-  { id: 1, title: "Udhëzuesi i pushimeve në bregdet", excerpt: "Zbuloni plazhet më të bukura pranë Holiday Villas dhe këshilla praktike për një ditë perfekte nën diell.", cover: "https://picsum.photos/seed/blog1/800/500", date: "05 Shtator 2025" },
-  { id: 2, title: "Gastronomia lokale që duhet provuar", excerpt: "Nga frutat e detit te verërat artizanale – listë e shijeve që nuk duhet t’i humbisni.", cover: "https://picsum.photos/seed/blog2/800/500", date: "22 Gusht 2025" },
-  { id: 3, title: "Aktivitetet më të mira për familje", excerpt: "Ide për aventura të sigurta dhe argëtuese për të gjithë moshat rreth resortit tonë.", cover: "https://picsum.photos/seed/blog3/800/500", date: "10 Korrik 2025" },
-];
+// src/pages/Blog.jsx
+import { Link } from "react-router-dom";
+import { posts } from "../data/posts";
 
 export default function Blog() {
   return (
-    <section className="py-16 bg-ink/[0.04]">
+    <section className="py-16 bg-bg text-ink">
       <div className="max-w-7xl mx-auto px-4">
-        <h1 className="text-3xl md:text-4xl font-display mb-8">Blogu ynë</h1>
+        <div className="mb-8">
+          <h1 className="font-display text-3xl md:text-4xl tracking-tight">
+            <span className="gradient-text">Blogu ynë</span>
+          </h1>
+          <p className="text-ink/70 mt-2">
+            Ide udhëtimi, gastronomi lokale dhe aktivitete për ta bërë pushimin tuaj
+            sa më të veçantë.
+          </p>
+        </div>
+
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((p) => (
-            <article key={p.id} className="card overflow-hidden">
-              <img src={p.cover} alt={p.title} className="w-full h-48 object-cover" />
-              <div className="p-5">
-                <div className="text-xs text-ink/70 mb-1">{p.date}</div>
-                <h2 className="text-lg font-semibold mb-2">{p.title}</h2>
-                <p className="text-sm text-ink/70">{p.excerpt}</p>
+            <article
+              key={p.id}
+              className="card lux-border overflow-hidden shine-wrap hover-glow flex flex-col"
+            >
+              <Link to={`/blog/${p.id}`} className="block">
+                <img
+                  src={p.cover}
+                  alt={p.title}
+                  loading="lazy"
+                  className="w-full object-cover aspect-[16/10]"
+                />
+              </Link>
+
+              <div className="p-5 flex flex-col gap-2 flex-1">
+                <div className="text-xs text-ink/70">{p.date}</div>
+                <Link to={`/blog/${p.id}`} className="hover:text-accent">
+                  <h2 className="text-lg font-semibold">{p.title}</h2>
+                </Link>
+                <p className="text-sm text-ink/70 flex-1">{p.excerpt}</p>
+
+                <div className="pt-2">
+                  <Link to={`/blog/${p.id}`} className="btn-ghost inline-flex items-center gap-2">
+                    Lexo më shumë
+                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M9 18l6-6-6-6" />
+                    </svg>
+                  </Link>
+                </div>
               </div>
             </article>
           ))}

@@ -15,6 +15,10 @@ import FAQ from "./pages/FAQ.jsx";
 import Accomodation from "./pages/Accomodation.jsx";
 import Contact from "./pages/Contact.jsx";
 import Blog from "./pages/Blog.jsx";
+import BlogPost from "./pages/BlogPost.jsx";
+import PaymentResult from "./pages/PaymentResult";
+
+
 
 export default function App() {
   return (
@@ -35,6 +39,10 @@ export default function App() {
           <Route path="/accomodation" element={<Accomodation />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:id" element={<BlogPost />} />
+            <Route path="/payment/success" element={<PaymentResult />} />
+<Route path="/payment/fail" element={<PaymentResult />} />
+
 
           <Route path="*" element={<Blog title="Faqja nuk u gjet" empty />} />
         </Routes>

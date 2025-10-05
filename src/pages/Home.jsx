@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import BookingBar from "../components/BookingBar";
 import PhotoSlider from "../components/PhotoSlider";
 
+// Images
 import foto1 from "../assets/3_7.jpg";
 import gallery2 from "../assets/515550823.jpg";
 import gallery3 from "../assets/5.jpg";
@@ -13,43 +14,44 @@ import gallery7 from "../assets/2_7.jpg";
 import gallery8 from "../assets/2_8.jpg";
 import gallery9 from "../assets/2_9.jpg";
 import gallery10 from "../assets/2_10.jpg";
+
 import prem from "../assets/3_2.jpg";
 import preme from "../assets/3_7.jpg";
-import vipe from "../assets/Artboard 1 copy 3.png"
+import vipe from "../assets/Artboard 1 copy 3.png";
 
 export default function Home() {
-  // ====== Foto të dedikuara për secilën kartë ======
+  // Foto për kartat (mund t’i ndërron kur të duash)
   const premiumImages = [prem, preme, gallery3];
   const vipImages = [vipe, gallery9, gallery10];
 
   return (
     <>
-      {/* HERO SECTION */}
-      <section className="relative min-h-[70vh] md:min-h-[82vh] grid place-items-end overflow-hidden">
+      {/* ============= HERO ============= */}
+      <section className="relative min-h-[68vh] md:min-h-[82vh] grid place-items-end overflow-hidden bg-bg text-ink">
         {/* Background image */}
         <img
           src={foto1}
-          alt="Holiday Villas"
+          alt="Holiday Villas — Hero"
           className="absolute inset-0 h-full w-full object-cover"
           fetchpriority="high"
         />
-        {/* Gradient overlay për kontrast teksti */}
+        {/* Overlay për kontrast teksti */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f0e]/75 via-[#0b0f0e]/35 to-transparent" />
 
         {/* Content */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 pb-8 md:pb-12">
-          <p className="uppercase tracking-[0.18em] text-sm text-ink/70 text-shadow-sm">
+          <p className="uppercase tracking-[0.18em] text-xs sm:text-sm text-ink/70 text-shadow-sm">
             Mirësevini
           </p>
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl leading-tight text-ink text-shadow">
             Holiday Villas
           </h1>
-          <p className="mt-3 max-w-2xl text-ink/85 text-shadow-sm">
+          <p className="mt-3 max-w-2xl text-ink/85 text-sm sm:text-base text-shadow-sm">
             Pushime luksoze dhe rehati të përjetshme në zemër të natyrës. Zgjidhni
             vilën tuaj të preferuar dhe shijoni çdo moment.
           </p>
 
-          <div className="mt-6">
+          <div className="mt-5 sm:mt-6">
             <BookingBar />
           </div>
 
@@ -61,10 +63,10 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SERVICES PREVIEW */}
-      <section className="py-12 sm:py-14 md:py-16 bg-ink/5">
+      {/* ============= SERVICES PREVIEW ============= */}
+      <section className="py-10 sm:py-14 md:py-16 bg-ink/5">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display mb-4 sm:mb-6">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-5">
             Çfarë ofrojmë
           </h2>
           <p className="text-ink/70 text-sm sm:text-base max-w-3xl">
@@ -72,7 +74,7 @@ export default function Home() {
             relaks, gastronomi cilësore, evente të personalizuara dhe asistencë 24/7.
           </p>
 
-          <div className="mt-8 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-7 sm:mt-8 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {[
               "Spa & Wellness",
               "Evente & Mbledhje",
@@ -81,7 +83,7 @@ export default function Home() {
               "Transport nga aeroporti",
               "Kujdestar 24/7",
             ].map((s, i) => (
-              <article key={i} className="card p-5 shine-wrap">
+              <article key={i} className="card p-5 shine-wrap h-full">
                 <h3 className="font-semibold text-base sm:text-lg text-accent mb-1">
                   {s}
                 </h3>
@@ -95,13 +97,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* PREMIUM VILLAS */}
-      <section className="py-12 sm:py-14 md:py-16">
+      {/* ============= PREMIUM VILLAS ============= */}
+      <section className="py-10 sm:py-14 md:py-16 bg-bg text-ink">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display mb-4 sm:mb-6 md:mb-8">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-5 md:mb-7">
             Vilat Premium
           </h2>
-          <p className="text-ink/70 text-sm sm:text-base max-w-3xl mb-6">
+          <p className="text-ink/70 text-sm sm:text-base max-w-3xl mb-5 sm:mb-6">
             Vila moderne me hapësirë, dritë natyrale dhe privatësi — perfekte
             për çifte, familje ose grupe miqsh.
           </p>
@@ -112,7 +114,7 @@ export default function Home() {
                 <img
                   src={src}
                   alt={`Villë Premium ${i + 1}`}
-                  className="w-full h-48 sm:h-56 md:h-64 object-cover"
+                  className="w-full object-cover aspect-[4/3] md:aspect-[16/10]"
                   loading="lazy"
                 />
                 <div className="p-4 sm:p-5">
@@ -132,13 +134,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* VIP VILLAS */}
-      <section className="py-12 sm:py-14 md:py-16 bg-ink/[0.04]">
+      {/* ============= VIP VILLAS ============= */}
+      <section className="py-10 sm:py-14 md:py-16 bg-ink/[0.04]">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display mb-4 sm:mb-6 md:mb-8">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-5 md:mb-7">
             Vilat VIP
           </h2>
-        <p className="text-ink/70 text-sm sm:text-base max-w-3xl mb-6">
+          <p className="text-ink/70 text-sm sm:text-base max-w-3xl mb-5 sm:mb-6">
             Ekskluzive, luksoze dhe me shërbime të personalizuara — për një
             përvojë unike dhe memorabile.
           </p>
@@ -149,7 +151,7 @@ export default function Home() {
                 <img
                   src={src}
                   alt={`Villë VIP ${i + 1}`}
-                  className="w-full h-48 sm:h-56 md:h-64 object-cover"
+                  className="w-full object-cover aspect-[4/3] md:aspect-[16/10]"
                   loading="lazy"
                 />
                 <div className="p-4 sm:p-5">
@@ -169,31 +171,32 @@ export default function Home() {
         </div>
       </section>
 
-      {/* GALLERY SLIDER */}
-      <section className="py-12 sm:py-14 md:py-16">
+      {/* ============= GALLERY SLIDER ============= */}
+      <section className="py-10 sm:py-14 md:py-16 bg-bg text-ink">
         <div className="max-w-7xl mx-auto px-4">
-          <h3 className="text-xl sm:text-2xl font-display mb-3 sm:mb-4">
+          <h3 className="font-display text-xl sm:text-2xl mb-3 sm:mb-4">
             Galeria
           </h3>
-          <p className="text-ink/70 text-sm sm:text-base mb-6">
+          <p className="text-ink/70 text-sm sm:text-base mb-5 sm:mb-6">
             Pamje nga vilat tona, pishinat, natyra dhe ambientet e brendshme.
           </p>
 
+          {/* Lartësi responsive për slider (nëse PhotoSlider pranon className/height) */}
           <PhotoSlider
             images={[gallery2, gallery3, gallery4, gallery5, gallery6, gallery7, gallery8, gallery9, gallery10]}
-            height="h-[55vh]"
+            height="h-[36vh] sm:h-[48vh] md:h-[55vh]"
             fade={false}
           />
         </div>
       </section>
 
-      {/* BLOG PREVIEW */}
-      <section className="py-12 sm:py-14 md:py-16 bg-ink/[0.04]">
+      {/* ============= BLOG PREVIEW ============= */}
+      <section className="py-10 sm:py-14 md:py-16 bg-ink/[0.04]">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-display mb-4">
+          <h2 className="font-display text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-4">
             Të rejat e fundit
           </h2>
-          <p className="text-ink/70 text-sm sm:text-base max-w-2xl mx-auto mb-6">
+          <p className="text-ink/70 text-sm sm:text-base max-w-2xl mx-auto mb-5 sm:mb-6">
             Këshilla udhëtimi, përvoja lokale dhe njoftime nga ekipi ynë – që të
             planifikoni pushimet në mënyrën më të mirë.
           </p>
