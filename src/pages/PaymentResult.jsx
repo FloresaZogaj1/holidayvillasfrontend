@@ -1,25 +1,17 @@
-// src/pages/PaymentResult.jsx
 import { useEffect, useState } from "react";
 
 export default function PaymentResult() {
-  const [data, setData] = useState({});
-
+  const [params, setParams] = useState({});
   useEffect(() => {
-    // BKT shpesh kthen si query ose POST -> në SPA zakonisht i kap si query
-    const params = new URLSearchParams(window.location.search);
-    const obj = {};
-    params.forEach((v,k) => obj[k]=v);
-    setData(obj);
+    const p = new URLSearchParams(window.location.search);
+    const o = {}; p.forEach((v,k)=>o[k]=v); setParams(o);
   }, []);
-
-  const success = (data["Response"] || "").toLowerCase() === "approved" || data["mdStatus"] === "1";
-
+  const ok = (params.Response || '').toLowerCase() === 'approved' || params.mdStatus === '1';
   return (
-    <div className="max-w-xl mx-auto py-12">
-      <h1 className="text-2xl font-bold">
-        {success ? "✅ Pagesa u krye me sukses" : "❌ Pagesa u refuzua"}
-      </h1>
-      <pre className="text-xs bg-black/5 p-3 mt-4 rounded">{JSON.stringify(data, null, 2)}</pre>
+    <div className="max-w-xl mx-auto py-10">
+      <h1 className="text-2xl font-semibold">
+        {ok ? "✅ Pagesa u krye me sukses" : "❌ Pagesa u refuzua"}
+    </h1>
       <a className="underline mt-6 inline-block" href="/rooms">Kthehu te Vilat</a>
     </div>
   );

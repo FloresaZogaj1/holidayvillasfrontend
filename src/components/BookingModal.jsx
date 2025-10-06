@@ -1,64 +1,105 @@
 // src/components/BookingModal.jsx
 import { useState } from "react";
+import { API_BASE } from "../lib/api";
 
 export default function BookingModal({ villa, onClose }) {
   const [email, setEmail] = useState("");
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  const [from, setFrom]   = useState("");
+  const [to, setTo]       = useState("");
   const [guests, setGuests] = useState(2);
-  const [submitting, setSubmitting] = useState(false);
+  const pricePerNight = villa?.price ?? villa?.price_per_night ?? 0;
 
-  const pay = async () => {
-    if (!from || !to) return alert("Zgjidh datat.");
-    if (!email) return alert("Shkruaj email-in.");
+  const nights = from && to ? Math.max(1, Math.ceil((new Date(to) - new Date(from)) / 86400000)) : 1;
+  const totalPrice = nights * Number(pricePerNight || 0);
 
-    const start = new Date(from);
-    const end = new Date(to);
-    const nights = Math.max(1, Math.ceil((end - start) / (1000 * 60 * 60 * 24)));
+  async function handlePay(e) {
+    e.preventDefault();
+    try {
+      const meta = {
+        villa: villa?.slug,
+        from,
+        to,
+        nights,
+        guests,
+        name: email?.split("@")[0] || "Guest",
+      };
 
-    const pricePerNight = Number(villa?.price_per_night || villa?.price || 0);
-    if (!pricePerNight) return alert("Çmimi i villës mungon.");
+      const r = await fetch(`${API_BASE}/api/payments/init`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: totalPrice, email, meta })
+      });
 
-    const amount = (nights * pricePerNight).toFixed(2);
-    setSubmitting(true);
+      if (!r.ok) {
+        const t = await r.text();
+        throw new Error(t || "Payment init failed");
+      }
+      const data = await r.json(); // { gate, fields }
 
-    // DEV: hardcode backend URL
-const apiBase = "https://holidayvillasks.com"; 
+      // Krijo formë dhe dërgo në bankë
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = data.gate;
 
-    const res = await fetch(`${apiBase}/api/payments/init`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount, email, meta: { villa: villa?.slug, from, to, nights, guests } }),
-    });
+      Object.entries(data.fields || {}).forEach(([k, v]) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = k;
+        input.value = String(v ?? "");
+        form.appendChild(input);
+      });
 
-    const html = await res.text();
-    const win = window.open("", "_self");
-    win.document.open();
-    win.document.write(html);
-    win.document.close();
-  };
+      document.body.appendChild(form);
+      form.submit();
+    } catch (err) {
+      alert("Nuk u inicua pagesa: " + err.message);
+    }
+  }
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center p-4 bg-black/60">
-      <div className="relative w-full max-w-lg rounded-2xl border border-line bg-card text-ink shadow-lux p-6">
-        <button onClick={onClose} className="absolute right-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-lg ring-1 ring-line/70">✕</button>
+    <div className="fixed inset-0 bg-black/50 grid place-items-center z-50">
+      <div className="w-full max-w-lg rounded-2xl bg-white p-6 text-gray-900">
+        <h3 className="text-2xl font-semibold mb-4">Rezervo: {villa?.name}</h3>
 
-        <h3 className="font-display text-2xl mb-4">Paguaj për — {villa?.name}</h3>
+        <form onSubmit={handlePay} className="space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            <input
+              type="date" value={from} onChange={e => setFrom(e.target.value)}
+              className="border rounded-lg px-3 py-2" placeholder="Check-in" required
+            />
+            <input
+              type="date" value={to} onChange={e => setTo(e.target.value)}
+              className="border rounded-lg px-3 py-2" placeholder="Check-out" required
+            />
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <input type="email" placeholder="Email" className="rounded-xl border border-line/60 bg-[#0f1412]/60 px-3 py-2"
-                 value={email} onChange={(e) => setEmail(e.target.value)} />
-          <input type="date" className="rounded-xl border border-line/60 bg-[#0f1412]/60 px-3 py-2"
-                 value={from} onChange={(e) => setFrom(e.target.value)} />
-          <input type="date" className="rounded-xl border border-line/60 bg-[#0f1412]/60 px-3 py-2"
-                 value={to} onChange={(e) => setTo(e.target.value)} />
-          <input type="number" min={1} className="rounded-xl border border-line/60 bg-[#0f1412]/60 px-3 py-2"
-                 value={guests} onChange={(e) => setGuests(+e.target.value)} />
-        </div>
+          <input
+            type="email" value={email} onChange={e => setEmail(e.target.value)}
+            className="border rounded-lg px-3 py-2 w-full" placeholder="Email" required
+          />
 
-        <button onClick={pay} disabled={submitting} className="btn-primary w-full mt-4">
-          {submitting ? "Duke u lidhur me bankën…" : "Paguaj Tani"}
-        </button>
+          <select
+            value={guests} onChange={e => setGuests(+e.target.value)}
+            className="border rounded-lg px-3 py-2 w-full"
+          >
+            {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n} mysafirë</option>)}
+          </select>
+
+          <div className="flex items-center justify-between border-t pt-3 mt-3">
+            <div>
+              <div className="text-sm text-gray-600">{nights} net x {pricePerNight}€</div>
+              <div className="text-lg font-semibold">Totali: {totalPrice}€</div>
+            </div>
+            <div className="flex gap-2">
+              <button type="button" onClick={onClose} className="px-4 py-2 rounded-lg border">
+                Mbyll
+              </button>
+              <button type="submit" className="px-4 py-2 rounded-lg bg-black text-white">
+                Vazhdo te Pagesa
+              </button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   );
