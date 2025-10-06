@@ -1,5 +1,5 @@
 // src/App.jsx
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
@@ -40,9 +40,8 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogPost />} />
-           <Route path="/payment/success" element={<PaymentResult />} />
-<Route path="/payment/fail" element={<PaymentResult />} />
-
+            <Route path="/payment/success" element={<PaymentResult />} />
+        <Route path="/payment/fail" element={<PaymentResult />} />
 
           <Route path="*" element={<Blog title="Faqja nuk u gjet" empty />} />
         </Routes>
