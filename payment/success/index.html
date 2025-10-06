@@ -1,0 +1,9 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Redirect</title></head>
+<body>
+<script>
+  // Ruaj query-string (p.sh. ?oid=...&msg=...)
+  var q = window.location.search || "";
+  // Shko te hash-route që e njeh React-i
+  window.location.replace("/#/payment/success" + q);
+</script>
+</body></html>
