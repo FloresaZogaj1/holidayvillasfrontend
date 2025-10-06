@@ -1,4 +1,3 @@
-// src/pages/RoomDetails.jsx
 import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { VILLAS, VILLAS_BY_SLUG } from "../data/villas";
@@ -95,7 +94,6 @@ export default function RoomDetails() {
             </div>
             <p className="text-sm text-ink/70 mb-4">Kapaciteti: deri në {villa.capacity} mysafirë</p>
 
-            {/* ISHTE anchor → tani buton që hap modalin */}
             <button onClick={() => setShow(true)} className="w-full btn-primary mb-6">
               Rezervo / Paguaj
             </button>

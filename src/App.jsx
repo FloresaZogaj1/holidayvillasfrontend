@@ -40,7 +40,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogPost />} />
-            <Route path="/payment/success" element={<PaymentResult />} />
+           <Route path="/payment/success" element={<PaymentResult />} />
 <Route path="/payment/fail" element={<PaymentResult />} />
 
 
