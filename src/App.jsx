@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import Rooms from "./pages/Rooms.jsx";
-import RoomDetails from "./pages/RoomDetails.jsx";
 import Gallery from "./pages/Gallery.jsx";
 
 // 🆕 faqet reale
@@ -17,6 +16,8 @@ import Contact from "./pages/Contact.jsx";
 import Blog from "./pages/Blog.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
 import PaymentResult from "./pages/PaymentResult";
+import Villa from "./pages/Villa.jsx";
+
 
 
 
@@ -28,7 +29,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/rooms" element={<Rooms />} />
-          <Route path="/rooms/:slug" element={<RoomDetails />} />
+<Route path="/rooms/:slug" element={<Villa />} />
           <Route path="/gallery" element={<Gallery />} />
 
           {/* 🆕 faqet e tjera */}
