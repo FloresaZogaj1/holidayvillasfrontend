@@ -1,10 +1,13 @@
 // src/pages/RoomDetails.jsx
+import { useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { VILLAS, VILLAS_BY_SLUG } from "../data/villas";
+import BookingModal from "../components/BookingModal.jsx";
 
 export default function RoomDetails() {
   const { slug } = useParams();
   const villa = VILLAS_BY_SLUG[slug];
+  const [show, setShow] = useState(false);
 
   if (!villa) {
     return (
@@ -84,16 +87,18 @@ export default function RoomDetails() {
             </div>
           </div>
 
+          {/* Sidebar / Booking */}
           <aside className="card p-6 h-fit self-start lux-border hover-glow">
             <div className="text-3xl font-semibold">
               <span className="gradient-text">{villa.price}€</span>
               <span className="text-sm text-ink/70"> / nata</span>
             </div>
-            <p className="text-sm text-ink/70 mb-4">
-              Kapaciteti: deri në {villa.capacity} mysafirë
-            </p>
+            <p className="text-sm text-ink/70 mb-4">Kapaciteti: deri në {villa.capacity} mysafirë</p>
 
-            <a href="#book" className="w-full inline-flex justify-center btn-primary mb-6">Rezervo</a>
+            {/* ISHTE anchor → tani buton që hap modalin */}
+            <button onClick={() => setShow(true)} className="w-full btn-primary mb-6">
+              Rezervo / Paguaj
+            </button>
 
             <div className="rule mb-4" />
             <h4 className="font-semibold mb-3">Vila të tjera</h4>
@@ -119,14 +124,8 @@ export default function RoomDetails() {
         </div>
       </section>
 
-      {/* BOOK SECTION */}
-      <section id="book" className="py-12 bg-bg text-ink">
-        <div className="max-w-3xl mx-auto px-4 card p-6">
-          <h2 className="font-display text-2xl mb-2">Rezervo {villa.name}</h2>
-          <p className="text-ink/70 mb-6">Plotëso të dhënat më poshtë dhe përfundo pagesën e sigurt.</p>
-          <a href="/rooms" className="btn-ghost inline-flex">Kthehu te Vilat</a>
-        </div>
-      </section>
+      {/* Modal */}
+      {show && <BookingModal villa={villa} onClose={() => setShow(false)} />}
     </>
   );
 }
