@@ -22,7 +22,7 @@ export default function PaymentResult() {
           </>
         )}
         {oid && <p className="mt-3 text-gray-500">Referenca: <b>{oid}</b></p>}
-        {msg && <p className="mt-1 text-gray-500">Detaj: {msg}</p>}
+        {msg && <p className="mt-1 text-gray-500 break-words">Detaj: {msg}</p>}
       </div>
     </section>
   );

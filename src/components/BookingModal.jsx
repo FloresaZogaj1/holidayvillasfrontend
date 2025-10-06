@@ -1,6 +1,5 @@
-// src/components/BookingModal.jsx
 import React, { useState } from "react";
-import http from "../requests"; // SIGUROHU: baseURL = import.meta.env.VITE_API_BASE
+import http from "../requests";
 
 export default function BookingModal({ villa, onClose }) {
   const [email, setEmail] = useState("");
@@ -15,7 +14,6 @@ export default function BookingModal({ villa, onClose }) {
 
   async function handlePay(e) {
     e.preventDefault();
-
     try {
       const meta = {
         villa: villa?.slug,
@@ -26,22 +24,21 @@ export default function BookingModal({ villa, onClose }) {
         name: (email || "").split("@")[0] || "Guest",
       };
 
-      // POST → backend /api/payments/init (kthen { gate, fields, oid })
+      // POST → backend
       const { data } = await http.post("/api/payments/init", {
         amount: totalPrice,
         email,
         meta,
-      });
+      }); // { gate, fields, oid }
 
       if (!data?.gate || !data?.fields) {
         throw new Error("Përgjigje e pavlefshme nga serveri i pagesës.");
       }
 
-      // Auto-POST te banka (3D Pay Hosting)
+      // Auto-POST te banka
       const form = document.createElement("form");
       form.method = "POST";
       form.action = data.gate;
-
       Object.entries(data.fields).forEach(([k, v]) => {
         const input = document.createElement("input");
         input.type = "hidden";
@@ -49,7 +46,6 @@ export default function BookingModal({ villa, onClose }) {
         input.value = String(v ?? "");
         form.appendChild(input);
       });
-
       document.body.appendChild(form);
       form.submit();
     } catch (err) {
@@ -62,60 +58,23 @@ export default function BookingModal({ villa, onClose }) {
     <div className="fixed inset-0 bg-black/50 grid place-items-center z-[9999]">
       <div className="w-full max-w-lg rounded-2xl bg-white p-6 text-gray-900 shadow-xl">
         <h3 className="text-2xl font-semibold mb-4">Rezervo: {villa?.name}</h3>
-
         <form onSubmit={handlePay} className="space-y-3">
           <div className="grid grid-cols-2 gap-3">
-            <input
-              type="date"
-              value={from}
-              onChange={(e) => setFrom(e.target.value)}
-              className="border rounded-lg px-3 py-2"
-              required
-            />
-            <input
-              type="date"
-              value={to}
-              onChange={(e) => setTo(e.target.value)}
-              className="border rounded-lg px-3 py-2"
-              required
-            />
+            <input type="date" value={from} onChange={e => setFrom(e.target.value)} className="border rounded-lg px-3 py-2" required />
+            <input type="date" value={to}   onChange={e => setTo(e.target.value)}   className="border rounded-lg px-3 py-2" required />
           </div>
-
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="border rounded-lg px-3 py-2 w-full"
-            placeholder="Email"
-            required
-          />
-
-          <select
-            value={guests}
-            onChange={(e) => setGuests(+e.target.value)}
-            className="border rounded-lg px-3 py-2 w-full"
-          >
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-              <option key={n} value={n}>
-                {n} mysafirë
-              </option>
-            ))}
+          <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="border rounded-lg px-3 py-2 w-full" placeholder="Email" required />
+          <select value={guests} onChange={e => setGuests(+e.target.value)} className="border rounded-lg px-3 py-2 w-full">
+            {[1,2,3,4,5,6,7,8].map(n => <option key={n} value={n}>{n} mysafirë</option>)}
           </select>
-
           <div className="flex items-center justify-between border-t pt-3 mt-3">
             <div>
-              <div className="text-sm text-gray-600">
-                {nights} net x {pricePerNight}€
-              </div>
+              <div className="text-sm text-gray-600">{nights} net x {pricePerNight}€</div>
               <div className="text-lg font-semibold">Totali: {totalPrice}€</div>
             </div>
             <div className="flex gap-2">
-              <button type="button" onClick={onClose} className="px-4 py-2 rounded-lg border">
-                Mbyll
-              </button>
-              <button type="submit" className="px-4 py-2 rounded-lg bg-black text-white">
-                Vazhdo te Pagesa
-              </button>
+              <button type="button" onClick={onClose} className="px-4 py-2 rounded-lg border">Mbyll</button>
+              <button type="submit" className="px-4 py-2 rounded-lg bg-black text-white">Vazhdo te Pagesa</button>
             </div>
           </div>
         </form>

@@ -1,14 +1,15 @@
-// src/requests.js
 import axios from "axios";
 
 const API_BASE =
-  import.meta.env.VITE_API_BASE ||
-  window?.__API_BASE__ ||
-  "http://localhost:4000";
+  import.meta.env.VITE_API_BASE || "https://holidayvillasbackend.onrender.com";
 
 const http = axios.create({
-  baseURL: API_BASE, // ← jo "/"
+  baseURL: API_BASE,
   withCredentials: false,
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  },
 });
 
 export default http;
