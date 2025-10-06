@@ -39,7 +39,7 @@ export default function App() {
 
           {/* rezultati i pagesës */}
           <Route path="/payment/success" element={<PaymentResult />} />
-          <Route path="/payment/fail" element={<PaymentResult />} />
+        <Route path="/payment/fail" element={<PaymentResult />} />
 
           {/* fallback */}
           <Route path="*" element={<Blog title="Faqja nuk u gjet" empty />} />
