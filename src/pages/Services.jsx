@@ -1,5 +1,14 @@
 // src/pages/Services.jsx
-import { Heart, Users, UtensilsCrossed, BedDouble, Plane, Headset } from "lucide-react";
+import {
+  Heart,
+  Users,
+  UtensilsCrossed,
+  BedDouble,
+  Plane,
+  Headset,
+  Wifi,
+  Leaf,
+} from "lucide-react";
 
 // import fotot për sfond (ndrysho me imazhet e tua)
 import spaBg from "../assets/6.jpg";
@@ -13,83 +22,102 @@ export default function Services() {
   const services = [
     {
       title: "Spa & Wellness",
-      desc: "Rifreskoni shqisat tuaja me spa dhe wellness-in tonë modern.",
+      desc: "Rifreskoni shqisat me sauna, relaks dhe kujdes premium të trupit.",
       icon: Heart,
-      bg: spaBg
+      bg: spaBg,
     },
     {
       title: "Evente & Mbledhje",
-      desc: "Organizoni evente të paharrueshme dhe mbledhje profesionale në ambientet tona elegante.",
+      desc: "Ambient elegant për evente private, ditëlindje dhe takime biznesi.",
       icon: Users,
-      bg: eventsBg
+      bg: eventsBg,
     },
     {
       title: "Restorant & Bar",
-      desc: "Shijoni kuzhinë të rafinuar dhe kokteje të përgatitura me kujdes me pamje mahnitëse.",
+      desc: "Kuzhinë e rafinuar dhe kokteje artizanale me pamje mahnitëse.",
       icon: UtensilsCrossed,
-      bg: restoBg
+      bg: restoBg,
     },
     {
       title: "Shërbim në Dhoma",
-      desc: "Përjetoni rehati me shërbimin tonë 24/7 në dhomë dhe kujdesin personalizuar.",
+      desc: "Komoditet maksimal me shërbim të shpejtë dhe diskret 24/7.",
       icon: BedDouble,
-      bg: roomBg
+      bg: roomBg,
     },
     {
       title: "Transport nga Aeroporti",
-      desc: "Relaksohuni ndërsa ne kujdesemi për transferet tuaja nga dhe në aeroport.",
+      desc: "Transfere të sigurta, të rehatshme dhe në kohë drejt vilave.",
       icon: Plane,
-      bg: transportBg
+      bg: transportBg,
     },
     {
       title: "Shërbim Kujdestari",
-      desc: "Stafi ynë i përkushtuar ju ndihmon me rezervime, ture dhe çdo kërkesë tjetër.",
+      desc: "Rezervime, rekomandime, ture — gjithçka që ju nevojitet.",
       icon: Headset,
-      bg: conciergeBg
-    }
+      bg: conciergeBg,
+    },
   ];
 
   const benefits = [
     { text: "Asistencë 24/7 për mysafirët", icon: Headset },
     { text: "Suita familjare të disponueshme", icon: BedDouble },
-    { text: "Wi-Fi me shpejtësi të lartë", icon: UtensilsCrossed },
-    { text: "Praktika miqësore me mjedisin", icon: Heart },
+    { text: "Wi-Fi me shpejtësi të lartë", icon: Wifi },
+    { text: "Praktika miqësore me mjedisin", icon: Leaf },
   ];
 
   return (
     <>
-      {/* SERVICES LIST */}
-      <section className="py-16 bg-paper">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h1 className="text-3xl md:text-4xl font-display mb-6">Shërbimet tona</h1>
-          <p className="text-muted max-w-3xl mx-auto mb-10">
-            Misioni ynë është të ofrojmë mikpritje të pakrahasueshme përmes një
-            game shërbimesh premium të krijuara për ta bërë qëndrimin tuaj sa më
-            të rehatshëm dhe të paharrueshëm.
+      {/* HERO MINI */}
+      <section className="bg-bg">
+        <div className="max-w-7xl mx-auto px-4 pt-12 text-center">
+          <h1 className="font-display text-3xl md:text-4xl mb-3 gradient-text">
+            Shërbimet tona
+          </h1>
+          <p className="text-ink/70 max-w-3xl mx-auto mb-8">
+            Mikpritje premium, detaje të menduara dhe përkujdesje që e kthen
+            çdo qëndrim në përvojë të paharrueshme.
           </p>
+        </div>
+      </section>
 
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/* SERVICES LIST */}
+      <section className="pb-8 bg-bg text-ink">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {services.map((s, i) => {
               const Icon = s.icon;
               return (
-                <div
+                <article
                   key={i}
-                  className="relative rounded-xl2 overflow-hidden shadow-card group h-64 flex items-center justify-center"
-                  style={{
-                    backgroundImage: `url(${s.bg})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center"
-                  }}
+                  className="group relative overflow-hidden rounded-xl2 card lux-border hover-glow"
                 >
-                  <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors" />
-                  <div className="relative z-10 text-center text-white px-4">
-                    <div className="w-14 h-14 flex items-center justify-center rounded-full bg-accent/90 text-primary mx-auto mb-3">
+                  {/* Background image */}
+                  <div
+                    className="absolute inset-0"
+                    style={{
+                      backgroundImage: `url(${s.bg})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                    aria-hidden="true"
+                  />
+                  {/* Gradient overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent transition-opacity duration-300 group-hover:from-black/70 group-hover:via-black/40" />
+                  {/* Content */}
+                  <div className="relative z-10 p-6 h-full flex flex-col justify-end min-h-[18rem]">
+                    <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-accent/90 text-[#0D0F0E] shadow-md mb-4">
                       <Icon size={26} />
                     </div>
-                    <h3 className="font-semibold text-lg">{s.title}</h3>
-                    <p className="text-sm mt-2">{s.desc}</p>
+                    <h3 className="text-white text-xl font-semibold tracking-tight">
+                      {s.title}
+                    </h3>
+                    <p className="text-white/90 text-sm mt-1">
+                      {s.desc}
+                    </p>
+                    {/* subtle lift on hover */}
+                    <div className="mt-4 translate-y-0 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
-                </div>
+                </article>
               );
             })}
           </div>
@@ -98,22 +126,23 @@ export default function Services() {
 
       {/* BENEFITS */}
       <section className="py-16 bg-paper">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-2xl font-display text-accent mb-6">
-            Pse të zgjidhni Holiday Villas?
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-2xl sm:text-3xl font-display text-ink mb-6">
+            Pse të zgjidhni <span className="gradient-text">Holiday Villas</span>?
           </h2>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {benefits.map((b, i) => {
               const Icon = b.icon;
               return (
                 <div
                   key={i}
-                  className="bg-white rounded-xl2 p-6 shadow-card hover:shadow-lg transition flex flex-col items-center text-center"
+                  className="rounded-xl2 border border-line bg-card p-6 shadow-card hover-glow transition"
                 >
-                  <div className="w-12 h-12 flex items-center justify-center rounded-full bg-accent/10 text-accent mb-3">
+                  <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-accent/15 text-accent mb-3">
                     <Icon size={22} />
                   </div>
-                  <p className="text-base font-semibold text-ink">{b.text}</p>
+                  <p className="text-ink font-semibold">{b.text}</p>
                 </div>
               );
             })}

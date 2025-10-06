@@ -1,0 +1,114 @@
+{
+  "brand": "Holiday Villas",
+  "welcome": "Welcome to Holiday Villas",
+  "bookNow": "Book Now",
+  "about": "About Us",
+  "contact": "Contact",
+  "hero.subtitle": "Private villas by Batllava Lake",
+  "footer.rights": "All rights reserved.",
+  "dateRangePlaceholder": "Check-in — Check-out",
+  "adults_one": "adult",
+  "adults_other": "adults",
+  "children_zero": "No children",
+  "children_one": "child",
+  "children_other": "children",
+  "rooms_one": "room",
+  "rooms_other": "rooms",
+  "search": "Search",
+
+  "reserve": "Reserve",
+  "basePerNight": "base {{price}}€/night",
+  "breakfastIncluded": "breakfast included",
+  "close": "Close",
+
+  "firstName": "First name",
+  "lastName": "Last name",
+  "email": "Email",
+  "phone": "Phone",
+  "from": "From",
+  "to": "To",
+  "guests": "Guests",
+  "guests_label_one": "guest",
+  "guests_label_other": "guests",
+
+  "lunch": "Lunch",
+  "dinner": "Dinner",
+  "perPersonPerNight": "(+{{price}}€/person/night)",
+
+  "priceSummary": "Price summary",
+  "categoryBase": "Base",
+  "perNight": "night",
+  "extraPersons": "Extra persons",
+  "totalPerNight": "Total / night",
+  "nights": "Nights",
+  "total": "Total",
+  "footnote": "Breakfast included. Up to 6 guests.",
+
+  "cancel": "Cancel",
+  "continueToPayment": "Continue to Payment",
+
+  "errName": "Please fill in first and last name.",
+  "errEmail": "Please enter your email.",
+  "errDates": "Please select stay dates.",
+  "errGuests": "Up to 6 guests are allowed.",
+  "errPaymentInit": "Payment could not be initialized. Check connection or CORS.",
+  
+  "footer": {
+    "brand": {
+      "tagline": "5-star nature escape — luxury, serenity and warm hospitality at Batllava Lake."
+    },
+    "reservations": {
+      "title": "Reservations",
+      "hours": "Mon – Sun: 09:00 – 21:00",
+      "phoneAria": "Call Holiday Villas reservations",
+      "emailAria": "Email Holiday Villas reservations"
+    },
+    "location": {
+      "title": "Location",
+      "address": "Batllava Lake, Orllan 📍",
+      "viewMap": "View on map",
+      "mapAria": "Open the location in Google Maps"
+    },
+    "quick": {
+      "title": "Quick links",
+      "aria": "Footer quick links",
+      "home": "Home",
+      "rooms": "Villas",
+      "gallery": "Gallery",
+      "about": "About Us",
+      "faq": "FAQ",
+      "contact": "Contact"
+    },
+    "follow": {
+      "title": "Follow us",
+      "instagramAria": "Holiday Villas Instagram"
+    },
+    "bottom": {
+      "rights": "All rights reserved.",
+      "terms": "Terms",
+      "privacy": "Privacy",
+      "weLove": "WE ❤ {{name}}"
+    }
+,
+  "nav": {
+    "home": "Home",
+    "resort": "Resort",
+    "about": "About Us",
+    "services": "Services",
+    "testimonials": "Testimonials",
+    "faq": "FAQ",
+    "accomodation": "Accommodation",
+    "villas": "Villas",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "book": "Book",
+    "menu": "Menu",
+    "cart": "Cart",
+    "openMenuAria": "Open menu",
+    "closeMenuAria": "Close menu"
+  }
+}
+
+  }
+
+

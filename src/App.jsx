@@ -16,6 +16,8 @@ import Contact from "./pages/Contact.jsx";
 import Blog from "./pages/Blog.jsx";
 import BlogPost from "./pages/BlogPost.jsx";
 import PaymentResult from "./pages/PaymentResult.jsx";
+import Terms from "./pages/Terms";
+import Privacy from "./pages/Privacy";
 
 export default function App() {
   return (
@@ -40,6 +42,8 @@ export default function App() {
           {/* rezultati i pagesës */}
           <Route path="/payment/success" element={<PaymentResult />} />
         <Route path="/payment/fail" element={<PaymentResult />} />
+        <Route path="/terms" element={<Terms />} />
+<Route path="/privacy" element={<Privacy />} />
 
           {/* fallback */}
           <Route path="*" element={<Blog title="Faqja nuk u gjet" empty />} />

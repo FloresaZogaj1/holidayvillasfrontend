@@ -158,24 +158,61 @@ export default function About() {
 
       {/* GALERIA (shpejt) */}
       <section className="py-12 bg-bg text-ink">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="font-display text-2xl sm:text-3xl mb-4 gradient-text">Galeria</h2>
-          <p className="text-ink/70 text-sm sm:text-base mb-6">
-            Pamje të shpejta nga ambientet tona — brenda dhe jashtë.
-          </p>
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
-            {gallery.map((src, i) => (
-              <img
-                key={i}
-                src={src}
-                alt={`Galeria — foto ${i + 1}`}
-                className="mb-4 w-full rounded-xl2 shadow-card object-cover"
-                loading="lazy"
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+  <div className="max-w-7xl mx-auto px-4">
+    <h2 className="font-display text-2xl sm:text-3xl mb-4 gradient-text">
+      Galeria
+    </h2>
+    <p className="text-ink/70 text-sm sm:text-base mb-6">
+      Pamje të shpejta nga ambientet tona — brenda dhe jashtë.
+    </p>
+
+    <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
+      <img
+        src="src/assets/3_6.jpg"
+        alt="Pamje e vilës nga jashtë"
+        className="mb-4 w-full rounded-xl2 shadow-card object-cover"
+        loading="lazy"
+      />
+      <img
+        src="src/assets/3_7.jpg"
+        alt="Pamje e dhomës kryesore"
+        className="mb-4 w-full rounded-xl2 shadow-card object-cover"
+        loading="lazy"
+      />
+      <img
+        src="src/assets/3_8.jpg"
+        alt="Pamje e pishinës"
+        className="mb-4 w-full rounded-xl2 shadow-card object-cover"
+        loading="lazy"
+      />
+      <img
+        src="src/assets/_P4A0282.jpg"
+        alt="Pamje e kuzhinës moderne"
+        className="mb-4 w-full rounded-xl2 shadow-card object-cover"
+        loading="lazy"
+      />
+      <img
+        src="src/assets/_P4A0283.jpg"
+        alt="Pamje e natës me ndriçim"
+        className="mb-4 w-full rounded-xl2 shadow-card object-cover"
+        loading="lazy"
+      />
+      <img
+        src="src/assets/_P4A9602.JPG"
+        alt="Pamje e natës me ndriçim"
+        className="mb-4 w-full rounded-xl2 shadow-card object-cover"
+        loading="lazy"
+      />
+       <img
+        src="src/assets/_P4A0280.jpg"
+        alt="Pamje e natës me ndriçim"
+        className="mb-4 w-full rounded-xl2 shadow-card object-cover"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
 
       {/* TIMELINE */}
       <section className="py-16 bg-ink/[0.04]">

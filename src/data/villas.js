@@ -30,6 +30,47 @@ import vip3_cover from "../assets/2.jpg";
 import vip3_b from "../assets/3.jpg";
 import vip3_c from "../assets/1_11.jpg";
 
+/** ——— Defaults në stil Booking (në shqip) ——— */
+const BOOKING_DEFAULTS = {
+  booking: {
+    top_location_score: 10,
+    highlights: [
+      "Lokacion i shkëlqyer (vlerësuar 10.0)",
+      "Parkim privat falas në vend",
+      "Wi-Fi falas",
+      "Dhomat familjare",
+      "Saunë",
+    ],
+    breakfast: {
+      available: true,
+      options: ["Hallall", "Bufe", "Mëngjes për me marrë"],
+      note: "Shërbehet çdo ditë",
+    },
+    parking: {
+      free: true,
+      private: true,
+      on_site: true,
+      reservation_needed: false,
+    },
+    internet: {
+      wifi: true,
+      areas: "I disponueshëm në të gjitha hapësirat",
+      free: true,
+    },
+    outdoors: ["Tarracë", "Kopsht"],
+    wellness: ["Saunë"],
+    misc: ["Ndalohet duhani në të gjitha hapësirat", "Ngrohje", "Dhomat familjare"],
+    distance_note:
+      "Distancat në përshkrim llogariten duke përdorur © OpenStreetMap",
+    airport_distance_km: 50,
+    attractions: [
+      { name: "Varri i Sulltan Muratit", distance_km: 34 },
+      { name: "Muzeu i Kosovës", distance_km: 36 },
+    ],
+    languages: ["Anglisht", "Shqip"],
+  },
+};
+
 // ——— LISTA KRYESORE (Premium 1–3, VIP 1–3) ———
 export const RAW_VILLAS = [
   // PREMIUM
@@ -42,10 +83,10 @@ export const RAW_VILLAS = [
     description:
       "Hapësirë moderne me dritare të mëdha dhe tarracë intime — perfekte për çifte ose familje të vogla.",
     cover_url: premium1_cover,
-    price_per_night: 180,
+    price_per_night: 180, // ruajtur si referencë historike (nuk përdoret për shfaqje)
     max_guests: 4,
     size: 60,
-    amenities: ["Pamje liqeni", "Tarracë private", "AC", "Wi-Fi"],
+    amenities: ["Pamje liqeni", "Tarracë private", "Ajër i kondicionuar (AC)", "Wi-Fi"],
     gallery: [premium1_cover, premium1_b, premium1_c],
   },
   {
@@ -55,12 +96,12 @@ export const RAW_VILLAS = [
     category: "Premium",
     location: "Orllan, Liqeni i Batllavës",
     description:
-      "Suitë e bollshme me dalje në kopsht, kitchenete dhe ambient të qetë për pushim total.",
+      "Suitë e bollshme me dalje në kopsht, mini-kuzhinë dhe ambient të qetë për pushim total.",
     cover_url: premium2_cover,
     price_per_night: 200,
     max_guests: 4,
     size: 70,
-    amenities: ["Kopsht privat", "Kitchenette", "BBQ", "Wi-Fi"],
+    amenities: ["Kopsht privat", "Mini-kuzhinë", "BBQ", "Wi-Fi"],
     gallery: [premium2_cover, premium2_b, premium2_c],
   },
   {
@@ -75,7 +116,7 @@ export const RAW_VILLAS = [
     price_per_night: 220,
     max_guests: 5,
     size: 75,
-    amenities: ["Tarracë e madhe", "Oxhak", "AC", "Wi-Fi"],
+    amenities: ["Tarracë e madhe", "Oxhak", "Ajër i kondicionuar (AC)", "Wi-Fi"],
     gallery: [premium3_cover, premium3_b, premium3_c],
   },
 
@@ -109,6 +150,9 @@ export const RAW_VILLAS = [
     size: 100,
     amenities: ["Jacuzzi privat", "Saunë", "Tarracë e izoluar", "Wi-Fi"],
     gallery: [vip2_cover, vip2_b, vip2_c],
+    booking: {
+      wellness: ["Saunë", "Jacuzzi"],
+    },
   },
   {
     id: 6,
@@ -122,19 +166,49 @@ export const RAW_VILLAS = [
     price_per_night: 420,
     max_guests: 8,
     size: 120,
-    amenities: ["Kuzhinë e plotë", "Garazh privat", "AC", "Wi-Fi"],
+    amenities: ["Kuzhinë e plotë", "Garazh privat", "Ajër i kondicionuar (AC)", "Wi-Fi"],
     gallery: [vip3_cover, vip3_b, vip3_c],
   },
 ];
 
 // ——— NORMALIZIMI për komponentët ekzistues (Rooms/RoomDetails) ———
-const normalize = (v) => ({
-  ...v,
-  cover: v.cover_url,
-  price: v.price_per_night,
-  capacity: v.max_guests,
-  gallery: v.gallery?.length ? v.gallery : [v.cover_url],
-});
+const normalize = (v) => {
+  const mergedBooking = {
+    ...BOOKING_DEFAULTS.booking,
+    ...(v.booking || {}),
+  };
+
+  const badges = [
+    mergedBooking.parking?.free ? "Parkim falas" : null,
+    mergedBooking.internet?.wifi ? "Wi-Fi falas" : null,
+    mergedBooking.misc?.includes("Dhomat familjare") ? "Dhomat familjare" : null,
+    mergedBooking.wellness?.includes("Saunë") ? "Saunë" : null,
+    mergedBooking.breakfast?.available ? "Mëngjes" : null,
+  ].filter(Boolean);
+
+  const facilities = [
+    ...(mergedBooking.outdoors || []),
+    ...(mergedBooking.wellness || []),
+    ...(mergedBooking.misc || []),
+  ];
+
+  // ✅ Çmimi uniform sipas kategorisë
+  const basePrice = v.category === "VIP" ? 250 : 200;
+
+  return {
+    ...v,
+    cover: v.cover_url,
+    price: basePrice, // përdoret kudo në UI
+    capacity: v.max_guests,
+    gallery: v.gallery?.length ? v.gallery : [v.cover_url],
+    booking: mergedBooking,
+    badges,
+    facilities,
+
+    // (opsionale) ruaj referencën origjinale nëse të duhet diku më vonë
+    original_price_per_night: v.price_per_night,
+  };
+};
 
 export const VILLAS = RAW_VILLAS.map(normalize);
 export const VILLAS_BY_SLUG = Object.fromEntries(VILLAS.map((v) => [v.slug, v]));

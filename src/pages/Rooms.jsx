@@ -45,7 +45,18 @@ export default function Rooms() {
               <div className="p-5">
                 <h3 className="text-lg font-semibold text-ink mb-1">{v.name}</h3>
                 <p className="text-sm text-ink/70 mb-1">{v.location}</p>
-                <p className="text-sm text-ink/70 mb-3">deri në {v.capacity} mysafirë</p>
+                <p className="text-sm text-ink/70">deri në {v.capacity} mysafirë</p>
+
+                {/* Badges nga booking (deri në 3) */}
+                {v.badges?.length ? (
+                  <div className="flex flex-wrap gap-2 mt-3 mb-3">
+                    {v.badges.slice(0, 3).map((b, i) => (
+                      <span key={i} className="px-2 py-1 rounded-full text-xs bg-card/80 border border-line">
+                        {b}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
 
                 <div className="rule my-4" />
                 <div className="flex items-center gap-3">

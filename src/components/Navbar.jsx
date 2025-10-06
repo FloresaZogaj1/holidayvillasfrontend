@@ -1,23 +1,9 @@
 // src/components/Navbar.jsx
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import LangSwitch from "./LangSwitch"; // sigurohu që e ke krijuar
 import logo from "../assets/Holiday - Colored.png";
-
-const linksLeft = [{ to: "/", label: "Ballina" }];
-
-const hotelLinks = [
-  { to: "/about", label: "Rreth Nesh" },
-  { to: "/services", label: "Shërbimet" },
-  { to: "/testimonials", label: "Dëshmitë" },
-  { to: "/faq", label: "Pyetje & Përgjigje" },
-  { to: "/accomodation", label: "Akomodimi" },
-];
-
-const linksRight = [
-  { to: "/rooms", label: "Villa" },
-  { to: "/gallery", label: "Galeria" },
-  { to: "/contact", label: "Kontakti" },
-];
 
 const NavItem = ({ to, children }) => (
   <NavLink
@@ -35,12 +21,28 @@ const NavItem = ({ to, children }) => (
 );
 
 export default function Navbar() {
+  const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hotelOpen, setHotelOpen] = useState(false); // përdoret për desktop + mobile
+  const [hotelOpen, setHotelOpen] = useState(false); // desktop + mobile
   const [solid, setSolid] = useState(false);
   const location = useLocation();
   const drawerRef = useRef(null);
   const btnRef = useRef(null);
+
+  // Menutë dinamike nga i18n
+  const linksLeft = [{ to: "/", label: t("nav.home") }];
+  const hotelLinks = [
+    { to: "/about", label: t("nav.about") },
+    { to: "/services", label: t("nav.services") },
+    { to: "/testimonials", label: t("nav.testimonials") },
+    { to: "/faq", label: t("nav.faq") },
+    { to: "/accomodation", label: t("nav.accomodation") }
+  ];
+  const linksRight = [
+    { to: "/rooms", label: t("nav.villas") },
+    { to: "/gallery", label: t("nav.gallery") },
+    { to: "/contact", label: t("nav.contact") }
+  ];
 
   // Timers për dropdown delay
   const openTimer = useRef(null);
@@ -58,7 +60,7 @@ export default function Navbar() {
     closeTimer.current = setTimeout(() => setHotelOpen(false), ms);
   };
 
-  // Mbyll menut kur ndryshon rrota
+  // Mbyll menut kur ndryshon ruta
   useEffect(() => {
     setMenuOpen(false);
     setHotelOpen(false);
@@ -107,7 +109,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const labelBtn = "Resorti"; // ndrysho këtu emrin e menusë nëse dëshiron
+  const labelBtn = t("nav.resort"); // titulli i dropdown-it
 
   return (
     <header className="fixed top-0 inset-x-0 z-50">
@@ -211,7 +213,8 @@ export default function Navbar() {
               onClick={() => setMenuOpen((v) => !v)}
               aria-controls="mobile-drawer"
               aria-expanded={menuOpen}
-              aria-label={menuOpen ? "Mbyll menunë" : "Hape menunë"}
+              aria-label={menuOpen ? t("nav.closeMenuAria") : t("nav.openMenuAria")}
+              title={t("nav.menu")}
             >
               {menuOpen ? (
                 <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -222,22 +225,24 @@ export default function Navbar() {
                   <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M3 6h18M3 12h18M3 18h18" />
                 </svg>
               )}
-              <span className="hidden sm:inline">Menu</span>
+              <span className="hidden sm:inline">{t("nav.menu")}</span>
             </button>
           </div>
 
           {/* Djathtas (desktop) */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {linksRight.map((l) => (
               <NavItem key={l.to} to={l.to}>
                 {l.label}
               </NavItem>
             ))}
+            {/* Lang switch (desktop) */}
+            <LangSwitch />
             <Link
               to="/cart"
               className="inline-flex items-center px-2 py-2 text-ink/80 hover:text-ink"
-              title="Shporta"
-              aria-label="Shporta"
+              title={t("nav.cart")}
+              aria-label={t("nav.cart")}
             >
               <svg className="h-[18px] w-[18px]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path strokeWidth="2" d="M6 6h15l-1.5 9h-12z" />
@@ -245,7 +250,7 @@ export default function Navbar() {
                 <circle cx="18" cy="20" r="1.5" />
               </svg>
             </Link>
-            <Link to="/#book" className="btn-primary">Rezervo</Link>
+            <Link to="/#book" className="btn-primary">{t("nav.book")}</Link>
           </div>
         </nav>
       </div>
@@ -268,7 +273,11 @@ export default function Navbar() {
                 <img src={logo} alt="Holiday Villas Logo" className="h-9 w-auto rounded-full ring-1 ring-line/50" />
                 <span className="text-lg font-display">Holiday Villas</span>
               </Link>
-              <button onClick={() => setMenuOpen(false)} className="p-2 rounded-lg ring-1 ring-line/60" aria-label="Mbyll menunë">
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="p-2 rounded-lg ring-1 ring-line/60"
+                aria-label={t("nav.closeMenuAria")}
+              >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
@@ -276,7 +285,9 @@ export default function Navbar() {
             </div>
 
             <nav className="mt-6">
-              <Link to="/" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>Ballina</Link>
+              <Link to="/" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>
+                {t("nav.home")}
+              </Link>
 
               <div className="border-t border-line/60">
                 <button
@@ -305,13 +316,30 @@ export default function Navbar() {
               </div>
 
               <div className="border-t border-line/60">
-                <Link to="/rooms" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>Villa</Link>
+                <Link to="/rooms" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>
+                  {t("nav.villas")}
+                </Link>
               </div>
               <div className="border-t border-line/60">
-                <Link to="/gallery" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>Galeria</Link>
+                <Link to="/gallery" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>
+                  {t("nav.gallery")}
+                </Link>
               </div>
               <div className="border-t border-line/60">
-                <Link to="/contact" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>Kontakti</Link>
+                <Link to="/contact" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>
+                  {t("nav.contact")}
+                </Link>
+              </div>
+
+              {/* Lang switch (mobile) */}
+              <div className="border-t border-line/60 mt-2 pt-3">
+                <LangSwitch />
+              </div>
+
+              <div className="border-t border-line/60 mt-2 pt-3">
+                <Link to="/#book" className="btn-primary w-full inline-flex justify-center" onClick={() => setMenuOpen(false)}>
+                  {t("nav.book")}
+                </Link>
               </div>
             </nav>
           </div>

@@ -1,8 +1,10 @@
 // src/components/BookingBar.jsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function BookingBar() {
+  const { t } = useTranslation();
   const [adults, setAdults] = useState(2);
   const [children, setChildren] = useState(0);
   const [rooms, setRooms] = useState(1);
@@ -17,20 +19,20 @@ export default function BookingBar() {
       className="w-full max-w-5xl mx-auto rounded-2xl border border-line/60 bg-card/60 backdrop-glass shadow-lux p-2"
     >
       <div className="grid grid-cols-1 sm:grid-cols-5 gap-2">
-        {/* Datat (placeholder — lidhe me datepickerin tënd kur të gjesh kohë) */}
+        {/* Dates (placeholder — lidhe me datepickerin kur të kesh kohë) */}
         <div className="col-span-2 flex items-center gap-3 rounded-xl bg-[#0f1412]/60 px-4 py-3 border border-line/60">
           <svg className="w-5 h-5 text-accent-2" viewBox="0 0 24 24">
             <path fill="currentColor" d="M7 2v2h10V2h2v2h3v18H2V4h3V2zM4 6v14h16V6z"/>
           </svg>
           <input
             type="text"
-            placeholder="Check-in — Check-out"
+            placeholder={t("dateRangePlaceholder")}
             className="w-full bg-transparent placeholder:text-ink/55 text-ink focus:outline-none"
             readOnly
           />
         </div>
 
-        {/* Të rritur */}
+        {/* Adults */}
         <select
           value={adults}
           onChange={(e) => setAdults(+e.target.value)}
@@ -38,12 +40,12 @@ export default function BookingBar() {
         >
           {[1, 2, 3, 4].map((n) => (
             <option key={n} value={n}>
-              {n} {n === 1 ? "i rritur" : "të rritur"}
+              {n} {t("adults", { count: n })}
             </option>
           ))}
         </select>
 
-        {/* Fëmijë */}
+        {/* Children */}
         <select
           value={children}
           onChange={(e) => setChildren(+e.target.value)}
@@ -51,12 +53,12 @@ export default function BookingBar() {
         >
           {[0, 1, 2, 3, 4].map((n) => (
             <option key={n} value={n}>
-              {n === 0 ? "Pa fëmijë" : `${n} fëmijë`}
+              {n === 0 ? t("children_zero") : `${n} ${t("children", { count: n })}`}
             </option>
           ))}
         </select>
 
-        {/* Dhoma */}
+        {/* Rooms */}
         <select
           value={rooms}
           onChange={(e) => setRooms(+e.target.value)}
@@ -64,13 +66,13 @@ export default function BookingBar() {
         >
           {[1, 2, 3, 4].map((n) => (
             <option key={n} value={n}>
-              {n} {n === 1 ? "dhomë" : "dhoma"}
+              {n} {t("rooms", { count: n })}
             </option>
           ))}
         </select>
 
-        {/* Kërko */}
-        <button className="btn-primary w-full">Kërko</button>
+        {/* Search */}
+        <button className="btn-primary w-full">{t("search")}</button>
       </div>
     </form>
   );

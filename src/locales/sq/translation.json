@@ -1,0 +1,113 @@
+{
+  "brand": "Holiday Villas",
+  "welcome": "Mirë se vini në Holiday Villas",
+  "bookNow": "Rezervo tani",
+  "about": "Rreth nesh",
+  "contact": "Kontakt",
+  "hero.subtitle": "Vila private pranë Liqenit të Batllavës",
+  "footer.rights": "Të gjitha të drejtat e rezervuara.",
+  
+  "dateRangePlaceholder": "Check-in — Check-out",
+  "adults_one": "i rritur",
+  "adults_other": "të rritur",
+  "children_zero": "Pa fëmijë",
+  "children_one": "fëmijë",
+  "children_other": "fëmijë",
+  "rooms_one": "dhomë",
+  "rooms_other": "dhoma",
+  "search": "Kërko",
+
+  "reserve": "Rezervo",
+  "basePerNight": "baza {{price}}€/natë",
+  "breakfastIncluded": "mëngjesi i përfshirë",
+  "close": "Mbyll",
+
+  "firstName": "Emri",
+  "lastName": "Mbiemri",
+  "email": "Email",
+  "phone": "Nr. kontakti",
+  "from": "Nga",
+  "to": "Deri",
+  "guests": "Mysafirë",
+  "guests_label_one": "mysafir",
+  "guests_label_other": "mysafirë",
+
+  "lunch": "Dreka",
+  "dinner": "Darka",
+  "perPersonPerNight": "(+{{price}}€/person/natë)",
+
+  "priceSummary": "Përmbledhja e çmimit",
+  "categoryBase": "Baza",
+  "perNight": "natë",
+  "extraPersons": "Persona shtesë",
+  "totalPerNight": "Totali / natë",
+  "nights": "Netë",
+  "total": "Totali",
+  "footnote": "Mëngjesi i përfshirë. Maksimumi 6 persona.",
+
+  "cancel": "Anulo",
+  "continueToPayment": "Vazhdo te Pagesa",
+
+  "errName": "Plotësoni emrin dhe mbiemrin.",
+  "errEmail": "Vendosni email-in.",
+  "errDates": "Zgjidhni datat e qëndrimit.",
+  "errGuests": "Lejohen deri në 6 mysafirë.",
+  "errPaymentInit": "Nuk u inicua pagesa. Kontrollo lidhjen ose CORS.",
+  
+  "footer": {
+    "brand": {
+      "tagline": "Përvojë 5-yje pranë natyrës — luks, qetësi dhe mikpritje e ngrohtë në Liqenin e Batllavës."
+    },
+    "reservations": {
+      "title": "Rezervime",
+      "hours": "E hënë – E diel: 09:00 – 21:00",
+      "phoneAria": "Telefono rezervimet e Holiday Villas",
+      "emailAria": "Dërgo email për rezervime te Holiday Villas"
+    },
+    "location": {
+      "title": "Lokacioni",
+      "address": "Liqeni i Batllavës, Orllan 📍",
+      "viewMap": "Shiko në hartë",
+      "mapAria": "Hape lokacionin në Google Maps"
+    },
+    "quick": {
+      "title": "Linjat e shpejta",
+      "aria": "Lidhjet e shpejta të footer-it",
+      "home": "Ballina",
+      "rooms": "Vilat",
+      "gallery": "Galeria",
+      "about": "Rreth Nesh",
+      "faq": "FAQ",
+      "contact": "Kontakti"
+    },
+    "follow": {
+      "title": "Na ndiqni",
+      "instagramAria": "Instagram i Holiday Villas"
+    },
+    "bottom": {
+      "rights": "Të gjitha të drejtat e rezervuara.",
+      "terms": "Termat",
+      "privacy": "Privatësia",
+      "weLove": "NE ❤ {{name}}"
+    ,
+    
+  "nav": {
+    "home": "Ballina",
+    "resort": "Resorti",
+    "about": "Rreth Nesh",
+    "services": "Shërbimet",
+    "testimonials": "Dëshmitë",
+    "faq": "Pyetje & Përgjigje",
+    "accomodation": "Akomodimi",
+    "villas": "Vilat",
+    "gallery": "Galeria",
+    "contact": "Kontakti",
+    "book": "Rezervo",
+    "menu": "Menu",
+    "cart": "Shporta",
+    "openMenuAria": "Hape menunë",
+    "closeMenuAria": "Mbyll menunë"
+  }
+}
+  }
+}
