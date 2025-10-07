@@ -110,4 +110,145 @@
   }
 }
   }
+,
+  "pay": {
+    "button": "Paguaj",
+    "initializing": "Duke inicializuar...",
+    "error": "Nuk u inicializua pagesa. Kontrollo backend ose konfigurimin e ENV."
+  }
+,
+  "slider": {
+    "ariaCarousel": "Karusel i imazheve",
+    "prev": "Slide i mëparshëm",
+    "next": "Slide i radhës",
+    "first": "Ky është slidi i parë",
+    "last": "Ky është slidi i fundit",
+    "slideLabel": "Slide {{index}} nga {{slidesLength}}",
+    "altFallback": "Slide {{index}}"
+  }
+,
+
+  "roomCard": {
+    "perNight": "/ natë",
+    "guests": "persona",
+    "details": "Detajet"
+  }
+,
+  "about": {
+    "hero": {
+      "alt": "Holiday Villas - pamje panoramike",
+      "kicker": "Rreth Nesh",
+      "subtitle": "Qetësi, privatësi dhe luks — në zemër të natyrës."
+    },
+    "who": {
+      "title": "Kush jemi",
+      "text": "Holiday Villas lindi për t’u ofruar mysafirëve një përvojë mikpritjeje të ngrohtë dhe elegante, të lidhur me natyrën. Çdo vilë është menduar në detaj: interior i pastër, dritë natyrale, oborre private dhe komoditete moderne.",
+      "ctaRooms": "Shiko vilat",
+      "ctaContact": "Na kontakto",
+      "alt": "Ambient i brendshëm i vilës"
+    },
+    "features": {
+      "privacy": { "title": "Privatësi & Qetësi", "desc": "Vila të izoluara me kopshte private dhe pamje relaksuese." },
+      "spa":     { "title": "Spa & Wellness", "desc": "Sauna, jacuzzi dhe trajtime relaksuese sipas kërkesës." },
+      "service": { "title": "Shërbim 24/7", "desc": "Asistencë e dedikuar për çdo nevojë gjatë qëndrimit tuaj." },
+      "food":    { "title": "Gastronomi Lokale", "desc": "Mëngjes artizanal dhe menytë sezonale me produkte vendore." },
+      "outdoor": { "title": "Aktivitete në Natyrë", "desc": "Hiking, biçikleta, ture fotografike dhe piknik në livadhe." },
+      "wifi":    { "title": "Wi-Fi i Shpejtë", "desc": "Internet i qëndrueshëm për punë dhe argëtim." }
+    },
+    "stats": {
+      "satisfaction": "Kënaqësi mysafirësh",
+      "rating": "Vlerësime mesatare",
+      "founded": "Viti i themelimit",
+      "support": "Asistencë"
+    },
+    "gallery": {
+      "title": "Galeria",
+      "subtitle": "Pamje të shpejta nga ambientet tona — brenda dhe jashtë.",
+      "alt1": "Pamje e vilës nga jashtë",
+      "alt2": "Pamje e dhomës kryesore",
+      "alt3": "Pamje e pishinës",
+      "alt4": "Pamje e kuzhinës moderne",
+      "alt5": "Pamje e natës me ndriçim",
+      "alt6": "Pamje e natës",
+      "alt7": "Atmosferë e mbrëmjes"
+    },
+    "timeline": {
+      "title": "Historia jonë",
+      "2023": "U hap vila e parë me konceptin ‘retreat në natyrë’.",
+      "2024": "Shtuam spa & wellness dhe paketa kulinare sezonale.",
+      "2025": "Galeria e aktiviteteve outdoor dhe evente private."
+    },
+    "cta": {
+      "title": "Gati për pushimin tuaj të radhës?",
+      "subtitle": "Zgjidhni vilën perfekte dhe na lejoni të kujdesemi për detajet.",
+      "book": "Rezervo një vilë",
+      "availability": "Pyet për disponueshmëri"
+    }
+  }
+,
+
+  "nav": {
+    "home": "Ballina",
+    "resort": "Resort",
+    "about": "Rreth Nesh",
+    "services": "Shërbimet",
+    "testimonials": "Dëshmitë",
+    "faq": "FAQ",
+    "accomodation": "Akomodimi",
+    "villas": "Vilat",
+    "gallery": "Galeria",
+    "contact": "Kontakti",
+    "book": "Rezervo",
+    "menu": "Meny",
+    "cart": "Shporta",
+    "openMenuAria": "Hape menynë",
+    "closeMenuAria": "Mbylle menynë"
+  }
+,
+
+  "accommodation": {
+    "title": "Qëndrimi në Holiday Villas",
+    "subtitle": "Pushime të qeta në zemër të natyrës, pranë liqenit të Batllavës — luks, rehati dhe mikpritje e ngrohtë.",
+    "items": {
+      "breakfast": {
+        "title": "Mëngjes i Shëndetshëm",
+        "desc": "Filloni ditën me përzgjedhje të freskëta dhe të shijshme – i përfshirë në çmim."
+      },
+      "support": {
+        "title": "Mbështetje 24/7",
+        "desc": "Recepsioni ynë është në dispozicion për çdo kërkesë, në çdo kohë."
+      },
+      "rooms": {
+        "title": "Dhoma të Bollshme & Komode",
+        "desc": "Hapësira moderne me dritë natyrale dhe rehati për një qëndrim të paharrueshëm."
+      },
+      "wellness": {
+        "title": "Saunë & Wellness",
+        "desc": "Relaksohuni me saunë dhe ambiente wellness për rikuperim të plotë."
+      },
+      "garden": {
+        "title": "Kopsht & Tarracë",
+        "desc": "Hapësira të jashtme për pushim, mëngjese në diell dhe mbrëmje nën yje."
+      },
+      "parking": {
+        "title": "Parkim Privat",
+        "desc": "Siguri dhe lehtësi me parkim të dedikuar në vend, pa pagesë."
+      }
+    }
+  }
+,
+
+  "blog": {
+    "title": "Blogu ynë",
+    "subtitle": "Ide udhëtimi, gastronomi lokale dhe aktivitete për ta bërë pushimin tuaj sa më të veçantë.",
+    "readMore": "Lexo më shumë"
+  }
+,
+
+  "blogPost": {
+    "notFoundTitle": "Artikulli nuk u gjet",
+    "notFoundText": "Kontrollo linkun ose kthehu te lista e artikujve.",
+    "backToBlog": "Kthehu te Blogu",
+    "viewVillas": "Shiko Vilat"
+  }
 }

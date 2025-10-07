@@ -1,18 +1,19 @@
-// src/pages/Blog.jsx
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { posts } from "../data/posts";
 
 export default function Blog() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-16 bg-bg text-ink">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="mb-8">
+        <div className="mb-8 text-center sm:text-left">
           <h1 className="font-display text-3xl md:text-4xl tracking-tight">
-            <span className="gradient-text">Blogu ynë</span>
+            <span className="gradient-text">{t("blog.title")}</span>
           </h1>
-          <p className="text-ink/70 mt-2">
-            Ide udhëtimi, gastronomi lokale dhe aktivitete për ta bërë pushimin tuaj
-            sa më të veçantë.
+          <p className="text-ink/70 mt-2 max-w-2xl mx-auto sm:mx-0">
+            {t("blog.subtitle")}
           </p>
         </div>
 
@@ -39,9 +40,19 @@ export default function Blog() {
                 <p className="text-sm text-ink/70 flex-1">{p.excerpt}</p>
 
                 <div className="pt-2">
-                  <Link to={`/blog/${p.id}`} className="btn-ghost inline-flex items-center gap-2">
-                    Lexo më shumë
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <Link
+                    to={`/blog/${p.id}`}
+                    className="btn-ghost inline-flex items-center gap-2"
+                  >
+                    {t("blog.readMore")}
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
                       <path d="M9 18l6-6-6-6" />
                     </svg>
                   </Link>

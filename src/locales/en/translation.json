@@ -109,6 +109,146 @@
   }
 }
 
+  
+,
+  "pay": {
+    "button": "Pay Now",
+    "initializing": "Initializing...",
+    "error": "Payment could not be initialized. Please check backend or environment variables."
   }
 
+,
+  "slider": {
+    "ariaCarousel": "Image carousel",
+    "prev": "Previous slide",
+    "next": "Next slide",
+    "first": "This is the first slide",
+    "last": "This is the last slide",
+    "slideLabel": "Slide {{index}} of {{slidesLength}}",
+    "altFallback": "Slide {{index}}"
+  }
+ ,
+  "roomCard": {
+    "perNight": "/ night",
+    "guests": "guests",
+    "details": "Details"
+  },
+  "about": {
+    "hero": {
+      "alt": "Holiday Villas - panoramic view",
+      "kicker": "About Us",
+      "subtitle": "Calm, privacy and luxury — in the heart of nature."
+    },
+    "who": {
+      "title": "Who we are",
+      "text": "Holiday Villas was created to offer guests a warm, elegant hospitality experience connected to nature. Each villa is carefully designed: clean interior, natural light, private yards and modern amenities.",
+      "ctaRooms": "See villas",
+      "ctaContact": "Contact us",
+      "alt": "Villa interior"
+    },
+    "features": {
+      "privacy": { "title": "Privacy & Tranquility", "desc": "Secluded villas with private gardens and relaxing views." },
+      "spa":     { "title": "Spa & Wellness", "desc": "Sauna, jacuzzi and relaxing treatments upon request." },
+      "service": { "title": "24/7 Service", "desc": "Dedicated assistance for any need during your stay." },
+      "food":    { "title": "Local Gastronomy", "desc": "Artisanal breakfast and seasonal menus with local products." },
+      "outdoor": { "title": "Outdoor Activities", "desc": "Hiking, biking, photo tours and meadow picnics." },
+      "wifi":    { "title": "Fast Wi-Fi", "desc": "Reliable internet for work and entertainment." }
+    },
+    "stats": {
+      "satisfaction": "Guest satisfaction",
+      "rating": "Average rating",
+      "founded": "Year founded",
+      "support": "Assistance"
+    },
+    "gallery": {
+      "title": "Gallery",
+      "subtitle": "Quick glimpses of our spaces — inside and out.",
+      "alt1": "Villa exterior view",
+      "alt2": "Master bedroom view",
+      "alt3": "Pool view",
+      "alt4": "Modern kitchen",
+      "alt5": "Night view with lighting",
+      "alt6": "Night view",
+      "alt7": "Evening ambiance"
+    },
+    "timeline": {
+      "title": "Our story",
+      "2023": "We opened the first villa with a ‘nature retreat’ concept.",
+      "2024": "We added spa & wellness and seasonal culinary packages.",
+      "2025": "Outdoor activity gallery and private events."
+    },
+    "cta": {
+      "title": "Ready for your next getaway?",
+      "subtitle": "Choose the perfect villa and let us handle the details.",
+      "book": "Book a villa",
+      "availability": "Ask for availability"
+    }
+  }
 
+,
+  "nav": {
+    "home": "Home",
+    "resort": "Resort",
+    "about": "About Us",
+    "services": "Services",
+    "testimonials": "Testimonials",
+    "faq": "FAQ",
+    "accomodation": "Accommodation",
+    "villas": "Villas",
+    "gallery": "Gallery",
+    "contact": "Contact",
+    "book": "Book",
+    "menu": "Menu",
+    "cart": "Cart",
+    "openMenuAria": "Open menu",
+    "closeMenuAria": "Close menu"
+  }
+
+,
+
+  "accommodation": {
+    "title": "Stay at Holiday Villas",
+    "subtitle": "Peaceful holidays in the heart of nature by Batllava Lake — luxury, comfort, and warm hospitality.",
+    "items": {
+      "breakfast": {
+        "title": "Healthy Breakfast",
+        "desc": "Start your day with fresh, delicious selections — included in the price."
+      },
+      "support": {
+        "title": "24/7 Support",
+        "desc": "Our reception is available for any request, at any time."
+      },
+      "rooms": {
+        "title": "Spacious & Cozy Rooms",
+        "desc": "Modern spaces with natural light and comfort for an unforgettable stay."
+      },
+      "wellness": {
+        "title": "Sauna & Wellness",
+        "desc": "Unwind with sauna and wellness facilities for full recovery."
+      },
+      "garden": {
+        "title": "Garden & Terrace",
+        "desc": "Outdoor areas for relaxing, sunny breakfasts and starry evenings."
+      },
+      "parking": {
+        "title": "Private Parking",
+        "desc": "Convenience and safety with dedicated on-site parking, free of charge."
+      }
+    }
+  }
+,
+
+  "blog": {
+    "title": "Our Blog",
+    "subtitle": "Travel ideas, local gastronomy and activities to make your stay truly special.",
+    "readMore": "Read more"
+  }
+,
+
+  "blogPost": {
+    "notFoundTitle": "Article not found",
+    "notFoundText": "Please check the link or go back to the articles list.",
+    "backToBlog": "Back to Blog",
+    "viewVillas": "See Villas"
+  }
+}
