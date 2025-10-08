@@ -251,4 +251,212 @@
     "backToBlog": "Kthehu te Blogu",
     "viewVillas": "Shiko Vilat"
   }
+,
+
+  "dateRangePlaceholder": "Check-in — Check-out",
+  "persons_label": "Persona (maksimumi 6)",
+  "persons_option": "{{n}} persona",
+  "villa_type": "Lloj vile",
+  "villa": "Villë",
+  "villa_vip": "Villë VIP",
+  "villa_premium": "Villë Premium",
+  "search": "Kërko"
+,
+
+  "dateRangePlaceholder": "Check-in — Check-out",
+  "persons_label": "Persona (max 6)",
+  "persons_option": "{{n}} persona",
+  "villa_type": "Lloj vile",
+  "villa": "Villa",
+  "villa_vip": "Villa VIP",
+  "villa_premium": "Villa Premium",
+  "search": "Kërko",
+
+  "home": {
+    "hero": {
+      "welcome": "Mirësevini",
+      "title": "Holiday Villas",
+      "subtitle": "Pushime luksoze dhe rehati të përjetshme në zemër të natyrës. Zgjidhni vilën tuaj të preferuar dhe shijoni çdo moment.",
+      "ctaRooms": "Shiko Villat"
+    },
+    "services": {
+      "heading": "Çfarë ofrojmë",
+      "subheading": "Shërbime ekskluzive për një përvojë pushimi të plotë dhe pa stres: relaks, gastronomi cilësore, evente të personalizuara dhe asistencë 24/7.",
+      "items": {
+        "spa_wellness": "Spa & Wellness",
+        "events_meetings": "Evente & Mbledhje",
+        "restaurant_bar": "Restorant & Bar",
+        "room_service": "Shërbim në dhomë",
+        "airport_transfer": "Transport nga aeroporti",
+        "concierge": "Kujdestar 24/7"
+      },
+      "cardBody": "Staf me përvojë, standard i lartë shërbimi dhe vëmendje ndaj detajeve për komoditetin tuaj."
+    },
+    "premium": {
+      "heading": "Vilat Premium",
+      "subheading": "Vila moderne me hapësirë, dritë natyrale dhe privatësi — perfekte për çifte, familje ose grupe miqsh.",
+      "card": {
+        "title": "Villë Premium {{index}}",
+        "meta": "{{size}} · deri në {{guests}} mysafirë",
+        "price": "{{price}}€ / nata"
+      }
+    },
+    "vip": {
+      "heading": "Vilat VIP",
+      "subheading": "Ekskluzive, luksoze dhe me shërbime të personalizuara — për një përvojë unike dhe memorabile.",
+      "card": {
+        "title": "Villë VIP {{index}}",
+        "meta": "{{size}} · deri në {{guests}} mysafirë",
+        "price": "{{price}}€ / nata"
+      }
+    },
+    "gallery": {
+      "heading": "Galeria",
+      "subheading": "Pamje nga vilat tona, pishinat, natyra dhe ambientet e brendshme."
+    },
+    "blog": {
+      "heading": "Të rejat e fundit",
+      "subheading": "Këshilla udhëtimi, përvoja lokale dhe njoftime nga ekipi ynë – që të planifikoni pushimet në mënyrën më të mirë.",
+      "cta": "Vizitoni blogun",
+      "cta_aria": "Vizitoni blogun e Holiday Villas"
+    }
+  }
+,
+
+  "privacy": {
+    "title": "Privatësia & Cookies",
+    "updated": "Përditësuar: 06 Tetor 2025",
+
+    "s1": {
+      "title": "1. Kush jemi",
+      "body": "“Holiday Villas” ofron akomodim në Orllan, Liqeni i Batllavës. Respektojmë privatësinë tuaj dhe përpunojmë të dhënat personale në përputhje me GDPR dhe ligjet lokale."
+    },
+
+    "s2": {
+      "title": "2. Çfarë të dhënash mbledhim",
+      "li1": "Të dhëna identifikimi dhe kontakti (emër, mbiemër, email, telefon).",
+      "li2": "Të dhëna rezervimi (datat, numri i mysafirëve, preferencat e shërbimit).",
+      "li3": "Të dhëna pagese (përpunohen te procesuesi i pagesave; nuk ruajmë kartat).",
+      "li4": "Të dhëna teknike (cookies, IP, shfletuesi) për statistika dhe siguri."
+    },
+
+    "s3": {
+      "title": "3. Si i përdorim",
+      "li1": "Për të menaxhuar rezervimin dhe qëndrimin tuaj.",
+      "li2": "Për komunikime mbi konfirmimin, faturimin dhe mbështetjen.",
+      "li3": "Për siguri, parandalim abuzimi dhe përmirësim të shërbimit.",
+      "li4": "Me pëlqimin tuaj: oferta, njoftime marketingu (mund të çabonoheni në çdo kohë)."
+    },
+
+    "s4": {
+      "title": "4. Baza ligjore",
+      "li1": "Përmbushje kontrate (rezervimi/akomodimi).",
+      "li2": "Detyrim ligjor (faturimi, raportimet).",
+      "li3": "Interes legjitim (siguri, përmirësim shërbimi).",
+      "li4": "Pëlqim (marketing, cookies jo-thelbësore)."
+    },
+
+    "s5": {
+      "title": "5. Ndarja me palë të treta",
+      "body": "Ndarja bëhet vetëm sa është e nevojshme: procesuesi i pagesave, ofrues IT/hosting, dhe platforma rezervimi (p.sh. Booking.com) kur rezervoni përmes tyre. Këto palë përpunojnë të dhënat si përpunues me marrëveshje të vlefshme."
+    },
+
+    "s6": {
+      "title": "6. Cookies",
+      "body": "Përdorim cookies thelbësore për funksionimin e faqes (p.sh. session), si dhe analitike/performancë me pëlqimin tuaj. Mund të menaxhoni cookies nga shiritin e pëlqimit ose nga cilësimet e shfletuesit.",
+      "li1": "Thelbësore: funksionaliteti i rezervimit dhe siguria.",
+      "li2": "Analitike: vizita dhe përdorimi i faqes (të anonimizuara kur është e mundur).",
+      "li3": "Marketing: vetëm me pëlqimin tuaj (p.sh. pixel-et social)."
+    },
+
+    "s7": {
+      "title": "7. Ruajtja & Siguria",
+      "body": "Të dhënat ruhen vetëm për aq kohë sa nevojitet për qëllimet e mësipërme dhe sa kërkohet nga ligji. Aplikojmë masa teknike dhe organizative për të mbrojtur konfidencialitetin, integritetin dhe disponueshmërinë e tyre."
+    },
+
+    "s8": {
+      "title": "8. Të drejtat tuaja",
+      "li1": "Qasje, korrigjim, fshirje (“e drejta për t’u harruar”).",
+      "li2": "Kufizim ose kundërshtim i përpunimit.",
+      "li3": "Portueshmëri e të dhënave (kur zbatohet).",
+      "li4": "Tërheqje e pëlqimit për marketing/cookies jo-thelbësore.",
+      "li5": "Ankesë te autoriteti i mbrojtjes së të dhënave kompetent."
+    },
+
+    "s9": {
+      "title": "9. Të miturit",
+      "body": "Shërbimet tona u drejtohen të rriturve. Rezervimet nga të miturit kërkojnë prani dhe miratim të prindit/kujdestarit ligjor."
+    },
+
+    "s10": {
+      "title": "10. Kontakt & DPO",
+      "body": "Për çdo kërkesë mbi të dhënat personale, na kontaktoni: holidayvillas.ks (Instagram) ose email-in e kontaktit në faqe. Do t’ju përgjigjemi sa më shpejt."
+    }
+  }
+,
+
+  "terms": {
+    "title": "Termat & Kushtet",
+    "updated": "Përditësuar: 06 Tetor 2025",
+
+    "s1": {
+      "title": "1. Përmbledhje",
+      "body": "Këto Terma rregullojnë përdorimin të faqes së internetit “Holiday Villas” dhe rezervimet e akomodimit tonë në Orllan, Liqeni i Batllavës. Duke përdorur faqen, ju pranoni këto kushte."
+    },
+
+    "s2": {
+      "title": "2. Rezervimet & Pagesat",
+      "li1": "Rezervimi konfirmohet pasi përfundoni pagesën ose paradhënien.",
+      "li2": "Çmimet: Premium 200€/natë, VIP 250€/natë (baza deri 2 persona). Mbi 2 persona aplikohet +50€/person/natë (maksimumi 6 persona).",
+      "li3": "Mëngjesi i përfshirë. Ekstra opsionale: Dreka +25€/person/natë, Darka +25€/person/natë.",
+      "li4": "Pagesat procesohen përmes partnerit të pagesave; mund të aplikohen tarifa bankare/transaksioni."
+    },
+
+    "s3": {
+      "title": "3. Anulimet & Ndryshimet",
+      "li1": "Anulimet deri në 7 ditë para check-in: rimbursim i plotë i paradhënies.",
+      "li2": "Anulimet brenda 7 ditëve: mund të aplikohet tarifë deri në 100% të natës së parë.",
+      "li3": "Ndryshimet e datave varen nga disponueshmëria dhe mund të kenë diferencë çmimi."
+    },
+
+    "s4": {
+      "title": "4. Check-in / Check-out",
+      "li1": "Check-in nga ora 14:00 • Check-out deri në 10:00.",
+      "li2": "Identifikimi me dokument zyrtar është i detyrueshëm në check-in."
+    },
+
+    "s5": {
+      "title": "5. Rregullat e Shtëpisë",
+      "li1": "Ndalohet duhani në hapësirat e brendshme; ndalohet organizimi i festave/eventeve pa miratim.",
+      "li2": "Respektohet qetësia e orëve të natës dhe udhëzimet e sigurisë në pronë.",
+      "li3": "Dëmet e shkaktuara gjatë qëndrimit faturëzohen sipas kostos së riparimit/zëvendësimit."
+    },
+
+    "s6": {
+      "title": "6. Fëmijët, Shtesat & Kafshët",
+      "li1": "Kapaciteti maksimal: 6 persona për vilë (përfshirë fëmijët).",
+      "li2": "Kërkesat për krevat shtesë ose pajisje për fëmijë konfirmohen paraprakisht.",
+      "li3": "Kafshët shtëpiake pranohen vetëm me miratim paraprak."
+    },
+
+    "s7": {
+      "title": "7. Forca Madhore & Përgjegjësia",
+      "body": "Nuk mbajmë përgjegjësi për vonesa ose anulime të shkaktuara nga rrethana jashtë kontrollit tonë (p.sh. fatkeqësi natyrore). Përgjegjësia jonë kufizohet në shumën e paguar për rezervimin përkatës, përveç rasteve kur ligji kërkon ndryshe."
+    },
+
+    "s8": {
+      "title": "8. Pronësia Intelektuale",
+      "body": "Markat, fotografitë dhe përmbajtja në këtë faqe janë pronë e Holiday Villas ose përdoren me licencë. Riprodhimi pa leje ndalohet."
+    },
+
+    "s9": {
+      "title": "9. Ligji Zbatues & Juridiksioni",
+      "body": "Këta Terma rregullohen nga ligjet e Republikës së Kosovës. Çdo mosmarrëveshje i nënshtrohet gjykatave kompetente në Kosovë."
+    },
+
+    "s10": {
+      "title": "10. Kontakti",
+      "body": "Pyetje për Termat? Na shkruani në holidayvillas.ks (Instagram) ose email-in e kontaktit të publikuar në faqe."
+    }
+  }
 }

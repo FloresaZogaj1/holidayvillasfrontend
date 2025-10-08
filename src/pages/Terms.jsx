@@ -1,99 +1,96 @@
 // src/pages/Terms.jsx
+import { useTranslation } from "react-i18next";
+
 export default function Terms() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-16 bg-bg text-ink">
       <div className="max-w-4xl mx-auto px-4">
         <h1 className="font-display text-3xl md:text-4xl gradient-text mb-2">
-          Termat & Kushtet
+          {t("terms.title")}
         </h1>
-        <p className="text-ink/70 mb-8">Përditësuar: 06 Tetor 2025</p>
+        <p className="text-ink/70 mb-8">{t("terms.updated")}</p>
 
         <div className="card lux-border p-6 space-y-6">
+          {/* 1 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">1. Përmbledhje</h2>
-            <p className="text-ink/80">
-              Këto Terma rregullojnë përdorimin e faqes së internetit “Holiday Villas”
-              dhe rezervimet e akomodimit tonë në Orllan, Liqeni i Batllavës. Duke
-              përdorur faqen, ju pranoni këto kushte.
-            </p>
+            <h2 className="font-semibold text-xl mb-2">{t("terms.s1.title")}</h2>
+            <p className="text-ink/80">{t("terms.s1.body")}</p>
           </div>
 
+          {/* 2 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">2. Rezervimet & Pagesat</h2>
+            <h2 className="font-semibold text-xl mb-2">{t("terms.s2.title")}</h2>
             <ul className="list-disc ml-5 text-ink/80 space-y-1">
-              <li>Rezervimi konfirmohet pasi përfundoni pagesën ose paradhënien.</li>
-              <li>Çmimet: Premium 200€/natë, VIP 250€/natë (baza deri 2 persona). Mbi 2 persona aplikohet +50€/person/natë (maksimumi 6 persona).</li>
-              <li>Mëngjesi i përfshirë. Ekstra opsionale: Dreka +25€/person/natë, Darka +25€/person/natë.</li>
-              <li>Pagesat procesohen përmes partnerit të pagesave; mund të aplikohen tarifa bankare/transaksioni.</li>
+              <li>{t("terms.s2.li1")}</li>
+              <li>{t("terms.s2.li2")}</li>
+              <li>{t("terms.s2.li3")}</li>
+              <li>{t("terms.s2.li4")}</li>
             </ul>
           </div>
 
+          {/* 3 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">3. Anulimet & Ndryshimet</h2>
+            <h2 className="font-semibold text-xl mb-2">{t("terms.s3.title")}</h2>
             <ul className="list-disc ml-5 text-ink/80 space-y-1">
-              <li>Anulimet deri në 7 ditë para check-in: rimbursim i plotë i paradhënies.</li>
-              <li>Anulimet brenda 7 ditëve: mund të aplikohet tarifë deri në 100% të natës së parë.</li>
-              <li>Ndryshimet e datave varen nga disponueshmëria dhe mund të kenë diferencë çmimi.</li>
+              <li>{t("terms.s3.li1")}</li>
+              <li>{t("terms.s3.li2")}</li>
+              <li>{t("terms.s3.li3")}</li>
             </ul>
           </div>
 
+          {/* 4 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">4. Check-in / Check-out</h2>
+            <h2 className="font-semibold text-xl mb-2">{t("terms.s4.title")}</h2>
             <ul className="list-disc ml-5 text-ink/80 space-y-1">
-              <li>Check-in nga ora 14:00 • Check-out deri në 10:00.</li>
-              <li>Identifikimi me dokument zyrtar është i detyrueshëm në check-in.</li>
+              <li>{t("terms.s4.li1")}</li>
+              <li>{t("terms.s4.li2")}</li>
             </ul>
           </div>
 
+          {/* 5 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">5. Rregullat e Shtëpisë</h2>
+            <h2 className="font-semibold text-xl mb-2">{t("terms.s5.title")}</h2>
             <ul className="list-disc ml-5 text-ink/80 space-y-1">
-              <li>Ndalohet duhani në hapësirat e brendshme; ndalohet organizimi i festave/eventeve pa miratim.</li>
-              <li>Respektohet qetësia e orëve të natës dhe udhëzimet e sigurisë në pronë.</li>
-              <li>Dëmet e shkaktuara gjatë qëndrimit faturëzohen sipas kostos së riparimit/zëvendësimit.</li>
+              <li>{t("terms.s5.li1")}</li>
+              <li>{t("terms.s5.li2")}</li>
+              <li>{t("terms.s5.li3")}</li>
             </ul>
           </div>
 
+          {/* 6 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">6. Fëmijët, Shtesat & Kafshët</h2>
+            <h2 className="font-semibold text-xl mb-2">{t("terms.s6.title")}</h2>
             <ul className="list-disc ml-5 text-ink/80 space-y-1">
-              <li>Kapaciteti maksimal: 6 persona për vilë (përfshirë fëmijët).</li>
-              <li>Kërkesat për krevat shtesë ose pajisje për fëmijë konfirmohen paraprakisht.</li>
-              <li>Kafshët shtëpiake pranohen vetëm me miratim paraprak.</li>
+              <li>{t("terms.s6.li1")}</li>
+              <li>{t("terms.s6.li2")}</li>
+              <li>{t("terms.s6.li3")}</li>
             </ul>
           </div>
 
+          {/* 7 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">7. Forca Madhore & Përgjegjësia</h2>
-            <p className="text-ink/80">
-              Nuk mbajmë përgjegjësi për vonesa ose anulime të shkaktuara nga rrethana
-              jashtë kontrollit tonë (p.sh. fatkeqësi natyrore). Përgjegjësia jonë
-              kufizohet në shumën e paguar për rezervimin përkatës, përveç rasteve kur
-              ligji kërkon ndryshe.
-            </p>
+            <h2 className="font-semibold text-xl mb-2">{t("terms.s7.title")}</h2>
+            <p className="text-ink/80">{t("terms.s7.body")}</p>
           </div>
 
+          {/* 8 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">8. Pronësia Intelektuale</h2>
-            <p className="text-ink/80">
-              Markat, fotografitë dhe përmbajtja në këtë faqe janë pronë e Holiday
-              Villas ose përdoren me licencë. Riprodhimi pa leje ndalohet.
-            </p>
+            <h2 className="font-semibold text-xl mb-2">{t("terms.s8.title")}</h2>
+            <p className="text-ink/80">{t("terms.s8.body")}</p>
           </div>
 
+          {/* 9 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">9. Ligji Zbatues & Juridiksioni</h2>
-            <p className="text-ink/80">
-              Këta Terma rregullohen nga ligjet e Republikës së Kosovës. Çdo mosmarrëveshje
-              i nënshtrohet gjykatave kompetente në Kosovë.
-            </p>
+            <h2 className="font-semibold text-xl mb-2">{t("terms.s9.title")}</h2>
+            <p className="text-ink/80">{t("terms.s9.body")}</p>
           </div>
 
+          {/* 10 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">10. Kontakti</h2>
-            <p className="text-ink/80">
-              Pyetje për Termat? Na shkruani në <span className="font-semibold">holidayvillas.ks</span> (Instagram) ose email-in e kontaktit të publikuar në faqe.
-            </p>
+            <h2 className="font-semibold text-xl mb-2">{t("terms.s10.title")}</h2>
+            <p className="text-ink/80">{t("terms.s10.body")}</p>
           </div>
         </div>
       </div>

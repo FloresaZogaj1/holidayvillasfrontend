@@ -251,4 +251,216 @@
     "backToBlog": "Back to Blog",
     "viewVillas": "See Villas"
   }
+
+,
+
+  "dateRangePlaceholder": "Check-in — Check-out",
+  "persons_label": "Persona (max 6)",
+  "persons_option": "{{n}} persona",
+  "villa_type": "Lloj vile",
+  "villa": "Villa",
+  "villa_vip": "Villa VIP",
+  "villa_premium": "Villa Premium",
+  "search": "Kërko",
+  
+  
+  "dateRangePlaceholder": "Check-in — Check-out",
+  "persons_label": "Guests (max 6)",
+  "persons_option": "{{n}} guests",
+  "villa_type": "Villa type",
+  "villa": "Villa",
+  "villa_vip": "Villa VIP",
+  "villa_premium": "Villa Premium",
+  "search": "Search",
+
+  "home": {
+    "hero": {
+      "welcome": "Welcome",
+      "title": "Holiday Villas",
+      "subtitle": "Luxury escapes and timeless comfort in the heart of nature. Choose your favorite villa and enjoy every moment.",
+      "ctaRooms": "View Villas"
+    },
+    "services": {
+      "heading": "What we offer",
+      "subheading": "Exclusive services for a complete and stress-free holiday: relaxation, fine dining, personalized events, and 24/7 assistance.",
+      "items": {
+        "spa_wellness": "Spa & Wellness",
+        "events_meetings": "Events & Meetings",
+        "restaurant_bar": "Restaurant & Bar",
+        "room_service": "Room Service",
+        "airport_transfer": "Airport Transfer",
+        "concierge": "Concierge 24/7"
+      },
+      "cardBody": "Experienced staff, high service standards, and attention to detail for your comfort."
+    },
+    "premium": {
+      "heading": "Premium Villas",
+      "subheading": "Modern villas with generous space, natural light, and privacy — perfect for couples, families, or groups of friends.",
+      "card": {
+        "title": "Premium Villa {{index}}",
+        "meta": "{{size}} · up to {{guests}} guests",
+        "price": "{{price}}€ / night"
+      }
+    },
+    "vip": {
+      "heading": "VIP Villas",
+      "subheading": "Exclusive, luxurious, and with personalized services — for a unique and memorable experience.",
+      "card": {
+        "title": "VIP Villa {{index}}",
+        "meta": "{{size}} · up to {{guests}} guests",
+        "price": "{{price}}€ / night"
+      }
+    },
+    "gallery": {
+      "heading": "Gallery",
+      "subheading": "Views of our villas, pools, nature, and interiors."
+    },
+    "blog": {
+      "heading": "Latest News",
+      "subheading": "Travel tips, local experiences, and updates from our team — helping you plan your perfect holiday.",
+      "cta": "Visit the Blog",
+      "cta_aria": "Visit the Holiday Villas Blog"
+    }
+  }
+,
+
+  "privacy": {
+    "title": "Privacy & Cookies",
+    "updated": "Updated: 06 October 2025",
+
+    "s1": {
+      "title": "1. Who we are",
+      "body": "\"Holiday Villas\" provides accommodation in Orllan, Lake Batllava. We respect your privacy and process personal data in accordance with GDPR and local laws."
+    },
+
+    "s2": {
+      "title": "2. What data we collect",
+      "li1": "Identification and contact details (first/last name, email, phone).",
+      "li2": "Booking data (dates, number of guests, service preferences).",
+      "li3": "Payment data (processed by payment processor; we do not store cards).",
+      "li4": "Technical data (cookies, IP, browser) for statistics and security."
+    },
+
+    "s3": {
+      "title": "3. How we use it",
+      "li1": "To manage your booking and stay.",
+      "li2": "For communications about confirmation, invoicing, and support.",
+      "li3": "For security, abuse prevention, and service improvement.",
+      "li4": "With your consent: offers and marketing updates (you can unsubscribe anytime)."
+    },
+
+    "s4": {
+      "title": "4. Legal bases",
+      "li1": "Contract performance (booking/accommodation).",
+      "li2": "Legal obligation (invoicing, reporting).",
+      "li3": "Legitimate interest (security, service improvement).",
+      "li4": "Consent (marketing, non-essential cookies)."
+    },
+
+    "s5": {
+      "title": "5. Sharing with third parties",
+      "body": "Sharing occurs only when necessary: payment processor, IT/hosting providers, and booking platforms (e.g., Booking.com) when you book via them. These parties process data under valid processing agreements."
+    },
+
+    "s6": {
+      "title": "6. Cookies",
+      "body": "We use essential cookies for site functionality (e.g., session) and analytics/performance with your consent. You can manage cookies via the consent banner or your browser settings.",
+      "li1": "Essential: booking functionality and security.",
+      "li2": "Analytics: visits and site usage (anonymized when possible).",
+      "li3": "Marketing: only with your consent (e.g., social pixels)."
+    },
+
+    "s7": {
+      "title": "7. Retention & Security",
+      "body": "Data is retained only as long as needed for the above purposes and as required by law. We apply technical and organizational measures to protect confidentiality, integrity, and availability."
+    },
+
+    "s8": {
+      "title": "8. Your rights",
+      "li1": "Access, rectification, erasure (“right to be forgotten”).",
+      "li2": "Restriction or objection to processing.",
+      "li3": "Data portability (where applicable).",
+      "li4": "Withdrawal of consent for marketing/non-essential cookies.",
+      "li5": "Complaint to the competent data protection authority."
+    },
+
+    "s9": {
+      "title": "9. Minors",
+      "body": "Our services are intended for adults. Bookings by minors require the presence and approval of a parent/legal guardian."
+    },
+
+    "s10": {
+      "title": "10. Contact & DPO",
+      "body": "For any personal data request, contact us: holidayvillas.ks (Instagram) or the contact email on the site. We will respond as soon as possible."
+    }
+  }
+,
+
+  "terms": {
+    "title": "Terms & Conditions",
+    "updated": "Updated: 06 October 2025",
+
+    "s1": {
+      "title": "1. Overview",
+      "body": "These Terms govern the use of the “Holiday Villas” website and our accommodation bookings in Orllan, Lake Batllava. By using the site, you agree to these conditions."
+    },
+
+    "s2": {
+      "title": "2. Bookings & Payments",
+      "li1": "A booking is confirmed after completing payment or the deposit.",
+      "li2": "Prices: Premium €200/night, VIP €250/night (base up to 2 persons). Over 2 persons, +€50/person/night (maximum 6 persons).",
+      "li3": "Breakfast included. Optional extras: Lunch +€25/person/night, Dinner +€25/person/night.",
+      "li4": "Payments are processed via our payment partner; bank/transaction fees may apply."
+    },
+
+    "s3": {
+      "title": "3. Cancellations & Changes",
+      "li1": "Cancellations up to 7 days before check-in: full refund of the deposit.",
+      "li2": "Cancellations within 7 days: a fee up to 100% of the first night may apply.",
+      "li3": "Date changes depend on availability and may have price differences."
+    },
+
+    "s4": {
+      "title": "4. Check-in / Check-out",
+      "li1": "Check-in from 14:00 • Check-out until 10:00.",
+      "li2": "Official ID is required at check-in."
+    },
+
+    "s5": {
+      "title": "5. House Rules",
+      "li1": "No smoking indoors; no parties/events without prior approval.",
+      "li2": "Night-time quiet hours and on-site safety instructions must be respected.",
+      "li3": "Damages during the stay are charged according to repair/replacement cost."
+    },
+
+    "s6": {
+      "title": "6. Children, Extras & Pets",
+      "li1": "Maximum capacity: 6 persons per villa (including children).",
+      "li2": "Requests for extra beds or baby equipment must be confirmed in advance.",
+      "li3": "Pets are accepted only with prior approval."
+    },
+
+    "s7": {
+      "title": "7. Force Majeure & Liability",
+      "body": "We are not liable for delays or cancellations caused by circumstances beyond our control (e.g., natural disasters). Our liability is limited to the amount paid for the respective booking, except where the law requires otherwise."
+    },
+
+    "s8": {
+      "title": "8. Intellectual Property",
+      "body": "Trademarks, photos, and content on this site are owned by Holiday Villas or used under license. Reproduction without permission is prohibited."
+    },
+
+    "s9": {
+      "title": "9. Governing Law & Jurisdiction",
+      "body": "These Terms are governed by the laws of the Republic of Kosovo. Any dispute is subject to the competent courts in Kosovo."
+    },
+
+    "s10": {
+      "title": "10. Contact",
+      "body": "Questions about the Terms? Write to us at holidayvillas.ks (Instagram) or the contact email published on the site."
+    }
+  }
 }
+
+
+

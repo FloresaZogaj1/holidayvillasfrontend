@@ -1,5 +1,6 @@
 // src/pages/Home.jsx
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import BookingBar from "../components/BookingBar";
 import PhotoSlider from "../components/PhotoSlider";
 
@@ -20,7 +21,8 @@ import preme from "../assets/3_7.jpg";
 import vipe from "../assets/Artboard 1 copy 3.png";
 
 export default function Home() {
-  // Foto për kartat (mund t’i ndërron kur të duash)
+  const { t } = useTranslation();
+
   const premiumImages = [prem, preme, gallery3];
   const vipImages = [vipe, gallery9, gallery10];
 
@@ -35,20 +37,20 @@ export default function Home() {
           className="absolute inset-0 h-full w-full object-cover"
           fetchpriority="high"
         />
+
         {/* Overlay për kontrast teksti */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f0e]/75 via-[#0b0f0e]/35 to-transparent" />
 
         {/* Content */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 pb-8 md:pb-12">
           <p className="uppercase tracking-[0.18em] text-xs sm:text-sm text-ink/70 text-shadow-sm">
-            Mirësevini
+            {t("home.hero.welcome")}
           </p>
           <h1 className="font-display text-4xl sm:text-5xl md:text-6xl leading-tight text-ink text-shadow">
-            Holiday Villas
+            {t("home.hero.title")}
           </h1>
           <p className="mt-3 max-w-2xl text-ink/85 text-sm sm:text-base text-shadow-sm">
-            Pushime luksoze dhe rehati të përjetshme në zemër të natyrës. Zgjidhni
-            vilën tuaj të preferuar dhe shijoni çdo moment.
+            {t("home.hero.subtitle")}
           </p>
 
           <div className="mt-5 sm:mt-6">
@@ -57,7 +59,7 @@ export default function Home() {
 
           <div className="mt-4">
             <Link to="/rooms" className="btn-ghost">
-              Shiko Villat
+              {t("home.hero.ctaRooms")}
             </Link>
           </div>
         </div>
@@ -67,29 +69,27 @@ export default function Home() {
       <section className="py-10 sm:py-14 md:py-16 bg-ink/5">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-5">
-            Çfarë ofrojmë
+            {t("home.services.heading")}
           </h2>
           <p className="text-ink/70 text-sm sm:text-base max-w-3xl">
-            Shërbime ekskluzive për një përvojë pushimi të plotë dhe pa stres:
-            relaks, gastronomi cilësore, evente të personalizuara dhe asistencë 24/7.
+            {t("home.services.subheading")}
           </p>
 
           <div className="mt-7 sm:mt-8 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {[
-              "Spa & Wellness",
-              "Evente & Mbledhje",
-              "Restorant & Bar",
-              "Shërbim në dhomë",
-              "Transport nga aeroporti",
-              "Kujdestar 24/7",
+              t("home.services.items.spa_wellness"),
+              t("home.services.items.events_meetings"),
+              t("home.services.items.restaurant_bar"),
+              t("home.services.items.room_service"),
+              t("home.services.items.airport_transfer"),
+              t("home.services.items.concierge"),
             ].map((s, i) => (
               <article key={i} className="card p-5 shine-wrap h-full">
                 <h3 className="font-semibold text-base sm:text-lg text-accent mb-1">
                   {s}
                 </h3>
                 <p className="text-xs sm:text-sm text-ink/70">
-                  Staf me përvojë, standard i lartë shërbimi dhe vëmendje ndaj
-                  detajeve për komoditetin tuaj.
+                  {t("home.services.cardBody")}
                 </p>
               </article>
             ))}
@@ -101,11 +101,10 @@ export default function Home() {
       <section className="py-10 sm:py-14 md:py-16 bg-bg text-ink">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-5 md:mb-7">
-            Vilat Premium
+            {t("home.premium.heading")}
           </h2>
           <p className="text-ink/70 text-sm sm:text-base max-w-3xl mb-5 sm:mb-6">
-            Vila moderne me hapësirë, dritë natyrale dhe privatësi — perfekte
-            për çifte, familje ose grupe miqsh.
+            {t("home.premium.subheading")}
           </p>
 
           <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -113,19 +112,19 @@ export default function Home() {
               <article key={i} className="card overflow-hidden shine-wrap flex flex-col">
                 <img
                   src={src}
-                  alt={`Villë Premium ${i + 1}`}
+                  alt={t("home.premium.card.title", { index: i + 1 })}
                   className="w-full object-cover aspect-[4/3] md:aspect-[16/10]"
                   loading="lazy"
                 />
                 <div className="p-4 sm:p-5">
                   <h3 className="text-base sm:text-lg font-semibold mb-1">
-                    Villë Premium {i + 1}
+                    {t("home.premium.card.title", { index: i + 1 })}
                   </h3>
                   <p className="text-xs sm:text-sm text-ink/70 mb-2">
-                    70m² · deri në 5 mysafirë
+                    {t("home.premium.card.meta", { size: "70m²", guests: 5 })}
                   </p>
                   <span className="text-accent font-bold text-sm sm:text-base">
-                    180€ / nata
+                    {t("home.premium.card.price", { price: 180 })}
                   </span>
                 </div>
               </article>
@@ -138,11 +137,10 @@ export default function Home() {
       <section className="py-10 sm:py-14 md:py-16 bg-ink/[0.04]">
         <div className="max-w-7xl mx-auto px-4">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-5 md:mb-7">
-            Vilat VIP
+            {t("home.vip.heading")}
           </h2>
           <p className="text-ink/70 text-sm sm:text-base max-w-3xl mb-5 sm:mb-6">
-            Ekskluzive, luksoze dhe me shërbime të personalizuara — për një
-            përvojë unike dhe memorabile.
+            {t("home.vip.subheading")}
           </p>
 
           <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -150,19 +148,19 @@ export default function Home() {
               <article key={i} className="card overflow-hidden shine-wrap flex flex-col">
                 <img
                   src={src}
-                  alt={`Villë VIP ${i + 1}`}
+                  alt={t("home.vip.card.title", { index: i + 1 })}
                   className="w-full object-cover aspect-[4/3] md:aspect-[16/10]"
                   loading="lazy"
                 />
                 <div className="p-4 sm:p-5">
                   <h3 className="text-base sm:text-lg font-semibold mb-1">
-                    Villë VIP {i + 1}
+                    {t("home.vip.card.title", { index: i + 1 })}
                   </h3>
                   <p className="text-xs sm:text-sm text-ink/70 mb-2">
-                    100m² · deri në 8 mysafirë
+                    {t("home.vip.card.meta", { size: "100m²", guests: 8 })}
                   </p>
                   <span className="text-accent font-bold text-sm sm:text-base">
-                    350€ / nata
+                    {t("home.vip.card.price", { price: 350 })}
                   </span>
                 </div>
               </article>
@@ -175,13 +173,12 @@ export default function Home() {
       <section className="py-10 sm:py-14 md:py-16 bg-bg text-ink">
         <div className="max-w-7xl mx-auto px-4">
           <h3 className="font-display text-xl sm:text-2xl mb-3 sm:mb-4">
-            Galeria
+            {t("home.gallery.heading")}
           </h3>
           <p className="text-ink/70 text-sm sm:text-base mb-5 sm:mb-6">
-            Pamje nga vilat tona, pishinat, natyra dhe ambientet e brendshme.
+            {t("home.gallery.subheading")}
           </p>
 
-          {/* Lartësi responsive për slider (nëse PhotoSlider pranon className/height) */}
           <PhotoSlider
             images={[gallery2, gallery3, gallery4, gallery5, gallery6, gallery7, gallery8, gallery9, gallery10]}
             height="h-[36vh] sm:h-[48vh] md:h-[55vh]"
@@ -194,18 +191,17 @@ export default function Home() {
       <section className="py-10 sm:py-14 md:py-16 bg-ink/[0.04]">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="font-display text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-4">
-            Të rejat e fundit
+            {t("home.blog.heading")}
           </h2>
           <p className="text-ink/70 text-sm sm:text-base max-w-2xl mx-auto mb-5 sm:mb-6">
-            Këshilla udhëtimi, përvoja lokale dhe njoftime nga ekipi ynë – që të
-            planifikoni pushimet në mënyrën më të mirë.
+            {t("home.blog.subheading")}
           </p>
           <Link
             to="/blog"
             className="btn-primary"
-            aria-label="Vizitoni blogun e Holiday Villas"
+            aria-label={t("home.blog.cta_aria")}
           >
-            Vizitoni blogun
+            {t("home.blog.cta")}
           </Link>
         </div>
       </section>
