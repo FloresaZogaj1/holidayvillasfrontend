@@ -1,37 +1,25 @@
+// src/pages/Checkout.jsx
 import { useState } from "react";
+import { postToGate } from "../utils/payment";
 
 export default function Checkout() {
   const [loading, setLoading] = useState(false);
-  const [amount, setAmount] = useState(10);
-  const [bookingId, setBookingId] = useState("BK-12345");
+  const [amount, setAmount] = useState(1.0);
+  const [email, setEmail] = useState("test@demo.com");
 
   async function startPayment() {
     setLoading(true);
     try {
-      const r = await fetch("http://localhost:5000/api/pay/init", {
+      const r = await fetch("https://holidayvillasbackend.onrender.com/api/payments/init", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount, description: "Villa booking", bookingId }),
+        body: JSON.stringify({ amount, email }),
       });
-      const { postUrl, fields, error } = await r.json();
-      if (error) throw new Error(error);
+      const data = await r.json();
+      if (data.error) throw new Error(data.error);
 
-      // Krijo dhe dërgo formën
-      const form = document.createElement("form");
-      form.method = "POST";
-      form.action = postUrl;
-
-      Object.entries(fields).forEach(([k, v]) => {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = k;
-        input.value = String(v);
-        form.appendChild(input);
-      });
-
-      document.body.appendChild(form);
-      form.submit(); // redirects to bank 3D page
-
+      // Backend kthen { gate, fields, oid }
+      postToGate(data.gate, data.fields);
     } catch (e) {
       alert("Nuk u inicua pagesa: " + e.message);
     } finally {
@@ -41,33 +29,38 @@ export default function Checkout() {
 
   return (
     <div className="max-w-md mx-auto p-6">
-      <h1 className="text-2xl font-semibold mb-4">Test Payment (BKT Stage)</h1>
+      <h1 className="text-2xl font-semibold mb-4">Test Payment (BKT)</h1>
+
       <label className="block mb-2">Shuma (€)</label>
       <input
         type="number"
+        step="0.01"
+        min="0.50"
         className="border rounded px-3 py-2 w-full mb-4"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
       />
 
-      <label className="block mb-2">Booking ID</label>
+      <label className="block mb-2">Email</label>
       <input
+        type="email"
         className="border rounded px-3 py-2 w-full mb-4"
-        value={bookingId}
-        onChange={(e) => setBookingId(e.target.value)}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
       />
 
       <button
         onClick={startPayment}
         disabled={loading}
-        className="px-4 py-3 rounded bg-black text-white"
+        className="px-4 py-3 rounded bg-black text-white w-full"
       >
-        {loading ? "Duke inicuar..." : "Paguaj"}
+        {loading ? "Duke inicuar…" : "Paguaj"}
       </button>
 
-      <div className="mt-6 text-sm">
-        Për test: <b>4090700100360047</b>, skadenca <b>12/30</b>, CVV <b>000</b>.
-      </div>
+      <p className="mt-6 text-sm text-gray-600">
+        Pas pagesës do të ridërgoheni te <code>/#/payment/success</code> ose{" "}
+        <code>/#/payment/fail</code>.
+      </p>
     </div>
   );
 }

@@ -1,11 +1,12 @@
+// src/pages/PaymentResult.jsx
 import { useLocation } from "react-router-dom";
 
 export default function PaymentResult() {
   const { pathname, search } = useLocation();
   const ok = pathname.includes("/success");
   const params = new URLSearchParams(search);
-  const oid = params.get("oid");
-  const msg = params.get("msg");
+  const oid = params.get("oid") || "";
+  const msg = params.get("msg") || "";
 
   return (
     <section className="py-16">
@@ -22,7 +23,7 @@ export default function PaymentResult() {
           </>
         )}
         {oid && <p className="mt-3 text-gray-500">Referenca: <b>{oid}</b></p>}
-        {msg && <p className="mt-1 text-gray-500 break-words">Detaj: {msg}</p>}
+        {msg && <p className="mt-1 text-gray-500 break-words">Detaj: {decodeURIComponent(msg)}</p>}
       </div>
     </section>
   );
