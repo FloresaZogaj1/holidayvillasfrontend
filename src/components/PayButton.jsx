@@ -1,47 +1,47 @@
+// components/PayButton.jsx
 import { useState } from "react";
-import { useTranslation } from "react-i18next";
 
-export default function PayButton({ amount, email, meta }) {
-  const { t } = useTranslation();
-  const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:4000";
+export default function PayButton({ amount = 120 }) {
   const [loading, setLoading] = useState(false);
 
-  const start = async () => {
+  const startPayment = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      const r = await fetch(`${API_BASE}/api/payments/init`, {
+      const r = await fetch("https://<backend-domain>/api/payments/init", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount, email, meta }),
+        body: JSON.stringify({ amount }),
       });
-
       const data = await r.json();
-      if (!data?.gate || !data?.fields) throw new Error("Invalid init response");
+      if (!r.ok) throw new Error(data.error || "init failed");
 
-      // Krijo dhe dërgo formën POST te banka
+      const { gate, fields } = data;
+
+      // Krijo formën dhe auto-posto
       const form = document.createElement("form");
       form.method = "POST";
-      form.action = data.gate;
-      Object.entries(data.fields).forEach(([k, v]) => {
+      form.action = gate;
+
+      Object.entries(fields).forEach(([k, v]) => {
         const input = document.createElement("input");
         input.type = "hidden";
         input.name = k;
-        input.value = String(v ?? "");
+        input.value = String(v);
         form.appendChild(input);
       });
+
       document.body.appendChild(form);
       form.submit();
-    } catch (err) {
-      console.error("Payment init error:", err);
-      alert(t("pay.error"));
+    } catch (e) {
+      alert(e.message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <button onClick={start} disabled={loading} className="btn btn-primary">
-      {loading ? t("pay.initializing") : t("pay.button")}
+    <button onClick={startPayment} disabled={loading} className="btn btn-primary">
+      {loading ? "Duke inicializuar…" : `Paguaj €${amount}`}
     </button>
   );
 }
