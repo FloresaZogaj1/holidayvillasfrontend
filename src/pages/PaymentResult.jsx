@@ -1,12 +1,12 @@
 import { useLocation, Link } from "react-router-dom";
 
 const MSG_MAP = {
-  "wrong security code": "Kodi i sigurisë i kartës është i pasaktë.",
-  "do not honour": "Banka e refuzoi transaksionin. Kontakto bankën.",
-  "not sufficient funds": "Fonde të pamjaftueshme në kartë.",
-  "invalid transaction": "Transaksion i pavlefshëm. Provo sërish.",
-  "3d authentication failed": "Verifikimi 3D Secure dështoi.",
-  "transaction not permitted to cardholder": "Transaksioni nuk lejohet për këtë kartë.",
+  "wrong security code": "Kodi i sigurisë i kartës është i pasaktë. Kontrollo CVV/CVC në pjesën e pasme të kartës.",
+  "do not honour": "Banka ka refuzuar transaksionin. Kontakto bankën për më shumë informata.",
+  "not sufficient funds": "Fonde të pamjaftueshme në kartë. Kontrollo bilancin.",
+  "invalid transaction": "Transaksion i pavlefshëm. Kontrollo të dhënat e kartës dhe provo sërish.",
+  "3d authentication failed": "Verifikimi 3D Secure dështoi. Kontrollo kartën ose provo një tjetër.",
+  "transaction not permitted to cardholder": "Karta nuk lejon këtë lloj transaksioni. Kontakto bankën.",
   "timeout": "Koha skadoi gjatë verifikimit. Provo sërish.",
 };
 
@@ -24,7 +24,8 @@ function translateMsg(raw) {
   if (key.includes("3d"))
     return MSG_MAP["3d authentication failed"];
 
-  return "Pagesa u refuzua nga banka. Kontrollo të dhënat dhe provo sërish.";
+  // Për gabime tjera jep mesazh teknik
+  return "Pagesa u refuzua nga banka. Kontrollo të dhënat dhe provo sërish. Nëse problemi vazhdon, kontakto mbështetjen.";
 }
 
 export default function PaymentResult() {
@@ -47,6 +48,16 @@ export default function PaymentResult() {
           <>
             <h1 className="text-3xl font-bold mb-2">❌ Pagesa u refuzua</h1>
             <p className="text-gray-600">{friendly}</p>
+            {msg && (
+              <p className="text-xs text-gray-400 mt-2">
+                <b>Arsyeja teknike:</b> <span className="font-mono">{msg}</span>
+              </p>
+            )}
+            <ul className="mt-4 text-left text-sm text-gray-500 mx-auto max-w-md list-disc list-inside">
+              <li>Kontrollo që informacioni i kartës të jetë i saktë (numri, data, CVV/CVC).</li>
+              <li>Nëse problemi vazhdon, provo një kartë tjetër ose kontakto bankën.</li>
+              <li>Shënim: Gabimi "Wrong security code" ndodh kur CVV/CVC është i gabuar.</li>
+            </ul>
           </>
         )}
 
