@@ -16,7 +16,7 @@ export default function BookingModal({ villa, onClose }) {
   const [guests,    setGuests]    = useState(2);
   const [lunch,     setLunch]     = useState(false);
   const [dinner,    setDinner]    = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+  const [submitting,setSubmitting]= useState(false);
 
   // ====== PRICING LOGIC ======
   const nights = useMemo(() => {
@@ -27,24 +27,24 @@ export default function BookingModal({ villa, onClose }) {
     return Math.max(1, diff);
   }, [from, to]);
 
-  const basePerNight = villa?.category === "VIP" ? 250 : 200;
-  const extraPersons    = Math.max(0, Math.min(6, guests) - 2);
-  const lodgingPerNight = basePerNight + (extraPersons * 50);
-
+  const basePerNight   = villa?.category === "VIP" ? 250 : 200;
+  const extraPersons   = Math.max(0, Math.min(6, guests) - 2);
+  const lodgingPerNight= basePerNight + extraPersons * 50;
   const lunchPerNight  = lunch  ? 25 * guests : 0;
   const dinnerPerNight = dinner ? 25 * guests : 0;
-
-  const totalPerNight = lodgingPerNight + lunchPerNight + dinnerPerNight;
-  const totalPrice    = nights * totalPerNight;
+  const totalPerNight  = lodgingPerNight + lunchPerNight + dinnerPerNight;
+  const totalPrice     = nights * totalPerNight;
+  const totalPriceStr  = Number(totalPrice).toFixed(2);
 
   // ====== SUBMIT ======
   async function handlePay(e) {
     e.preventDefault();
     if (submitting) return;
+
     try {
       if (!firstName.trim() || !lastName.trim()) return alert(t("errName"));
       if (!email.trim()) return alert(t("errEmail"));
-      if (!from || !to)  return alert(t("errDates"));
+      if (!from || !to) return alert(t("errDates"));
       if (guests < 1 || guests > 6) return alert(t("errGuests"));
 
       setSubmitting(true);
@@ -53,39 +53,53 @@ export default function BookingModal({ villa, onClose }) {
         villa: villa?.slug,
         villaName: villa?.name,
         category: villa?.category,
-        from, to, nights, guests,
+        from,
+        to,
+        nights,
+        guests,
         customer: { firstName, lastName, email, phone },
         pricing: {
-          basePerNight, extraPersons, lodgingPerNight,
-          lunch, dinner, lunchPerNight, dinnerPerNight,
-          totalPerNight, totalPrice, breakfastIncluded: true, currency: "EUR",
+          basePerNight,
+          extraPersons,
+          lodgingPerNight,
+          lunch,
+          dinner,
+          lunchPerNight,
+          dinnerPerNight,
+          totalPerNight,
+          totalPrice: totalPriceStr,
+          breakfastIncluded: true,
+          currency: "EUR",
         },
       };
 
+      // Kërko /api/payments/init në backend që llogarit HashAlgorithm=ver3
       const { data } = await http.post("/api/payments/init", {
-        amount: Number(totalPrice).toFixed(2),
+        amount: totalPriceStr, // gjithmonë p.sh. "120.00"
         email,
         meta,
       });
 
-      if (!data?.gate || !data?.fields) throw new Error("Invalid payment response");
+      if (!data?.gate || !data?.fields) {
+        throw new Error("Invalid payment response");
+      }
 
-      // Auto-POST te banka (3D_PAY_HOSTING – banka merr kartën & CVV)
+      // Krijo formën dhe POST te gateway (3D_PAY_HOSTING)
       const form = document.createElement("form");
       form.method = "POST";
       form.action = data.gate;
 
-      Object.entries(data.fields).forEach(([k, v]) => {
-        if (v === undefined || v === null) return;
+      // Mos ndrysho emrat e fushave. Vendos vlerat si tekst.
+      Object.entries(data.fields).forEach(([name, value]) => {
         const input = document.createElement("input");
         input.type = "hidden";
-        input.name = k;
-        input.value = String(v);
+        input.name = name;                       // p.sh. Installment, TranType, HashAlgorithm, etj.
+        input.value = value == null ? "" : String(value);
         form.appendChild(input);
       });
 
       document.body.appendChild(form);
-      form.submit();
+      form.submit(); // do të kalojë në faqen e bankës për kartën/CVV
     } catch (err) {
       console.error("Payment init error:", err);
       alert(t("errPaymentInit"));
@@ -123,7 +137,7 @@ export default function BookingModal({ villa, onClose }) {
 
         {/* Body */}
         <form onSubmit={handlePay} className="p-6 grid lg:grid-cols-5 gap-6">
-          {/* Left: form fields */}
+          {/* Left */}
           <div className="lg:col-span-3 space-y-4">
             {/* Personal */}
             <div className="grid sm:grid-cols-2 gap-3">
@@ -132,7 +146,7 @@ export default function BookingModal({ villa, onClose }) {
                 <input
                   type="text"
                   value={firstName}
-                  onChange={e => setFirstName(e.target.value)}
+                  onChange={(e) => setFirstName(e.target.value)}
                   className="w-full rounded-xl2 border border-line bg-bg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
                   placeholder={t("firstName")}
                   required
@@ -143,7 +157,7 @@ export default function BookingModal({ villa, onClose }) {
                 <input
                   type="text"
                   value={lastName}
-                  onChange={e => setLastName(e.target.value)}
+                  onChange={(e) => setLastName(e.target.value)}
                   className="w-full rounded-xl2 border border-line bg-bg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
                   placeholder={t("lastName")}
                   required
@@ -157,7 +171,7 @@ export default function BookingModal({ villa, onClose }) {
                 <input
                   type="email"
                   value={email}
-                  onChange={e => setEmail(e.target.value)}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full rounded-xl2 border border-line bg-bg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
                   placeholder="email@example.com"
                   required
@@ -168,7 +182,7 @@ export default function BookingModal({ villa, onClose }) {
                 <input
                   type="tel"
                   value={phone}
-                  onChange={e => setPhone(e.target.value)}
+                  onChange={(e) => setPhone(e.target.value)}
                   className="w-full rounded-xl2 border border-line bg-bg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
                   placeholder="+383 xx xxx xxx"
                 />
@@ -182,7 +196,7 @@ export default function BookingModal({ villa, onClose }) {
                 <input
                   type="date"
                   value={from}
-                  onChange={e => setFrom(e.target.value)}
+                  onChange={(e) => setFrom(e.target.value)}
                   className="w-full rounded-xl2 border border-line bg-bg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
                   required
                 />
@@ -192,7 +206,7 @@ export default function BookingModal({ villa, onClose }) {
                 <input
                   type="date"
                   value={to}
-                  onChange={e => setTo(e.target.value)}
+                  onChange={(e) => setTo(e.target.value)}
                   className="w-full rounded-xl2 border border-line bg-bg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
                   required
                 />
@@ -201,11 +215,13 @@ export default function BookingModal({ villa, onClose }) {
                 <label className="block text-xs text-ink/60 mb-1">{t("guests")}</label>
                 <select
                   value={guests}
-                  onChange={e => setGuests(Math.min(6, Math.max(1, +e.target.value)))}
+                  onChange={(e) => setGuests(Math.min(6, Math.max(1, +e.target.value)))}
                   className="w-full rounded-xl2 border border-line bg-bg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent"
                 >
-                  {[1,2,3,4,5,6].map(n => (
-                    <option key={n} value={n}>{n} {t("guests_label", { count: n })}</option>
+                  {[1,2,3,4,5,6].map((n) => (
+                    <option key={n} value={n}>
+                      {n} {t("guests_label", { count: n })}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -214,13 +230,21 @@ export default function BookingModal({ villa, onClose }) {
             {/* Extras */}
             <div className="grid sm:grid-cols-2 gap-3">
               <label className="flex items-center gap-2 rounded-xl2 border border-line bg-card px-3 py-2 cursor-pointer hover-glow">
-                <input type="checkbox" checked={lunch} onChange={e => setLunch(e.target.checked)} />
+                <input
+                  type="checkbox"
+                  checked={lunch}
+                  onChange={(e) => setLunch(e.target.checked)}
+                />
                 <span className="text-ink/90">
                   {t("lunch")} <span className="text-ink/60">{t("perPersonPerNight", { price: 25 })}</span>
                 </span>
               </label>
               <label className="flex items-center gap-2 rounded-xl2 border border-line bg-card px-3 py-2 cursor-pointer hover-glow">
-                <input type="checkbox" checked={dinner} onChange={e => setDinner(e.target.checked)} />
+                <input
+                  type="checkbox"
+                  checked={dinner}
+                  onChange={(e) => setDinner(e.target.checked)}
+                />
                 <span className="text-ink/90">
                   {t("dinner")} <span className="text-ink/60">{t("perPersonPerNight", { price: 25 })}</span>
                 </span>
@@ -267,12 +291,10 @@ export default function BookingModal({ villa, onClose }) {
 
               <div className="mt-3 py-3 px-4 rounded-xl2 bg-bg border border-line flex items-center justify-between">
                 <span className="text-sm text-ink/70">{t("total")}</span>
-                <span className="text-xl font-semibold">{totalPrice}€</span>
+                <span className="text-xl font-semibold">{totalPriceStr}€</span>
               </div>
 
-              <p className="text-xs text-ink/60 mt-2">
-                * {t("footnote")}
-              </p>
+              <p className="text-xs text-ink/60 mt-2">* {t("footnote")}</p>
 
               <div className="mt-4 flex gap-2 justify-end">
                 <button
