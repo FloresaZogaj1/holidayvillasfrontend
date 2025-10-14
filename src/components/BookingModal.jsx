@@ -16,6 +16,7 @@ export default function BookingModal({ villa, onClose }) {
   const [guests,    setGuests]    = useState(2);
   const [lunch,     setLunch]     = useState(false);
   const [dinner,    setDinner]    = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   // ====== PRICING LOGIC ======
   const nights = useMemo(() => {
@@ -39,11 +40,14 @@ export default function BookingModal({ villa, onClose }) {
   // ====== SUBMIT ======
   async function handlePay(e) {
     e.preventDefault();
+    if (submitting) return;
     try {
       if (!firstName.trim() || !lastName.trim()) return alert(t("errName"));
       if (!email.trim()) return alert(t("errEmail"));
       if (!from || !to)  return alert(t("errDates"));
       if (guests < 1 || guests > 6) return alert(t("errGuests"));
+
+      setSubmitting(true);
 
       const meta = {
         villa: villa?.slug,
@@ -59,29 +63,33 @@ export default function BookingModal({ villa, onClose }) {
       };
 
       const { data } = await http.post("/api/payments/init", {
-        amount: totalPrice,
+        amount: Number(totalPrice).toFixed(2),
         email,
         meta,
       });
 
       if (!data?.gate || !data?.fields) throw new Error("Invalid payment response");
 
-      // Auto-POST te banka
+      // Auto-POST te banka (3D_PAY_HOSTING – banka merr kartën & CVV)
       const form = document.createElement("form");
       form.method = "POST";
       form.action = data.gate;
+
       Object.entries(data.fields).forEach(([k, v]) => {
+        if (v === undefined || v === null) return;
         const input = document.createElement("input");
         input.type = "hidden";
         input.name = k;
-        input.value = String(v ?? "");
+        input.value = String(v);
         form.appendChild(input);
       });
+
       document.body.appendChild(form);
       form.submit();
     } catch (err) {
       console.error("Payment init error:", err);
       alert(t("errPaymentInit"));
+      setSubmitting(false);
     }
   }
 
@@ -98,15 +106,14 @@ export default function BookingModal({ villa, onClose }) {
                   {t("reserve")}: <span className="gradient-text">{villa?.name}</span>
                 </h3>
                 <p className="text-ink/60 text-sm mt-1">
-                  {villa?.category} • {t("basePerNight", { price: basePerNight })}
-                  {" • "}
-                  {t("breakfastIncluded")}
+                  {villa?.category} • {t("basePerNight", { price: basePerNight })} • {t("breakfastIncluded")}
                 </p>
               </div>
               <button
                 onClick={onClose}
                 className="btn-ghost px-3 py-1.5 rounded-xl border border-line hover-glow"
                 aria-label={t("close")}
+                type="button"
               >
                 {t("close")}
               </button>
@@ -272,14 +279,16 @@ export default function BookingModal({ villa, onClose }) {
                   type="button"
                   onClick={onClose}
                   className="px-4 py-2 rounded-xl2 border border-line bg-bg hover-glow"
+                  disabled={submitting}
                 >
                   {t("cancel")}
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl2 btn-primary"
+                  className="px-4 py-2 rounded-xl2 btn-primary disabled:opacity-60"
+                  disabled={submitting}
                 >
-                  {t("continueToPayment")}
+                  {submitting ? t("processing") : t("continueToPayment")}
                 </button>
               </div>
             </div>
