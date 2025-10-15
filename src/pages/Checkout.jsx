@@ -3,6 +3,7 @@ import { useState } from "react";
 import { postToGate } from "../utils/payment";
 
 export default function Checkout() {
+  console.log("Checkout component mounted");
   const [loading, setLoading] = useState(false);
   const [amount, setAmount] = useState(1.0);
   const [email, setEmail] = useState("test@demo.com");
@@ -54,7 +55,7 @@ export default function Checkout() {
       />
 
       <button
-        onClick={startPayment}
+        onClick={() => { console.log("Button clicked"); startPayment(); }}
         disabled={loading}
         className="px-4 py-3 rounded bg-black text-white w-full"
       >
