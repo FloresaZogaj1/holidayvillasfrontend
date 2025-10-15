@@ -8,14 +8,18 @@ export default function Checkout() {
   const [email, setEmail] = useState("test@demo.com");
 
   async function startPayment() {
+    console.log("startPayment called");
     setLoading(true);
     try {
+      console.log("fetching...");
       const r = await fetch("https://holidayvillasbackend.onrender.com/api/payments/init", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount, email }),
       });
+      console.log("Response:", r);
       const data = await r.json();
+      console.log("Data:", data);
       if (data.error) throw new Error(data.error);
 
       // Backend kthen { gate, fields, oid }
