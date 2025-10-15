@@ -1,6 +1,7 @@
 // src/pages/Checkout.jsx
 
 
+
 import { useState } from "react";
 
 export default function Checkout() {
@@ -15,7 +16,6 @@ export default function Checkout() {
     e.preventDefault();
     setLoading(true);
     try {
-      // Collect customer info and send to backend
       const r = await fetch("https://holidayvillasbackend.onrender.com/api/payments/init", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,12 +38,6 @@ export default function Checkout() {
         input.value = v == null ? "" : String(v);
         form.appendChild(input);
       });
-      // Add encoding field as required by BKT
-      const encodingInput = document.createElement("input");
-      encodingInput.type = "hidden";
-      encodingInput.name = "encoding";
-      encodingInput.value = "UTF-8";
-      form.appendChild(encodingInput);
       document.body.appendChild(form);
       form.submit();
     } catch (e) {
