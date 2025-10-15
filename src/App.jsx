@@ -40,9 +40,9 @@ export default function App() {
           <Route path="/blog/:id" element={<BlogPost />} />
 
           {/* rezultati i pagesës */}
-          
-<Route path="/payment/success" element={<PaymentResult />} />
-<Route path="/payment/fail" element={<PaymentResult />} />
+ <Route path="/payment/success" element={<PaymentResult />} />
+<Route path="/payment/fail"    element={<PaymentResult />} />
+
         <Route path="/terms" element={<Terms />} />
 <Route path="/privacy" element={<Privacy />} />
 
