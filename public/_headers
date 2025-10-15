@@ -1,0 +1,6 @@
+/*
+  Content-Security-Policy: default-src 'self' https:;
+  Content-Security-Policy: form-action 'self' https://pgw.bkt-ks.com;
+  Content-Security-Policy: frame-ancestors 'self'
+
+  */
