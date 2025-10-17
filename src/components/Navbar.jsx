@@ -2,7 +2,7 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import LangSwitch from "./LangSwitch"; // sigurohu që e ke krijuar
+import LangSwitch from "./LangSwitch";
 import logo from "../assets/Holiday - Colored.png";
 
 const NavItem = ({ to, children }) => (
@@ -23,28 +23,26 @@ const NavItem = ({ to, children }) => (
 export default function Navbar() {
   const { t } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [hotelOpen, setHotelOpen] = useState(false); // desktop + mobile
+  const [hotelOpen, setHotelOpen] = useState(false);
   const [solid, setSolid] = useState(false);
   const location = useLocation();
   const drawerRef = useRef(null);
   const btnRef = useRef(null);
 
-  // Menutë dinamike nga i18n
   const linksLeft = [{ to: "/", label: t("nav.home") }];
   const hotelLinks = [
     { to: "/about", label: t("nav.about") },
     { to: "/services", label: t("nav.services") },
     { to: "/testimonials", label: t("nav.testimonials") },
     { to: "/faq", label: t("nav.faq") },
-    { to: "/accomodation", label: t("nav.accomodation") }
+    { to: "/accomodation", label: t("nav.accomodation") },
   ];
   const linksRight = [
     { to: "/rooms", label: t("nav.villas") },
     { to: "/gallery", label: t("nav.gallery") },
-    { to: "/contact", label: t("nav.contact") }
+    { to: "/contact", label: t("nav.contact") },
   ];
 
-  // Timers për dropdown delay
   const openTimer = useRef(null);
   const closeTimer = useRef(null);
   const clearTimers = () => {
@@ -60,21 +58,18 @@ export default function Navbar() {
     closeTimer.current = setTimeout(() => setHotelOpen(false), ms);
   };
 
-  // Mbyll menut kur ndryshon ruta
   useEffect(() => {
     setMenuOpen(false);
     setHotelOpen(false);
     clearTimers();
   }, [location.pathname]);
 
-  // Lock scroll kur drawer hapet
   useEffect(() => {
     const prev = document.body.style.overflow;
     document.body.style.overflow = menuOpen ? "hidden" : prev || "";
     return () => (document.body.style.overflow = prev || "");
   }, [menuOpen]);
 
-  // Close on Esc / click jashtë (drawer)
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === "Escape") {
@@ -101,7 +96,6 @@ export default function Navbar() {
     };
   }, [menuOpen]);
 
-  // Navbar solid kur scroll > 40
   useEffect(() => {
     const onScroll = () => setSolid(window.scrollY > 40);
     onScroll();
@@ -109,7 +103,7 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const labelBtn = t("nav.resort"); // titulli i dropdown-it
+  const labelBtn = t("nav.resort");
 
   return (
     <header className="fixed top-0 inset-x-0 z-50">
@@ -122,7 +116,7 @@ export default function Navbar() {
               : "border-line/60 bg-[#0f1412]/35 backdrop-blur-md",
           ].join(" ")}
         >
-          {/* Majtas (desktop) */}
+          {/* Left (desktop) */}
           <div className="hidden md:flex items-center gap-8">
             {linksLeft.map((l) => (
               <NavItem key={l.to} to={l.to}>
@@ -130,7 +124,7 @@ export default function Navbar() {
               </NavItem>
             ))}
 
-            {/* Resorti dropdown (desktop): hover + click me delay */}
+            {/* Resort dropdown (desktop) */}
             <div
               className="relative"
               onMouseEnter={() => openWithDelay(120)}
@@ -142,7 +136,7 @@ export default function Navbar() {
                 aria-haspopup="menu"
                 aria-expanded={hotelOpen}
                 aria-controls="desktop-hotel-menu"
-                onClick={() => setHotelOpen((v) => !v)} // click toggle
+                onClick={() => setHotelOpen((v) => !v)}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
@@ -193,7 +187,7 @@ export default function Navbar() {
             </div>
           </div>
 
-          {/* Brand në qendër (desktop) + left (mobile) */}
+          {/* Brand center (desktop) / left (mobile) */}
           <div className="flex items-center md:justify-center justify-between w-full md:w-auto">
             <Link to="/" className="flex items-center gap-2 md:gap-3">
               <img
@@ -229,14 +223,13 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Djathtas (desktop) */}
+          {/* Right (desktop) */}
           <div className="hidden md:flex items-center gap-6">
             {linksRight.map((l) => (
               <NavItem key={l.to} to={l.to}>
                 {l.label}
               </NavItem>
             ))}
-            {/* Lang switch (desktop) */}
             <LangSwitch />
             <Link
               to="/cart"
@@ -250,7 +243,6 @@ export default function Navbar() {
                 <circle cx="18" cy="20" r="1.5" />
               </svg>
             </Link>
-            <Link to="/#book" className="btn-primary">{t("nav.book")}</Link>
           </div>
         </nav>
       </div>
@@ -331,15 +323,8 @@ export default function Navbar() {
                 </Link>
               </div>
 
-              {/* Lang switch (mobile) */}
               <div className="border-t border-line/60 mt-2 pt-3">
                 <LangSwitch />
-              </div>
-
-              <div className="border-t border-line/60 mt-2 pt-3">
-                <Link to="/#book" className="btn-primary w-full inline-flex justify-center" onClick={() => setMenuOpen(false)}>
-                  {t("nav.book")}
-                </Link>
               </div>
             </nav>
           </div>

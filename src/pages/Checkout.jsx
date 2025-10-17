@@ -1,106 +1,117 @@
-// src/pages/Checkout.jsx
+// server.js  (ESM)
+import express from "express";
+import cors from "cors";
+import helmet from "helmet";
+import crypto from "crypto";
+import dotenv from 'dotenv';
+dotenv.config();
 
 
+const app = express();
 
-import { useState } from "react";
+// ---------- ENV ----------
+const FRONT_OK   = process.env.FRONT_OK   || "https://holidayvillasks.com/#/payment/success";
+const FRONT_FAIL = process.env.FRONT_FAIL || "https://holidayvillasks.com/#/payment/fail";
+const BKT_CLIENT_ID = process.env.BKT_CLIENT_ID;
+const BKT_STORE_KEY = process.env.BKT_STORE_KEY;
+const BKT_3D_GATE   = process.env.BKT_3D_GATE || "https://pgw.bkt-ks.com/fim/est3Dgate";
+const BKT_OK_URL    = process.env.BKT_OK_URL;
+const BKT_FAIL_URL  = process.env.BKT_FAIL_URL;
 
-export default function Checkout() {
-  const [loading, setLoading] = useState(false);
-  const [amount, setAmount] = useState(1.00);
-  const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [phone, setPhone] = useState("");
+// ---------- MID ----------
+app.use(helmet({ crossOriginResourcePolicy: false }));
+app.use(express.json());
+// BKT zakonisht POST-on application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: false }));
 
-  async function startPayment(e) {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const r = await fetch("https://holidayvillasbackend.onrender.com/api/payments/init", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ amount, email, meta: { firstName, lastName, phone } }),
-      });
-      const data = await r.json();
-      if (!r.ok || data.error) throw new Error(data.error || "init_failed");
+app.use(
+    cors({
+      origin: (origin, cb) => {
+        const allowedOrigins = [
+          "https://holidayvillasks.com",
+          "https://www.holidayvillasks.com",
+          "https://pgw.bkt-ks.com",
+          "http://localhost:5173"
+        ];
 
-      // Create and submit form to BKT gateway
-      const form = document.createElement("form");
-      form.method = "POST";
-      form.action = data.gate;
-      form.target = "_self";
-      form.acceptCharset = "UTF-8";
-      form.style.display = "none";
-      Object.entries(data.fields).forEach(([k, v]) => {
-        const input = document.createElement("input");
-        input.type = "hidden";
-        input.name = k;
-        input.value = v == null ? "" : String(v);
-        form.appendChild(input);
-      });
-      document.body.appendChild(form);
-      form.submit();
-    } catch (e) {
-      alert("Nuk u inicua pagesa: " + e.message);
-    } finally {
-      setLoading(false);
-    }
-  }
+        if (!origin || allowedOrigins.includes(origin) || origin === "null") {
+          return cb(null, true);
+        }
 
-  return (
-    <form className="max-w-md mx-auto p-6" onSubmit={startPayment}>
-      <h1 className="text-2xl font-semibold mb-4">Rezervo & Paguaj (BKT)</h1>
-      <label className="block mb-2">Emri</label>
-      <input
-        type="text"
-        className="border rounded px-3 py-2 w-full mb-4"
-        value={firstName}
-        onChange={e => setFirstName(e.target.value)}
-        required
-      />
-      <label className="block mb-2">Mbiemri</label>
-      <input
-        type="text"
-        className="border rounded px-3 py-2 w-full mb-4"
-        value={lastName}
-        onChange={e => setLastName(e.target.value)}
-        required
-      />
-      <label className="block mb-2">Email</label>
-      <input
-        type="email"
-        className="border rounded px-3 py-2 w-full mb-4"
-        value={email}
-        onChange={e => setEmail(e.target.value)}
-        required
-      />
-      <label className="block mb-2">Telefoni</label>
-      <input
-        type="tel"
-        className="border rounded px-3 py-2 w-full mb-4"
-        value={phone}
-        onChange={e => setPhone(e.target.value)}
-      />
-      <label className="block mb-2">Shuma (€)</label>
-      <input
-        type="number"
-        step="0.01"
-        min="0.50"
-        className="border rounded px-3 py-2 w-full mb-4"
-        value={amount}
-        onChange={e => setAmount(e.target.value)}
-        required
-      />
-      <button
-        type="submit"
-        disabled={loading}
-        className="px-4 py-3 rounded bg-black text-white w-full"
-      >
-        {loading ? "Duke inicuar…" : "Rezervo & Paguaj"}
-      </button>
-      <p className="mt-6 text-sm text-gray-600">
-        Pas pagesës do të ridërgoheni te <code>/#/payment/success</code> ose <code>/#/payment/fail</code>.
-      </p>
-    </form>
-  );
+        return cb(new Error("CORS " + origin));
+      },
+      methods: ["GET", "POST", "OPTIONS"],
+      allowedHeaders: ["Content-Type"],
+      credentials: false,
+      maxAge: 600,
+    })
+);
+
+app.options("*", cors());
+
+// ---------- HEALTH ----------
+app.get("/health", (_req,res)=>res.status(200).json({ ok:true }));
+
+// ---------- HELPERS ----------
+function hashV3(f){
+  const plain = `${f.clientid}${f.oid}${f.amount}${f.okUrl}${f.failUrl}${f.TranType}${f.Installment}${f.rnd}${BKT_STORE_KEY}`;
+  const sha1 = crypto.createHash("sha1").update(plain,"utf8").digest();
+  return Buffer.from(sha1).toString("base64");
 }
+
+// ---------- PAYMENTS ----------
+const r = express.Router();
+
+r.get("/ping", (_req,res)=>res.json({ up:true }));
+
+r.post("/init", (req,res)=>{
+  if (!BKT_CLIENT_ID || !BKT_STORE_KEY || !BKT_OK_URL || !BKT_FAIL_URL)
+    return res.status(500).json({ error:"Missing BKT env" });
+
+  const amount = String(Number(req.body?.amount ?? 0).toFixed(2));
+  if (amount === "0.00") return res.status(400).json({ error:"Invalid amount" });
+
+  const email = String(req.body?.email ?? "");
+  const fields = {
+    clientid: String(BKT_CLIENT_ID),
+    oid: crypto.randomBytes(10).toString("hex"),
+    amount,
+    okUrl: BKT_OK_URL,
+    failUrl: BKT_FAIL_URL,
+    TranType: "Auth",
+    Installment: "",
+    storetype: "3D_PAY_HOSTING",
+    currency: "978",
+    lang: "en",
+    email,
+    BillToName: "",
+    HashAlgorithm: "ver3",
+    rnd: crypto.randomBytes(16).toString("hex"),
+  };
+  fields.hash = hashV3(fields);
+  res.json({ gate: BKT_3D_GATE, fields });
+});
+
+// Prano GET dhe POST nga gateway
+r.all("/ok", (req, res) => {
+  const p = { ...req.query, ...req.body };
+  const oid = p.oid || p.OrderId || "";
+  const target = `${FRONT_OK}${FRONT_OK.includes("?") ? "&" : "?"}oid=${encodeURIComponent(oid)}`;
+  return res.redirect(302, target);
+});
+
+r.all("/fail", (req, res) => {
+  const p = { ...req.query, ...req.body };
+  const oid = p.oid || p.OrderId || "";
+  const msg = p.msg || p.ErrMsg || p.Response || "Payment failed";
+  const target =
+    `${FRONT_FAIL}${FRONT_FAIL.includes("?") ? "&" : "?"}` +
+    `oid=${encodeURIComponent(oid)}&msg=${encodeURIComponent(msg)}`;
+  return res.redirect(302, target);
+});
+
+app.use("/api/payments", r);
+
+// ---------- START ----------
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, "0.0.0.0", ()=>console.log("API up on", PORT));

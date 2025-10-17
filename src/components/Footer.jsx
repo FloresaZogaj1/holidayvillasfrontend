@@ -41,7 +41,7 @@ export default function Footer() {
           <p className="text-ink/80">{t("footer.location.address")}</p>
           <a
             className="btn-ghost mt-3 inline-flex"
-            href="https://maps.google.com/?q=Batllava%20Lake"
+            href="https://maps.app.goo.gl/r2bKkjnDmZp8eBoW8"
             target="_blank"
             rel="noreferrer"
             aria-label={t("footer.location.mapAria")}

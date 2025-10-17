@@ -9,19 +9,22 @@ export default function Contact() {
             Jemi këtu për t’ju ndihmuar të planifikoni qëndrimin perfekt. Kontaktoni për rezervime, evente ose çdo pyetje tjetër.
           </p>
           <div className="space-y-3">
-            <div><strong>Adresa:</strong> Batllave, Podujevë, Kosovo</div>
+            <div><strong>Adresa:</strong>  Podujevë, Kosovo</div>
             <div><strong>Telefoni:</strong> +383 048 512 512</div>
             <div><strong>Email:</strong> holidayvillas.ks@gmail.com</div>
             <div><strong>Orari:</strong> Recepsion 24/7</div>
           </div>
           <div className="mt-8 aspect-video rounded-2xl overflow-hidden shadow-lux border border-line">
-            <iframe
-              title="Harta"
-              className="w-full h-full"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93762.3171063214!2d21.08706320562922!3d42.744520215310146!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1354a580fdfb4613%3A0x735486830206f337!2s125%2C%20Batllav%C3%AB%2011050!5e0!3m2!1sen!2s!4v1758120491483!5m2!1sen!2s"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+  <iframe
+    title="Harta e Holiday Villas"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d93648.6502464451!2d21.24012155973453!3d42.81962165930613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1354bbacca467253%3A0x97c3dc45d12f998b!2sHoliday%20Villas!5e0!3m2!1sen!2s!4v1760723061539!5m2!1sen!2s"
+    style={{ border: 0 }}
+    loading="lazy"
+    allowFullScreen
+    referrerPolicy="no-referrer-when-downgrade"
+    className="w-full h-full"
+  />
+
           </div>
         </div>
 
