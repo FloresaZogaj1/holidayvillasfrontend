@@ -21,14 +21,8 @@ import siteMapFull from "../assets/Artboard 11 (1).png";
 export default function Home() {
   const { t } = useTranslation();
 
-  const hotspots = [
-    { id: 1, top: "74%", left: "63%", to: "/rooms/premium-1" },
-    { id: 2, top: "56%", left: "60%", to: "/rooms/premium-2" },
-    { id: 3, top: "32%", left: "64%", to: "/rooms/premium-3" },
-    { id: 4, top: "72%", left: "82%", to: "/rooms/vip-1" },
-    { id: 5, top: "50%", left: "84%", to: "/rooms/vip-2" },
-    { id: 6, top: "21%", left: "86%", to: "/rooms/vip-3" },
-  ];
+  // All villa hotspot circles removed as requested
+  const hotspots = [];
 
   return (
     <>
@@ -112,33 +106,7 @@ export default function Home() {
       loading="lazy"
     />
 
-    {/* Hotspot-et klikues me efekt hover */}
-    {hotspots.map((h) => (
-      <Link
-        key={h.id}
-        to={h.to}
-        aria-label={`Vila ${h.id}`}
-        style={{
-          position: "absolute",
-          top: h.top,
-          left: h.left,
-          transform: "translate(-50%, -50%)",
-        }}
-        className="
-          group block w-[3vw] min-w-[30px] aspect-square rounded-full
-          cursor-pointer transition-all duration-300 z-[2]
-        "
-      >
-        <span
-          className="
-            absolute inset-0 rounded-full border-2 border-white/70 opacity-0
-            group-hover:opacity-100 group-hover:scale-125
-            transition-all duration-300
-          "
-        />
-        <span className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/10" />
-      </Link>
-    ))}
+    {/* Hotspot circles removed */}
 
     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0b0f0e]/55 via-[#0b0f0e]/10 to-transparent" />
   </div>

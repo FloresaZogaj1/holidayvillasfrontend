@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 
 import Home from "./pages/Home.jsx";
+import AdminPanel from "./pages/AdminPanel.jsx";
 import Rooms from "./pages/Rooms.jsx";
 import RoomDetails from "./pages/RoomDetails.jsx";
 import Gallery from "./pages/Gallery.jsx";
@@ -24,7 +25,7 @@ export default function App() {
     <Router>
       <Navbar />
       <main className="pt-[96px] md:pt-[120px]">
-        <Routes>
+  <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/rooms" element={<Rooms />} />
           <Route path="/rooms/:slug" element={<RoomDetails />} />
@@ -39,12 +40,16 @@ export default function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogPost />} />
 
-          {/* rezultati i pagesës */}
- <Route path="/payment/success" element={<PaymentResult />} />
-<Route path="/payment/fail"    element={<PaymentResult />} />
 
-        <Route path="/terms" element={<Terms />} />
-<Route path="/privacy" element={<Privacy />} />
+    {/* Admin Panel */}
+    <Route path="/admin" element={<AdminPanel />} />
+
+    {/* rezultati i pagesës */}
+    <Route path="/payment/success" element={<PaymentResult />} />
+    <Route path="/payment/fail"    element={<PaymentResult />} />
+
+    <Route path="/terms" element={<Terms />} />
+    <Route path="/privacy" element={<Privacy />} />
 
           {/* fallback */}
           <Route path="*" element={<Blog title="Faqja nuk u gjet" empty />} />
