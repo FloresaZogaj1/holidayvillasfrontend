@@ -1,8 +1,15 @@
 // src/pages/About.jsx
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import fotoo3 from "../assets/3_3.jpg";
-import fotoo4 from "../assets/515550894.jpg";
+import fotoo3 from "../assets/DJI_20241031160822_0100_D.JPG";
+import fotoo4 from "../assets/aa.png";
+import gallery1 from "../assets/3_6.jpg";
+import gallery2 from "../assets/3_7.jpg";
+import gallery3 from "../assets/3_8.jpg";
+import gallery4 from "../assets/_P4A0282.jpg";
+import gallery5 from "../assets/_P4A0283.jpg";
+import gallery6 from "../assets/_P4A9602.JPG";
+import gallery7 from "../assets/_P4A0280.jpg";
 
 export default function About() {
   const { t } = useTranslation();
@@ -51,13 +58,13 @@ export default function About() {
           className="absolute inset-0 w-full h-full object-cover"
           fetchpriority="high"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0b0f0e]/75 via-[#0b0f0e]/35 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
         <div className="relative z-10 text-center px-4">
-          <p className="text-ink/80 tracking-wide">{t("about.hero.kicker")}</p>
-          <h1 className="text-4xl md:text-6xl font-display text-ink font-semibold">
+          <p className="text-white/90 tracking-wide text-shadow">{t("about.hero.kicker")}</p>
+          <h1 className="text-4xl md:text-6xl font-display text-white font-semibold text-shadow">
             Holiday Villas
           </h1>
-          <p className="mt-3 max-w-2xl mx-auto text-ink/90">
+          <p className="mt-3 max-w-2xl mx-auto text-white/95 text-shadow-sm">
             {t("about.hero.subtitle")}
           </p>
         </div>
@@ -123,14 +130,13 @@ export default function About() {
           </p>
 
           <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 [column-fill:_balance]">
-            {/* 🔎 Këshillë: për performancë, importo fotot si module, jo me 'src/assets/...' absolute path */}
-            <img src="src/assets/3_6.jpg" alt={t("about.gallery.alt1")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
-            <img src="src/assets/3_7.jpg" alt={t("about.gallery.alt2")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
-            <img src="src/assets/3_8.jpg" alt={t("about.gallery.alt3")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
-            <img src="src/assets/_P4A0282.jpg" alt={t("about.gallery.alt4")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
-            <img src="src/assets/_P4A0283.jpg" alt={t("about.gallery.alt5")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
-            <img src="src/assets/_P4A9602.JPG" alt={t("about.gallery.alt6")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
-            <img src="src/assets/_P4A0280.jpg" alt={t("about.gallery.alt7")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
+            <img src={gallery1} alt={t("about.gallery.alt1")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
+            <img src={gallery2} alt={t("about.gallery.alt2")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
+            <img src={gallery3} alt={t("about.gallery.alt3")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
+            <img src={gallery4} alt={t("about.gallery.alt4")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
+            <img src={gallery5} alt={t("about.gallery.alt5")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
+            <img src={gallery6} alt={t("about.gallery.alt6")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
+            <img src={gallery7} alt={t("about.gallery.alt7")} className="mb-4 w-full rounded-xl2 shadow-card object-cover" loading="lazy" />
           </div>
         </div>
       </section>

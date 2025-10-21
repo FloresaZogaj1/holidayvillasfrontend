@@ -6,39 +6,39 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-card text-ink border-t border-line/70">
+    <footer className="bg-card text-ink border-t border-line/70 safe-bottom">
       {/* Top */}
-      <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
         {/* Brand */}
         <div>
-          <div className="text-2xl font-display">Holiday Villas</div>
-          <p className="text-ink/80 mt-2">
+          <div className="text-xl sm:text-2xl font-display">Holiday Villas</div>
+          <p className="text-ink-secondary mt-2 text-sm sm:text-base">
             {t("footer.brand.tagline")}
           </p>
         </div>
 
         {/* Reservations */}
         <div>
-          <h4 className="font-semibold mb-3">{t("footer.reservations.title")}</h4>
-          <address className="not-italic space-y-1">
-            <a href="tel:+38348512512" className="block hover:text-accent" aria-label={t("footer.reservations.phoneAria")}>
+          <h4 className="font-semibold mb-3 text-sm sm:text-base">{t("footer.reservations.title")}</h4>
+          <address className="not-italic space-y-1 text-sm">
+            <a href="tel:+38348512512" className="block hover:text-accent touch-manipulation" aria-label={t("footer.reservations.phoneAria")}>
               (+383) 48 512 512
             </a>
             <a
               href="mailto:holidayvillas@gmail.com"
-              className="block hover:text-accent"
+              className="block hover:text-accent touch-manipulation"
               aria-label={t("footer.reservations.emailAria")}
             >
               holidayvillas@gmail.com
             </a>
           </address>
-          <p className="text-ink/70 text-sm mt-3">{t("footer.reservations.hours")}</p>
+          <p className="text-ink-secondary text-sm mt-3">{t("footer.reservations.hours")}</p>
         </div>
 
         {/* Location */}
         <div>
           <h4 className="font-semibold mb-3">{t("footer.location.title")}</h4>
-          <p className="text-ink/80">{t("footer.location.address")}</p>
+          <p className="text-ink-secondary">{t("footer.location.address")}</p>
           <a
             className="btn-ghost mt-3 inline-flex"
             href="https://maps.app.goo.gl/r2bKkjnDmZp8eBoW8"
@@ -85,7 +85,7 @@ export default function Footer() {
 
       {/* Bottom */}
       <div className="border-t border-line/70">
-        <div className="max-w-7xl mx-auto px-4 py-4 text-sm text-ink/70 flex flex-col md:flex-row items-center justify-between gap-2">
+        <div className="max-w-7xl mx-auto px-4 py-4 text-sm text-ink-secondary flex flex-col md:flex-row items-center justify-between gap-2">
           <span className="text-center md:text-left">
             © {year} Holiday Villas. {t("footer.bottom.rights")}
           </span>

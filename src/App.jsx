@@ -19,12 +19,13 @@ import BlogPost from "./pages/BlogPost.jsx";
 import PaymentResult from "./pages/PaymentResult.jsx";
 import Terms from "./pages/Terms";
 import Privacy from "./pages/Privacy";
+import "./App.css"
 
 export default function App() {
   return (
     <Router>
       <Navbar />
-      <main className="pt-[96px] md:pt-[120px]">
+      <main className="pt-[80px] sm:pt-[96px] md:pt-[120px] safe-top">
   <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/rooms" element={<Rooms />} />

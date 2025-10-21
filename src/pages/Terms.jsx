@@ -10,19 +10,19 @@ export default function Terms() {
         <h1 className="font-display text-3xl md:text-4xl gradient-text mb-2">
           {t("terms.title")}
         </h1>
-        <p className="text-ink/70 mb-8">{t("terms.updated")}</p>
+        <p className="text-ink-secondary mb-8">{t("terms.updated")}</p>
 
         <div className="card lux-border p-6 space-y-6">
           {/* 1 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">{t("terms.s1.title")}</h2>
-            <p className="text-ink/80">{t("terms.s1.body")}</p>
+            <h2 className="font-semibold text-xl mb-2 text-accent">{t("terms.s1.title")}</h2>
+            <p className="text-ink-secondary">{t("terms.s1.body")}</p>
           </div>
 
           {/* 2 */}
           <div>
-            <h2 className="font-semibold text-xl mb-2">{t("terms.s2.title")}</h2>
-            <ul className="list-disc ml-5 text-ink/80 space-y-1">
+            <h2 className="font-semibold text-xl mb-2 text-accent">{t("terms.s2.title")}</h2>
+            <ul className="list-disc ml-5 text-ink-secondary space-y-1">
               <li>{t("terms.s2.li1")}</li>
               <li>{t("terms.s2.li2")}</li>
               <li>{t("terms.s2.li3")}</li>

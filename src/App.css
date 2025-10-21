@@ -2,13 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities{
-  .text-shadow-sm{ text-shadow: 0 1px 2px rgba(0,0,0,.45); }
-  .text-shadow{ text-shadow: 0 2px 8px rgba(0,0,0,.55); }
-  .backdrop-glass{ backdrop-filter: blur(10px) saturate(120%); background: rgba(15,20,18,.35); }
+/* ===========================
+   CUSTOM UTILITIES
+=========================== */
+@layer utilities {
+  .text-shadow-sm { text-shadow: 0 1px 2px rgba(0,0,0,.45); }
+  .text-shadow { text-shadow: 0 2px 8px rgba(0,0,0,.55); }
+  .backdrop-glass {
+    backdrop-filter: blur(10px) saturate(120%);
+    background: rgba(15,20,18,.35);
+  }
 }
 
-/* ===== FONTS (self-hosted) ===== */
+/* ===========================
+   FONTS (SELF-HOSTED)
+=========================== */
 @font-face {
   font-family: "NyghtSerif";
   src: url("/fonts/NyghtSerif-Regular.woff2") format("woff2");
@@ -24,26 +32,34 @@
   font-display: swap;
 }
 
-/* ===== CSS ROOT THEME ===== */
-:root{
-  --bg:#0E1A16; 
-  --ink:#F6F3EC;
-  --card:#1F2A24; 
-  --line:#2B342F;
-  --accent:#E6D2A5; 
-  --accent-2:#7A6230;
-  color-scheme: dark;
+/* ===========================
+   THEME ROOT COLORS
+=========================== */
+:root {
+  --bg:#F4F5F1;         /* Background kryesor */
+  --ink:#0C0F0E;        /* Tekst kryesor */
+  --ink-secondary: rgba(26, 60, 52, 0.8); /* Tekst sekondar */
+  --card:#E5E1DA;       /* Card background */
+  --line:#D6B676;       /* Border color */
+  --accent:#1A3C34;     /* Buton primar background */
+  --accent-2:#B37A4C;   /* Buton primar hover */
+  --accent-light:#D6B676; /* Buton sekondar */
+  color-scheme: light;
 }
 
-/* ===== Base reset + theming ===== */
+/* ===========================
+   BASE STYLES
+=========================== */
 @layer base {
   html, body { @apply bg-bg text-ink antialiased; }
   body { @apply font-sansBrand; }
   h1, h2, h3, .font-display { @apply font-serifLux tracking-tight; }
 
-  ::selection { background: color-mix(in oklab, var(--accent) 60%, transparent); color: #0D0F0E; }
-  
-  /* Scrollbar premium i lehtë */
+  ::selection {
+    background: color-mix(in oklab, var(--accent) 60%, transparent);
+    color: #0D0F0E;
+  }
+
   * {
     scrollbar-width: thin;
     scrollbar-color: var(--accent-2) transparent;
@@ -53,47 +69,103 @@
   *::-webkit-scrollbar-track { background: transparent; }
 }
 
-/* ===== Components (Tailwind-first) ===== */
+/* ===========================
+   COMPONENTS
+=========================== */
 @layer components {
+  /* Primary Button */
   .btn-primary {
-    @apply relative inline-flex items-center justify-center 
-           px-5 py-3 rounded-[14px] font-semibold
-           text-[#0D0F0E] shadow-lux transition-transform duration-200 ease-lux;
-    background: linear-gradient(180deg,var(--accent),var(--accent-2));
+    @apply relative inline-flex items-center justify-center px-5 py-3 rounded-[14px] font-semibold
+           shadow-lux transition-transform duration-200 ease-lux;
+    background: var(--accent);
+    color: #F4F5F1;
   }
-  .btn-primary:hover { @apply -translate-y-0.5; filter: saturate(1.06); }
-  .btn-primary:focus-visible { @apply outline-none ring-2 ring-accent/40; }
 
+  .btn-primary:hover { 
+    @apply -translate-y-0.5; 
+    background: var(--accent-2);
+    filter: saturate(1.06); 
+  }
+
+  /* ✅ FIXED LINE */
+  .btn-primary:focus-visible { @apply outline-none ring-2 ring-accent ring-opacity-40; }
+
+  /* Ghost Button */
   .btn-ghost {
-    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 border border-line text-ink/80 hover:text-ink;
-    background: linear-gradient(180deg, color-mix(in oklab, var(--card) 85%, transparent), var(--card));
+    @apply inline-flex items-center gap-2 rounded-full px-4 py-2 border transition-all duration-200;
+    color: var(--accent);
+    border-color: var(--accent-light);
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    background: var(--accent-light);
+    color: var(--accent);
   }
 
-  .card {
-    @apply rounded-2xl border border-line bg-card shadow-inner-lux;
-  }
 
-  /* Shine overlay (opsionale) */
+  /* Card */
+  .card { @apply rounded-2xl border border-line bg-card shadow-inner-lux; }
+
+  /* Shine Overlay (for hover effects) */
   .shine-wrap { @apply relative overflow-hidden; }
-  .shine-wrap::after{
-    content:"";
+  .shine-wrap::after {
+    content: "";
     @apply pointer-events-none absolute inset-y-0 -left-full w-1/3;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,.12), transparent);
   }
-  .shine-wrap:hover::after{ animation: shine 1.2s ease-in-out; }
+  .shine-wrap:hover::after { animation: shine 1.2s ease-in-out; }
 
-  /* Divider elegant */
+  /* Divider Line */
   .rule { @apply h-px w-full bg-gradient-to-r from-transparent via-line to-transparent; }
 }
 
-/* ===== Utilities ===== */
+/* ===========================
+   EXTRA UTILITIES
+=========================== */
 @layer utilities {
   .lux-border { box-shadow: inset 0 0 0 1px var(--line); }
-  .lux-soft { backdrop-filter: saturate(120%) blur(8px); background: color-mix(in oklab, var(--card) 70%, transparent); }
+  .lux-soft {
+    backdrop-filter: saturate(120%) blur(8px);
+    background: color-mix(in oklab, var(--card) 70%, transparent);
+  }
   .hover-glow:hover { box-shadow: 0 8px 30px rgba(122,98,48,.18); }
+
   .gradient-text {
     background: linear-gradient(180deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text; background-clip: text; color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
   }
+
   .motion-safe-fade-up { @apply motion-safe:animate-fade-up; }
+}
+
+/* ===========================
+   GLOBAL OVERRIDES
+=========================== */
+html, body { background: var(--bg); color: var(--ink); }
+.card { background: var(--card); border: 1px solid var(--line); }
+
+/* Button styles */
+.btn-primary {
+  background: var(--accent);
+  color: #F4F5F1;
+}
+.btn-primary:hover {
+  background: var(--accent-2);
+}
+.gradient-text {
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===========================
+   ANIMATIONS
+=========================== */
+@keyframes shine {
+  0% { transform: translateX(0); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateX(200%); opacity: 0; }
 }

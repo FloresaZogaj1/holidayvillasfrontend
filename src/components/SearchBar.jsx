@@ -13,19 +13,19 @@ export default function SearchBar({ onSearch }) {
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Kërko destinacion ose villë"
-          className="col-span-2 px-4 py-3 rounded-xl border border-line/60 bg-[#0f1412]/60 text-ink placeholder:text-ink/55 focus:outline-none"
+          className="col-span-2 px-4 py-3 rounded-xl border border-line/60 bg-bg/90 text-ink placeholder:text-ink-secondary focus:outline-none"
         />
         <input
           type="date"
           value={from}
           onChange={(e) => setFrom(e.target.value)}
-          className="px-4 py-3 rounded-xl border border-line/60 bg-[#0f1412]/60 text-ink focus:outline-none"
+          className="px-4 py-3 rounded-xl border border-line/60 bg-bg/90 text-ink focus:outline-none"
         />
         <input
           type="date"
           value={to}
           onChange={(e) => setTo(e.target.value)}
-          className="px-4 py-3 rounded-xl border border-line/60 bg-[#0f1412]/60 text-ink focus:outline-none"
+          className="px-4 py-3 rounded-xl border border-line/60 bg-bg/90 text-ink focus:outline-none"
         />
 
         <div className="flex gap-2">
@@ -34,7 +34,7 @@ export default function SearchBar({ onSearch }) {
             min={1}
             value={guests}
             onChange={(e) => setGuests(+e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border border-line/60 bg-[#0f1412]/60 text-ink focus:outline-none"
+            className="w-full px-4 py-3 rounded-xl border border-line/60 bg-bg/90 text-ink focus:outline-none"
           />
           <button
             onClick={() => onSearch?.({ q, from, to, guests })}

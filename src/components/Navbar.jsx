@@ -12,7 +12,7 @@ const NavItem = ({ to, children }) => (
       [
         "px-3 py-2 transition-colors",
         "text-[14px] md:text-[15px] font-normal tracking-[0.01em]",
-        isActive ? "text-ink" : "text-ink/80 hover:text-ink",
+        isActive ? "text-accent" : "text-ink-secondary hover:text-accent",
       ].join(" ")
     }
   >
@@ -106,14 +106,14 @@ export default function Navbar() {
   const labelBtn = t("nav.resort");
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50">
-      <div className="mx-auto max-w-7xl px-4">
+    <header className="fixed top-0 inset-x-0 z-50 safe-top">
+      <div className="mx-auto max-w-7xl px-3 sm:px-4">
         <nav
           className={[
-            "mt-4 flex items-center justify-between rounded-2xl border shadow-lux transition-colors duration-200",
+            "mt-2 sm:mt-4 flex items-center justify-between rounded-xl sm:rounded-2xl border shadow-lux transition-colors duration-200",
             solid
-              ? "border-line/70 bg-card/90 backdrop-blur-md"
-              : "border-line/60 bg-[#0f1412]/35 backdrop-blur-md",
+              ? "border-line/70 bg-card/95 backdrop-blur-md"
+              : "border-line/40 bg-card/80 backdrop-blur-md",
           ].join(" ")}
         >
           {/* Left (desktop) */}
@@ -132,7 +132,7 @@ export default function Navbar() {
             >
               <button
                 type="button"
-                className="px-3 py-2 inline-flex items-center gap-1 text-ink/80 hover:text-ink transition-colors text-[14px] md:text-[15px]"
+                className="px-3 py-2 inline-flex items-center gap-1 text-ink-secondary hover:text-accent transition-colors text-[14px] md:text-[15px]"
                 aria-haspopup="menu"
                 aria-expanded={hotelOpen}
                 aria-controls="desktop-hotel-menu"
@@ -178,7 +178,7 @@ export default function Navbar() {
                     key={h.to}
                     to={h.to}
                     role="menuitem"
-                    className="block px-3 py-2 rounded-lg text-sm text-ink/85 hover:bg-white/5"
+                    className="block px-3 py-2 rounded-lg text-sm text-ink-secondary hover:bg-accent-light/20 hover:text-accent"
                   >
                     {h.label}
                   </Link>
@@ -188,14 +188,14 @@ export default function Navbar() {
           </div>
 
           {/* Brand center (desktop) / left (mobile) */}
-          <div className="flex items-center md:justify-center justify-between w-full md:w-auto">
-            <Link to="/" className="flex items-center gap-2 md:gap-3">
+          <div className="flex items-center md:justify-center justify-between w-full md:w-auto px-2 sm:px-0">
+            <Link to="/" className="flex items-center gap-2 md:gap-3 py-2 sm:py-0">
               <img
                 src={logo}
                 alt="Holiday Villas"
-                className="h-9 w-auto md:h-14 rounded-full ring-1 ring-line/50"
+                className="h-8 w-auto sm:h-9 md:h-14 rounded-full ring-1 ring-line/50"
               />
-              <span className="hidden md:inline-block font-display text-[34px] leading-none text-ink">
+              <span className="hidden sm:inline-block md:inline-block font-display text-lg sm:text-xl md:text-[34px] leading-none text-ink">
                 Holiday Villas
               </span>
             </Link>
@@ -203,7 +203,7 @@ export default function Navbar() {
             {/* Hamburger mobile */}
             <button
               ref={btnRef}
-              className="md:hidden text-ink/85 px-3 py-2 rounded-lg ring-1 ring-line/60 inline-flex items-center gap-2"
+              className="md:hidden text-ink px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg ring-1 ring-line/60 inline-flex items-center gap-1.5 sm:gap-2 text-sm sm:text-base touch-manipulation"
               onClick={() => setMenuOpen((v) => !v)}
               aria-controls="mobile-drawer"
               aria-expanded={menuOpen}
@@ -233,7 +233,7 @@ export default function Navbar() {
             <LangSwitch />
             <Link
               to="/cart"
-              className="inline-flex items-center px-2 py-2 text-ink/80 hover:text-ink"
+              className="inline-flex items-center px-2 py-2 text-ink-secondary hover:text-accent"
               title={t("nav.cart")}
               aria-label={t("nav.cart")}
             >
@@ -248,7 +248,7 @@ export default function Navbar() {
       </div>
 
       {/* Drawer mobile */}
-      <div className={`md:hidden ${menuOpen ? "pointer-events-auto" : "pointer-events-none"}`} aria-hidden={!menuOpen}>
+        <div className={`md:hidden ${menuOpen ? "pointer-events-auto" : "pointer-events-none"}`} aria-hidden={!menuOpen}>
         <div className={`fixed inset-0 bg-black/40 transition-opacity duration-200 ${menuOpen ? "opacity-100" : "opacity-0"} z-40`} />
         <aside
           ref={drawerRef}

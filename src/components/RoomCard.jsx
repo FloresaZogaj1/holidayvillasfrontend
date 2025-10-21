@@ -14,16 +14,16 @@ export default function RoomCard({ room }) {
       />
       <div className="p-5">
         <div className="flex items-center justify-between mb-2">
-          <h3 className="text-lg font-semibold">{room.name}</h3>
+          <h3 className="text-lg font-semibold text-accent">{room.name}</h3>
           <span className="text-accent font-bold">
             {room.price}€{" "}
-            <span className="text-sm font-normal text-ink/70">
+            <span className="text-sm font-normal text-ink-secondary">
               {t("roomCard.perNight")}
             </span>
           </span>
         </div>
 
-        <p className="text-sm text-ink/70 mb-3">
+        <p className="text-sm text-ink-secondary mb-3">
           {room.size}m² · {room.capacity} {t("roomCard.guests")}
         </p>
 

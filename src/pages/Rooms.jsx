@@ -4,19 +4,19 @@ import { VILLAS } from "../data/villas";
 
 export default function Rooms() {
   return (
-    <section className="py-16 bg-bg">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="mb-8">
-          <h1 className="font-display text-3xl md:text-4xl tracking-tight">
+    <section className="py-12 sm:py-16 bg-bg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-4xl tracking-tight">
             <span className="gradient-text">Vilat</span>
           </h1>
-          <p className="text-ink/70 mt-2">
+          <p className="text-ink/70 mt-2 text-sm sm:text-base">
             Zgjidh nga linja <span className="font-semibold text-ink">Premium</span> ose{" "}
             <span className="font-semibold text-ink">VIP</span>.
           </p>
         </div>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {VILLAS.map((v) => (
             <article key={v.slug} className="group card shine-wrap hover-glow lux-border overflow-hidden">
               <div className="relative">
@@ -24,7 +24,7 @@ export default function Rooms() {
                   src={v.cover}
                   alt={v.name}
                   loading="lazy"
-                  className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                  className="w-full h-48 sm:h-56 object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 />
                 <div className="absolute inset-0 lux-soft opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 <span
@@ -42,14 +42,14 @@ export default function Rooms() {
                 </span>
               </div>
 
-              <div className="p-5">
-                <h3 className="text-lg font-semibold text-ink mb-1">{v.name}</h3>
-                <p className="text-sm text-ink/70 mb-1">{v.location}</p>
-                <p className="text-sm text-ink/70">deri në {v.capacity} mysafirë</p>
+              <div className="p-4 sm:p-5">
+                <h3 className="text-base sm:text-lg font-semibold text-ink mb-1">{v.name}</h3>
+                <p className="text-xs sm:text-sm text-ink/70 mb-1">{v.location}</p>
+                <p className="text-xs sm:text-sm text-ink/70">deri në {v.capacity} mysafirë</p>
 
                 {/* Badges nga booking (deri në 3) */}
                 {v.badges?.length ? (
-                  <div className="flex flex-wrap gap-2 mt-3 mb-3">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 sm:mt-3 mb-2 sm:mb-3">
                     {v.badges.slice(0, 3).map((b, i) => (
                       <span key={i} className="px-2 py-1 rounded-full text-xs bg-card/80 border border-line">
                         {b}

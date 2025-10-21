@@ -13,10 +13,10 @@ export default function VillaCard({ villa }) {
         </div>
         <div className="p-4 flex items-center justify-between">
           <div>
-            <h3 className="font-display text-xl">{villa.name}</h3>
-            <p className="text-sm text-ink/70">{villa.location}</p>
+            <h3 className="font-display text-xl text-accent">{villa.name}</h3>
+            <p className="text-sm text-ink-secondary">{villa.location}</p>
           </div>
-          <span className="text-sm px-3 py-1 rounded-full border border-line bg-card/70 text-ink/90">
+          <span className="text-sm px-3 py-1 rounded-full border border-line bg-accent-light/20 text-accent font-medium">
             €{villa.price_per_night} / natë
           </span>
         </div>

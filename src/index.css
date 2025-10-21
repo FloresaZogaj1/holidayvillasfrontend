@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Fonts */
+/* ===========================
+   FONTS
+=========================== */
 @font-face {
   font-family: "NyghtSerif";
   src: url("/fonts/NyghtSerif-Regular.woff2") format("woff2");
@@ -17,16 +19,87 @@
   font-style: normal;
   font-display: swap;
 }
-:root{
-  --bg:#0E1A16; --ink:#F6F3EC;
-  --card:#1F2A24; --line:#2B342F;
-  --accent:#E6D2A5; --accent-2:#7A6230;
+
+/* ===========================
+   THEME COLORS
+=========================== */
+:root {
+  --bg:#095515;          /* sfondi i faqes */
+  --ink:#F6F3EC;         /* teksti kryesor */
+  --card:#1F2A24;        /* kartat/panelët */
+  --line:#2B342F;        /* bordurat */
+  --accent:#d1aa67;      /* krem – ngjyra kryesore */
+  --accent-2:#9a7a3d;    /* krem i errësuar për gradient */
+  color-scheme: dark;
 }
-body{background:var(--bg); color:var(--ink);}
-.btn-primary{
-  background:linear-gradient(180deg,var(--accent),var(--accent-2));
-  color:#0D0F0E; border-radius:14px; font-weight:700;
-  transition:transform .2s ease, box-shadow .2s ease, filter .2s;
+
+/* ===========================
+   BASE
+=========================== */
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Argentum Sans", sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
-.btn-primary:hover{ transform:translateY(-1px); filter:saturate(1.05); }
-.card{ background:var(--card); border:1px solid var(--line); border-radius:16px; }
+
+/* ===========================
+   COMPONENTS
+=========================== */
+.btn-primary {
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  color: #0D0F0E;
+  border-radius: 14px;
+  font-weight: 700;
+  transition: transform .2s ease, box-shadow .2s ease, filter .2s;
+  padding: 0.65rem 1.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  filter: saturate(1.05);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+/* ===========================
+   TEXT GRADIENT OPTION
+=========================== */
+.gradient-text {
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ===========================
+   SCROLLBAR & SELECTION
+=========================== */
+::selection {
+  background: color-mix(in oklab, var(--accent) 60%, transparent);
+  color: #0D0F0E;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-2) transparent;
+}
+*::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--accent-2);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
