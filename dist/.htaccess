@@ -1,9 +1,0 @@
-RewriteEngine On
-RewriteBase /
-RewriteRule ^index\.html$ - [L]
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule . /index.html [L]
-<IfModule mod_headers.c>
-  Header always set Content-Security-Policy "default-src 'self' https:; form-action 'self' https://pgw.bkt-ks.com; frame-ancestors 'self'"
-</IfModule>
