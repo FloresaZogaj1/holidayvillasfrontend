@@ -1,11 +1,16 @@
 // src/pages/Home.jsx
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { useState, useEffect } from "react";
 import BookingBar from "../components/BookingBar";
 import PhotoSlider from "../components/PhotoSlider";
+import { Heart, Users, UtensilsCrossed, BedDouble, Plane, Headset } from "lucide-react";
 
-// Images
-import foto1 from "../assets/DJI_20241121102449_0318_8==D.png";
+// Hero Images for Slider
+import foto1 from "../assets/hero1.webp";
+import hero2 from "../assets/1_2.jpg";
+import hero3 from "../assets/1_3.jpg";
+import hero4 from "../assets/1_4.jpg";
 import gallery2 from "../assets/515550823.jpg";
 import gallery3 from "../assets/5.jpg";
 import gallery4 from "../assets/4.jpg";
@@ -15,43 +20,83 @@ import gallery7 from "../assets/2_7.jpg";
 import gallery8 from "../assets/2_8.jpg";
 import gallery9 from "../assets/2_9.jpg";
 import gallery10 from "../assets/2_10.jpg";
+import set11 from "../assets/hero2.webp";
+import set21 from "../assets/hero3.webp";
+import sets from "../assets/hero4.webp";
 
 import siteMapFull from "../assets/Artboard 11 (1).png"; 
 
 export default function Home() {
   const { t } = useTranslation();
 
+  // Hero slider images
+  const heroImages = [foto1, set11, set21, sets];
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Auto slide effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length);
+    }, 1500); // Changes every 1.5 seconds
+
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
+
   // All villa hotspot circles removed as requested
   const hotspots = [];
 
   return (
     <>
-      {/* HERO */}
-      <section className="relative min-h-[65vh] sm:min-h-[68vh] md:min-h-[82vh] grid place-items-end overflow-hidden bg-bg text-ink">
-        <img
-          src={foto1}
-          alt="Holiday Villas — Hero"
-          className="absolute inset-0 h-full w-full object-cover"
-          fetchPriority="high"
-        />
+      {/* HERO SLIDER */}
+      <section className="relative min-h-[65vh] sm:min-h-[68vh] md:min-h-[82vh] flex items-center justify-center overflow-hidden bg-bg text-ink">
+        {/* Background Images Slider */}
+        {heroImages.map((image, index) => (
+          <div
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              index === currentSlide ? 'opacity-100' : 'opacity-0'
+            }`}
+            style={{
+              backgroundImage: `url(${image})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat'
+            }}
+          />
+        ))}
+        
+        {/* Slide Indicators */}
+        <div className="absolute top-6 right-6 z-[2] flex gap-2">
+          {heroImages.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === currentSlide 
+                  ? 'bg-white w-6' 
+                  : 'bg-white/50 hover:bg-white/75'
+              }`}
+            />
+          ))}
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
 
-        <div className="relative z-[1] w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 md:pb-12">
+        <div className="relative z-[1] w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <p className="uppercase tracking-[0.18em] text-xs sm:text-sm text-white/90 text-shadow-sm">
             {t("home.hero.welcome")}
           </p>
-          <h1 className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-tight text-white text-shadow">
+          <h1 className="font-display text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-tight text-white text-shadow mt-2">
             {t("home.hero.title")}
           </h1>
-          <p className="mt-2 sm:mt-3 max-w-2xl text-white/95 text-xs sm:text-sm md:text-base text-shadow-sm">
+          <p className="mt-3 sm:mt-4 max-w-3xl mx-auto text-white/95 text-xs sm:text-sm md:text-base text-shadow-sm">
             {t("home.hero.subtitle")}
           </p>
 
-          <div className="mt-4 sm:mt-5 md:mt-6">
+          <div className="mt-6 sm:mt-8 md:mt-10 flex justify-center">
             <BookingBar />
           </div>
 
-          <div className="mt-3 sm:mt-4">
+          <div className="mt-4 sm:mt-6 flex justify-center">
             <Link 
               to="/rooms" 
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/95 text-accent font-semibold border-2 border-white/20 shadow-lg backdrop-blur-sm hover:bg-white hover:scale-105 hover:shadow-xl transition-all duration-300 group text-sm sm:text-base"
@@ -82,18 +127,21 @@ export default function Home() {
 
           <div className="mt-7 sm:mt-8 grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
   {[
-    "spa_wellness",
-    "events_meetings",
-    "restaurant_bar",
-    "room_service",
-    "airport_transfer",
-    "concierge",
-  ].map((key) => (
-    <article key={key} className="card p-5 sm:p-6 shine-wrap h-full">
-      <h3 className="font-semibold text-base sm:text-lg text-accent mb-1">
+    { key: "spa_wellness", icon: Heart },
+    { key: "events_meetings", icon: Users },
+    { key: "restaurant_bar", icon: UtensilsCrossed },
+    { key: "room_service", icon: BedDouble },
+    { key: "airport_transfer", icon: Plane },
+    { key: "concierge", icon: Headset },
+  ].map(({ key, icon: Icon }) => (
+    <article key={key} className="card p-5 sm:p-6 shine-wrap h-full bg-gradient-to-br from-accent/5 to-accent/10 text-center group hover-glow">
+      <div className="w-12 h-12 flex items-center justify-center rounded-xl bg-accent text-white shadow-md mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+        <Icon size={22} />
+      </div>
+      <h3 className="font-semibold text-base sm:text-lg text-accent mb-2">
         {t(`home.services.items.${key}`)}
       </h3>
-      <p className="text-ink-secondary text-xs sm:text-sm">
+      <p className="text-ink-secondary text-xs sm:text-sm leading-relaxed">
         {t(`home.services.descriptions.${key}`)}
       </p>
     </article>

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import OptimizedImage from "./OptimizedImage";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation, Keyboard, A11y, EffectFade } from "swiper/modules";
 
@@ -78,12 +79,11 @@ export default function PhotoSlider({
 
         return (
           <SwiperSlide key={i} className="select-none relative">
-            <img
+            <OptimizedImage
               src={item.src}
               alt={alt}
+              priority={i < 2} // Preload first 2 slides
               className="w-full h-full object-cover"
-              loading="lazy"
-              decoding="async"
             />
             {showCaptions && (item.captionKey || item.altKey) && (
               <figcaption className="absolute bottom-2 left-2 right-2 text-xs sm:text-sm px-3 py-2 rounded-lg bg-black/45 text-white backdrop-blur">

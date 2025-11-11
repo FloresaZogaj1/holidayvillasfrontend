@@ -24,13 +24,12 @@ function translateMsg(raw) {
   if (key.includes("3d"))
     return MSG_MAP["3d authentication failed"];
 
-  // Për gabime tjera jep mesazh teknik
   return "Pagesa u refuzua nga banka. Kontrollo të dhënat dhe provo sërish. Nëse problemi vazhdon, kontakto mbështetjen.";
 }
 
 export default function PaymentResult() {
   const { pathname, search } = useLocation();
-  const ok = pathname.includes("/success");
+  const ok = pathname.includes("/payment/success");
   const params = new URLSearchParams(search);
   const oid = params.get("oid");
   const msg = params.get("msg");
@@ -56,7 +55,7 @@ export default function PaymentResult() {
             <ul className="mt-4 text-left text-sm text-gray-500 mx-auto max-w-md list-disc list-inside">
               <li>Kontrollo që informacioni i kartës të jetë i saktë (numri, data, CVV/CVC).</li>
               <li>Nëse problemi vazhdon, provo një kartë tjetër ose kontakto bankën.</li>
-              <li>Shënim: Gabimi "Wrong security code" ndodh kur CVV/CVC është i gabuar.</li>
+              <li>Shënim: “Wrong security code” ndodh kur CVV/CVC është i gabuar.</li>
             </ul>
           </>
         )}
@@ -68,10 +67,7 @@ export default function PaymentResult() {
         )}
 
         <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-block rounded-lg border border-line/60 bg-card px-4 py-2 text-sm hover:bg-card/80"
-          >
+          <Link to="/" className="inline-block rounded-lg border border-line/60 bg-card px-4 py-2 text-sm hover:bg-card/80">
             Kthehu në faqen kryesore
           </Link>
         </div>
@@ -79,3 +75,4 @@ export default function PaymentResult() {
     </section>
   );
 }
+

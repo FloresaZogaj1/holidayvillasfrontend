@@ -12,8 +12,8 @@ i18n
       en: { translation: en },
       sq: { translation: sq },
     },
-    lng: localStorage.getItem("i18nextLng") || "en",
-    fallbackLng: "en",
+    lng: "sq", // Default language to Albanian
+    fallbackLng: "sq",
 
     // ⬇️ këto dy janë kyçe që 'en-US' dhe 'sq-AL' të bien te 'en' / 'sq'
     load: "languageOnly",

@@ -172,6 +172,34 @@
     }
   },
 
+  "contactPage": {
+    "title": "Contact Us",
+    "subtitle": "We're here to help you plan the perfect stay. Contact us for reservations, events, or any other inquiries.",
+    "info": {
+      "title": "Contact information",
+      "address": "Podujevë, Kosovo",
+      "phone": "+383 048 512 512",
+      "email": "holidayvillas.ks@gmail.com",
+      "hours": "Reception 24/7"
+    },
+    "form": {
+      "title": "Send us a message",
+      "subtitle": "Fill out the form and we'll get back to you as soon as possible.",
+      "firstName": "First name",
+      "firstNamePlaceholder": "Enter your first name",
+      "lastName": "Last name",
+      "lastNamePlaceholder": "Enter your last name",
+      "email": "Email address",
+      "emailPlaceholder": "name@example.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "Enter the message subject",
+      "message": "Message",
+      "messagePlaceholder": "Write your message here...",
+      "required": "*",
+      "submit": "Send Message"
+    }
+  },
+
   "accommodation": {
     "title": "Stay at Holiday Villas",
     "subtitle": "Peaceful holidays in the heart of nature by Batllava Lake — luxury, comfort, and warm hospitality.",

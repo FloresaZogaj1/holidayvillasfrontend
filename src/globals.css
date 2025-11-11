@@ -17,6 +17,13 @@
     -webkit-background-clip: text; background-clip: text; color: transparent;
   }
   .motion-safe-fade-up { @apply motion-safe:animate-fade-up; }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* ===========================

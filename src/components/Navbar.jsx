@@ -2,7 +2,6 @@
 import { Link, NavLink, useLocation } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import LangSwitch from "./LangSwitch";
 import logo from "../assets/Holiday - Colored.png";
 
 const NavItem = ({ to, children }) => (
@@ -38,8 +37,9 @@ export default function Navbar() {
     { to: "/accomodation", label: t("nav.accomodation") },
   ];
   const linksRight = [
-    { to: "/rooms", label: t("nav.villas") },
     { to: "/gallery", label: t("nav.gallery") },
+  ];
+  const linksRightAfterResort = [
     { to: "/contact", label: t("nav.contact") },
   ];
 
@@ -103,17 +103,17 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const labelBtn = t("nav.resort");
+  const labelBtn = t("nav.villas");
 
   return (
-    <header className="fixed top-0 inset-x-0 z-50 safe-top">
+    <header className="fixed top-0 inset-x-0 z-[100] safe-top">
       <div className="mx-auto max-w-7xl px-3 sm:px-4">
         <nav
           className={[
-            "mt-2 sm:mt-4 flex items-center justify-between rounded-xl sm:rounded-2xl border shadow-lux transition-colors duration-200",
+            "mt-2 sm:mt-4 flex items-center justify-between rounded-xl sm:rounded-2xl border shadow-xl transition-all duration-300",
             solid
-              ? "border-line/70 bg-card/95 backdrop-blur-md"
-              : "border-line/40 bg-card/80 backdrop-blur-md",
+              ? "border-accent/30 bg-white/95 backdrop-blur-lg shadow-2xl ring-1 ring-accent/20"
+              : "border-white/20 bg-white/90 backdrop-blur-md shadow-lg",
           ].join(" ")}
         >
           {/* Left (desktop) */}
@@ -124,67 +124,10 @@ export default function Navbar() {
               </NavItem>
             ))}
 
-            {/* Resort dropdown (desktop) */}
-            <div
-              className="relative"
-              onMouseEnter={() => openWithDelay(120)}
-              onMouseLeave={() => closeWithDelay(220)}
-            >
-              <button
-                type="button"
-                className="px-3 py-2 inline-flex items-center gap-1 text-ink-secondary hover:text-accent transition-colors text-[14px] md:text-[15px]"
-                aria-haspopup="menu"
-                aria-expanded={hotelOpen}
-                aria-controls="desktop-hotel-menu"
-                onClick={() => setHotelOpen((v) => !v)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setHotelOpen((v) => !v);
-                  }
-                  if (e.key === "Escape") setHotelOpen(false);
-                  if (e.key === "ArrowDown") setHotelOpen(true);
-                }}
-              >
-                {labelBtn}
-                <svg
-                  className={`w-4 h-4 transition-transform ${hotelOpen ? "rotate-180" : ""}`}
-                  viewBox="0 0 20 20"
-                >
-                  <path fill="currentColor" d="M5.5 7.5 10 12l4.5-4.5" />
-                </svg>
-              </button>
-
-              <div
-                id="desktop-hotel-menu"
-                role="menu"
-                tabIndex={-1}
-                className={`absolute left-0 mt-3 min-w-56 rounded-xl2 border border-line/60 bg-card/95 p-2 shadow-lux z-50 ${
-                  hotelOpen ? "block" : "hidden"
-                }`}
-                onMouseEnter={() => {
-                  clearTimers();
-                  setHotelOpen(true);
-                }}
-                onMouseLeave={() => closeWithDelay(220)}
-                onFocus={() => {
-                  clearTimers();
-                  setHotelOpen(true);
-                }}
-                onBlur={() => closeWithDelay(220)}
-              >
-                {hotelLinks.map((h) => (
-                  <Link
-                    key={h.to}
-                    to={h.to}
-                    role="menuitem"
-                    className="block px-3 py-2 rounded-lg text-sm text-ink-secondary hover:bg-accent-light/20 hover:text-accent"
-                  >
-                    {h.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
+            {/* Villat link (desktop) */}
+            <NavItem to="/rooms">
+              {labelBtn}
+            </NavItem>
           </div>
 
           {/* Brand center (desktop) / left (mobile) */}
@@ -230,7 +173,87 @@ export default function Navbar() {
                 {l.label}
               </NavItem>
             ))}
-            <LangSwitch />
+            
+            {/* Resort dropdown (desktop) */}
+            <div
+              className="relative"
+              onMouseEnter={() => openWithDelay(120)}
+              onMouseLeave={() => closeWithDelay(220)}
+            >
+              <button
+                type="button"
+                className={`px-3 py-2 inline-flex items-center gap-1 transition-all duration-200 text-[14px] md:text-[15px] font-normal tracking-[0.01em] ${
+                  hotelOpen 
+                    ? 'text-accent' 
+                    : 'text-ink-secondary hover:text-accent'
+                }`}
+                aria-haspopup="menu"
+                aria-expanded={hotelOpen}
+                aria-controls="desktop-hotel-menu"
+                onClick={() => setHotelOpen((v) => !v)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setHotelOpen((v) => !v);
+                  }
+                  if (e.key === "Escape") setHotelOpen(false);
+                  if (e.key === "ArrowDown") setHotelOpen(true);
+                }}
+              >
+                {t("nav.resort")}
+                <svg
+                  className={`w-4 h-4 transition-transform duration-200 ${hotelOpen ? "rotate-180" : ""}`}
+                  viewBox="0 0 20 20"
+                >
+                  <path fill="currentColor" d="M5.5 7.5 10 12l4.5-4.5" />
+                </svg>
+              </button>
+
+              <div
+                id="desktop-hotel-menu"
+                role="menu"
+                tabIndex={-1}
+                className={`absolute right-0 mt-3 min-w-64 rounded-xl border border-gray-200 bg-white shadow-2xl ring-1 ring-black/5 p-3 z-50 ${
+                  hotelOpen ? "block" : "hidden"
+                }`}
+                style={{
+                  boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)'
+                }}
+                onMouseEnter={() => {
+                  clearTimers();
+                  setHotelOpen(true);
+                }}
+                onMouseLeave={() => closeWithDelay(220)}
+                onFocus={() => {
+                  clearTimers();
+                  setHotelOpen(true);
+                }}
+                onBlur={() => closeWithDelay(220)}
+              >
+                <div className="space-y-1">
+                  {hotelLinks.map((h) => (
+                    <Link
+                      key={h.to}
+                      to={h.to}
+                      role="menuitem"
+                      className="flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:text-accent hover:bg-accent/5 transition-all border border-transparent hover:border-accent/20 hover:shadow-sm group"
+                    >
+                      <span>{h.label}</span>
+                      <svg className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 group-hover:text-accent transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </div>
+            
+            {linksRightAfterResort.map((l) => (
+              <NavItem key={l.to} to={l.to}>
+                {l.label}
+              </NavItem>
+            ))}
+            
             <Link
               to="/cart"
               className="inline-flex items-center px-2 py-2 text-ink-secondary hover:text-accent"
@@ -249,84 +272,116 @@ export default function Navbar() {
 
       {/* Drawer mobile */}
         <div className={`md:hidden ${menuOpen ? "pointer-events-auto" : "pointer-events-none"}`} aria-hidden={!menuOpen}>
-        <div className={`fixed inset-0 bg-black/40 transition-opacity duration-200 ${menuOpen ? "opacity-100" : "opacity-0"} z-40`} />
+        <div className={`fixed inset-0 bg-black/60 transition-opacity duration-300 ${menuOpen ? "opacity-100" : "opacity-0"} z-40`} />
         <aside
           ref={drawerRef}
           id="mobile-drawer"
           role="dialog"
           aria-modal="true"
-          className={`fixed top-0 left-0 h-full w-[86%] xs:w-4/5 max-w-sm bg-card text-ink border-r border-line/70 shadow-xl transform transition-transform duration-200 z-50 ${
+          className={`fixed top-0 left-0 h-full w-[85%] max-w-sm bg-white text-ink shadow-2xl transform transition-transform duration-300 ease-in-out z-50 ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          <div className="px-5 py-4 h-full overflow-y-auto">
-            <div className="flex items-center justify-between">
-              <Link to="/" className="flex items-center gap-2" onClick={() => setMenuOpen(false)}>
-                <img src={logo} alt="Holiday Villas Logo" className="h-9 w-auto rounded-full ring-1 ring-line/50" />
-                <span className="text-lg font-display">Holiday Villas</span>
+          <div className="h-full flex flex-col">
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-100">
+              <Link to="/" className="flex items-center gap-3" onClick={() => setMenuOpen(false)}>
+                <img src={logo} alt="Holiday Villas Logo" className="h-10 w-auto rounded-full shadow-sm" />
+                <span className="text-xl font-display font-semibold text-accent">Holiday Villas</span>
               </Link>
               <button
                 onClick={() => setMenuOpen(false)}
-                className="p-2 rounded-lg ring-1 ring-line/60"
+                className="p-2 rounded-full bg-gray-50 hover:bg-gray-100 transition-colors"
                 aria-label={t("nav.closeMenuAria")}
               >
-                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <svg className="h-5 w-5 text-gray-600" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                   <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
 
-            <nav className="mt-6">
-              <Link to="/" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>
-                {t("nav.home")}
-              </Link>
+            {/* Navigation */}
+            <div className="flex-1 py-6">
+              <nav className="space-y-2">
+                <Link 
+                  to="/" 
+                  className="flex items-center py-3 px-4 text-gray-900 font-medium rounded-lg hover:bg-accent hover:text-white transition-all group" 
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <span>{t("nav.home")}</span>
+                </Link>
+                
+                <Link 
+                  to="/rooms" 
+                  className="flex items-center py-3 px-4 text-gray-900 font-medium rounded-lg hover:bg-accent hover:text-white transition-all group" 
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <span>{t("nav.villas")}</span>
+                </Link>
 
-              <div className="border-t border-line/60">
-                <button
-                  onClick={() => setHotelOpen((v) => !v)}
-                  className="w-full py-3 flex items-center justify-between text-base"
-                  aria-expanded={hotelOpen}
-                  aria-controls="hotel-accordion"
+                <Link 
+                  to="/gallery" 
+                  className="flex items-center py-3 px-4 text-gray-900 font-medium rounded-lg hover:bg-accent hover:text-white transition-all group" 
+                  onClick={() => setMenuOpen(false)}
                 >
-                  <span>{labelBtn}</span>
-                  <svg className={`h-4 w-4 transition-transform ${hotelOpen ? "rotate-180" : ""}`} viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
-                  </svg>
-                </button>
-                <div
-                  id="hotel-accordion"
-                  className={`overflow-hidden transition-[max-height,opacity] duration-200 ${hotelOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
-                >
-                  <div className="pl-3 pb-2 space-y-1">
-                    {hotelLinks.map((h) => (
-                      <Link key={h.to} to={h.to} className="block py-2 hover:text-accent" onClick={() => setMenuOpen(false)}>
-                        {h.label}
-                      </Link>
-                    ))}
+                  <span>{t("nav.gallery")}</span>
+                </Link>
+
+                {/* Resort Dropdown */}
+                <div className="space-y-1">
+                  <button
+                    onClick={() => setHotelOpen((v) => !v)}
+                    className={`w-full flex items-center justify-between py-3 px-4 font-medium rounded-lg transition-all group ${
+                      hotelOpen 
+                        ? 'bg-accent text-white' 
+                        : 'text-gray-900 hover:bg-accent hover:text-white'
+                    }`}
+                    aria-expanded={hotelOpen}
+                    aria-controls="hotel-accordion"
+                  >
+                    <span>{t("nav.resort")}</span>
+                    <svg 
+                      className={`h-5 w-5 transition-transform duration-200 ${hotelOpen ? "rotate-180" : ""}`} 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 9l6 6 6-6" />
+                    </svg>
+                  </button>
+                  
+                  <div
+                    id="hotel-accordion"
+                    className={`overflow-hidden transition-all duration-300 ${hotelOpen ? "max-h-96 opacity-100 mt-2" : "max-h-0 opacity-0"}`}
+                  >
+                    <div className="ml-3 mr-2 space-y-1 bg-gray-50 rounded-lg p-3">
+                      {hotelLinks.map((h) => (
+                        <Link 
+                          key={h.to} 
+                          to={h.to} 
+                          className="flex items-center py-3 px-4 text-sm font-medium text-gray-700 hover:text-accent hover:bg-white rounded-lg transition-all shadow-sm border border-gray-200 hover:border-accent/30 hover:shadow-md" 
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          <span className="flex-1">{h.label}</span>
+                          <svg className="w-4 h-4 text-gray-400 group-hover:text-accent" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                          </svg>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="border-t border-line/60">
-                <Link to="/rooms" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>
-                  {t("nav.villas")}
+                <Link 
+                  to="/contact" 
+                  className="flex items-center py-3 px-4 text-gray-900 font-medium rounded-lg hover:bg-accent hover:text-white transition-all group" 
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <span>{t("nav.contact")}</span>
                 </Link>
-              </div>
-              <div className="border-t border-line/60">
-                <Link to="/gallery" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>
-                  {t("nav.gallery")}
-                </Link>
-              </div>
-              <div className="border-t border-line/60">
-                <Link to="/contact" className="block py-3 text-base hover:text-accent" onClick={() => setMenuOpen(false)}>
-                  {t("nav.contact")}
-                </Link>
-              </div>
-
-              <div className="border-t border-line/60 mt-2 pt-3">
-                <LangSwitch />
-              </div>
-            </nav>
+              </nav>
+            </div>
           </div>
         </aside>
       </div>

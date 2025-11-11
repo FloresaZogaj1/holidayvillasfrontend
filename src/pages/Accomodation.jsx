@@ -32,28 +32,20 @@ export default function Accomodation() {
         </p>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {items.map(({ key, icon: Icon, bg }) => (
+          {items.map(({ key, icon: Icon }) => (
             <article
               key={key}
-              className="relative rounded-2xl overflow-hidden card lux-border hover-glow h-64 flex items-center justify-center"
-              style={{
-                backgroundImage: `url(${bg})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
+              className="card lux-border hover-glow h-64 flex flex-col justify-center items-center text-center bg-gradient-to-br from-accent/5 to-accent/10 group"
             >
-              <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors" />
-              <div className="relative z-10 text-center text-white px-5">
-                <div className="w-14 h-14 flex items-center justify-center rounded-full bg-accent/90 text-[#0D0F0E] mx-auto mb-4 shadow-card">
-                  <Icon size={26} />
-                </div>
-                <h3 className="font-semibold text-lg">
-                  {t(`accommodation.items.${key}.title`)}
-                </h3>
-                <p className="text-sm mt-2 leading-relaxed">
-                  {t(`accommodation.items.${key}.desc`)}
-                </p>
+              <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-accent text-white shadow-lg mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Icon size={28} />
               </div>
+              <h3 className="font-semibold text-lg text-ink mb-3">
+                {t(`accommodation.items.${key}.title`)}
+              </h3>
+              <p className="text-sm text-ink/70 leading-relaxed px-4">
+                {t(`accommodation.items.${key}.desc`)}
+              </p>
             </article>
           ))}
         </div>

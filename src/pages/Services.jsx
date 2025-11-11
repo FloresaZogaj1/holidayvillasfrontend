@@ -10,51 +10,37 @@ import {
   Leaf,
 } from "lucide-react";
 
-// import fotot për sfond (ndrysho me imazhet e tua)
-import spaBg from "../assets/6.jpg";
-import eventsBg from "../assets/3.jpg";
-import restoBg from "../assets/3.jpg";
-import roomBg from "../assets/3.jpg";
-import transportBg from "../assets/3.jpg";
-import conciergeBg from "../assets/3.jpg";
-
 export default function Services() {
   const services = [
     {
       title: "Spa & Wellness",
       desc: "Rifreskoni shqisat me sauna, relaks dhe kujdes premium të trupit.",
       icon: Heart,
-      bg: spaBg,
     },
     {
       title: "Evente & Mbledhje",
       desc: "Ambient elegant për evente private, ditëlindje dhe takime biznesi.",
       icon: Users,
-      bg: eventsBg,
     },
     {
       title: "Restorant & Bar",
       desc: "Kuzhinë e rafinuar dhe kokteje artizanale me pamje mahnitëse.",
       icon: UtensilsCrossed,
-      bg: restoBg,
     },
     {
       title: "Shërbim në Dhoma",
       desc: "Komoditet maksimal me shërbim të shpejtë dhe diskret 24/7.",
       icon: BedDouble,
-      bg: roomBg,
     },
     {
       title: "Transport nga Aeroporti",
       desc: "Transfere të sigurta, të rehatshme dhe në kohë drejt vilave.",
       icon: Plane,
-      bg: transportBg,
     },
     {
       title: "Shërbim Kujdestari",
       desc: "Rezervime, rekomandime, ture — gjithçka që ju nevojitet.",
       icon: Headset,
-      bg: conciergeBg,
     },
   ];
 
@@ -89,33 +75,19 @@ export default function Services() {
               return (
                 <article
                   key={i}
-                  className="group relative overflow-hidden rounded-xl2 card lux-border hover-glow"
+                  className="group relative overflow-hidden rounded-xl2 card lux-border hover-glow bg-gradient-to-br from-accent/5 to-accent/10 min-h-[18rem] flex flex-col justify-center"
                 >
-                  {/* Background image */}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      backgroundImage: `url(${s.bg})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                    }}
-                    aria-hidden="true"
-                  />
-                  {/* Gradient overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent transition-opacity duration-300 group-hover:from-black/70 group-hover:via-black/40" />
                   {/* Content */}
-                  <div className="relative z-10 p-6 h-full flex flex-col justify-end min-h-[18rem]">
-                    <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-accent/90 text-[#0D0F0E] shadow-md mb-4">
-                      <Icon size={26} />
+                  <div className="p-6 text-center">
+                    <div className="w-16 h-16 flex items-center justify-center rounded-2xl bg-accent text-white shadow-lg mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                      <Icon size={28} />
                     </div>
-                    <h3 className="text-white text-xl font-semibold tracking-tight">
+                    <h3 className="text-ink text-xl font-semibold tracking-tight mb-3">
                       {s.title}
                     </h3>
-                    <p className="text-white/90 text-sm mt-1">
+                    <p className="text-ink/70 text-sm leading-relaxed">
                       {s.desc}
                     </p>
-                    {/* subtle lift on hover */}
-                    <div className="mt-4 translate-y-0 group-hover:-translate-y-0.5 transition-transform" />
                   </div>
                 </article>
               );

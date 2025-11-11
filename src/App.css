@@ -169,3 +169,28 @@ html, body { background: var(--bg); color: var(--ink); }
   50% { opacity: 1; }
   100% { transform: translateX(200%); opacity: 0; }
 }
+
+/* ===========================
+   SITE MAP RESPONSIVE BACKGROUNDS
+=========================== */
+.site-map-section {
+  background-position: 60% 38%;
+}
+
+@media (min-width: 640px) {
+  .site-map-section {
+    background-position: 60% 36%;
+  }
+}
+
+@media (min-width: 768px) {
+  .site-map-section {
+    background-position: 58% 40%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-map-section {
+    background-position: 56% 45%;
+  }
+}
