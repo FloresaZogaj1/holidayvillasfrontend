@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
+        target: 'https://holidayvillasbackend.onrender.com',
         changeOrigin: true
       }
     }
@@ -24,4 +24,5 @@ export default defineConfig({
     }
   }
 })
+
 

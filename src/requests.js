@@ -5,7 +5,7 @@ const baseURL =
   import.meta.env.VITE_API_BASE ??
   (import.meta.env.PROD
     ? "https://holidayvillasbackend.onrender.com"
-    : "http://localhost:4000");
+    : "https://holidayvillasbackend.onrender.com");
 
 const http = axios.create({
   baseURL,
