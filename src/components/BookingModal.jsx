@@ -11,8 +11,6 @@ export default function BookingModal({ villa, onClose }) {
   const [from,      setFrom]      = useState("");
   const [to,        setTo]        = useState("");
   const [guests,    setGuests]    = useState(2);
-  const [lunch,     setLunch]     = useState(false);
-  const [dinner,    setDinner]    = useState(false);
   const [submitting,setSubmitting]= useState(false);
 
   const nights = useMemo(() => {
@@ -26,9 +24,7 @@ export default function BookingModal({ villa, onClose }) {
   const basePerNight    = villa?.category === "VIP" ? 250 : 200;
   const extraPersons    = Math.max(0, Math.min(6, guests) - 2);
   const lodgingPerNight = basePerNight + extraPersons * 50;
-  const lunchPerNight   = lunch  ? 25 * guests : 0;
-  const dinnerPerNight  = dinner ? 25 * guests : 0;
-  const totalPerNight   = lodgingPerNight + lunchPerNight + dinnerPerNight;
+  const totalPerNight   = lodgingPerNight;
   const totalPrice      = nights * totalPerNight;
   const totalPriceStr   = Number(totalPrice).toFixed(2);
 
@@ -57,10 +53,6 @@ export default function BookingModal({ villa, onClose }) {
           basePerNight,
           extraPersons,
           lodgingPerNight,
-          lunch,
-          dinner,
-          lunchPerNight,
-          dinnerPerNight,
           totalPerNight,
           totalPrice: totalPriceStr,
           breakfastIncluded: true,
@@ -197,20 +189,7 @@ export default function BookingModal({ villa, onClose }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <label className="flex items-center gap-2 rounded-xl2 border border-line bg-card px-3 py-2 cursor-pointer hover-glow">
-                <input type="checkbox" checked={lunch} onChange={(e)=>setLunch(e.target.checked)} />
-                <span className="text-ink/90 text-sm">
-                  {t("lunch")} <span className="text-ink/60">{t("perPersonPerNight",{price:25})}</span>
-                </span>
-              </label>
-              <label className="flex items-center gap-2 rounded-xl2 border border-line bg-card px-3 py-2 cursor-pointer hover-glow">
-                <input type="checkbox" checked={dinner} onChange={(e)=>setDinner(e.target.checked)} />
-                <span className="text-ink/90 text-sm">
-                  {t("dinner")} <span className="text-ink/60">{t("perPersonPerNight",{price:25})}</span>
-                </span>
-              </label>
-            </div>
+            {/* lunch/dinner options removed per request */}
           </div>
 
           {/* Kolona e djathtë */}
@@ -226,14 +205,7 @@ export default function BookingModal({ villa, onClose }) {
                   <span>{t("extraPersons")} {extraPersons>0 ? `(+${extraPersons})` : ""}</span>
                   <span>{extraPersons>0 ? `+${extraPersons*50}€` : "—"}</span>
                 </li>
-                <li className="flex justify-between gap-2">
-                  <span>{t("lunch")}</span>
-                  <span>{lunch ? `${guests}×25€ = +${lunchPerNight}€` : "—"}</span>
-                </li>
-                <li className="flex justify-between gap-2">
-                  <span>{t("dinner")}</span>
-                  <span>{dinner ? `${guests}×25€ = +${dinnerPerNight}€` : "—"}</span>
-                </li>
+                {/* Lunch and Dinner lines removed */}
                 <li className="border-t border-line pt-2 flex justify-between gap-2">
                   <span>{t("totalPerNight")}</span>
                   <span className="font-semibold">{totalPerNight}€</span>
