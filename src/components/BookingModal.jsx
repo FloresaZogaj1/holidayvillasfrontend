@@ -12,6 +12,7 @@ export default function BookingModal({ villa, onClose }) {
   const [to,        setTo]        = useState("");
   const [guests,    setGuests]    = useState(2);
   const [submitting,setSubmitting]= useState(false);
+  const [serverMessage, setServerMessage] = useState(null);
 
   const nights = useMemo(() => {
     if (!from || !to) return 1;
@@ -37,8 +38,11 @@ export default function BookingModal({ villa, onClose }) {
       try {
         const avail = await http.get('/api/bookings/available');
         if (avail?.data && avail.data.ok === false) {
-          alert(avail.data.error || 'Rezervimet janë të mbyllura.');
+          // show persistent message in modal instead of alert/redirect
+          setServerMessage(avail.data.error + " Per rezervim kontaktoni numrin 048 512 512");
           return;
+        } else {
+          setServerMessage(null);
         }
       } catch (checkErr) {
         // If check fails, continue to attempt payment (fallback)
@@ -248,11 +252,16 @@ export default function BookingModal({ villa, onClose }) {
                 <button
                   type="submit"
                   className="w-full sm:w-auto px-4 py-2 rounded-xl2 btn-primary disabled:opacity-60"
-                  disabled={submitting}
+                  disabled={submitting || !!serverMessage}
                 >
-                  {submitting ? t("processing") : t("continueToPayment")}
+                  {submitting ? t("processing") : (serverMessage ? "Mbyllur" : t("continueToPayment"))}
                 </button>
               </div>
+              {serverMessage && (
+                <div className="mt-3 p-3 rounded-md bg-yellow-100 border border-yellow-300 text-ink text-sm">
+                  {serverMessage}
+                </div>
+              )}
             </div>
           </div>
         </form>
