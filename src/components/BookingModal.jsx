@@ -33,6 +33,18 @@ export default function BookingModal({ villa, onClose }) {
     if (submitting) return;
 
     try {
+      // Check server-side availability before initiating payment
+      try {
+        const avail = await http.get('/api/bookings/available');
+        if (avail?.data && avail.data.ok === false) {
+          alert(avail.data.error || 'Rezervimet janë të mbyllura.');
+          return;
+        }
+      } catch (checkErr) {
+        // If check fails, continue to attempt payment (fallback)
+        console.warn('Availability check failed, continuing...', checkErr?.message || checkErr);
+      }
+
       if (!firstName.trim() || !lastName.trim()) return alert(t("errName"));
       if (!email.trim()) return alert(t("errEmail"));
       if (!from || !to) return alert(t("errDates"));
@@ -87,7 +99,9 @@ export default function BookingModal({ villa, onClose }) {
       form.submit();
     } catch (err) {
       console.error(err);
-      alert(t("errPaymentInit"));
+      // If server returned a specific error message, show it to the user
+      const serverMsg = err?.response?.data?.error || err?.response?.data?.message || err?.message;
+      alert(serverMsg || t("errPaymentInit"));
       setSubmitting(false);
     }
   }
