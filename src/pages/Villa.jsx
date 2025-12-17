@@ -141,6 +141,12 @@ export default function Villa() {
 
             <button
               onClick={async () => {
+                // client-side fallback block until 2026-01-05
+                const localBlockUntil = new Date("2026-01-05T00:00:00.000Z");
+                if (new Date() < localBlockUntil) {
+                  setServerMessage("Rezervimet janë të mbyllura deri me daten 5 Janar 2026. Per rezervim kontaktoni numrin 048 512 512");
+                  return;
+                }
                 try {
                   const resp = await http.get('/api/bookings/available');
                   if (resp?.data && resp.data.ok === false) {

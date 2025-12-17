@@ -33,6 +33,13 @@ export default function BookingModal({ villa, onClose }) {
     e.preventDefault();
     if (submitting) return;
 
+    // Client-side temporary block (fallback) until 2026-01-05
+    const localBlockUntil = new Date("2026-01-05T00:00:00.000Z");
+    if (new Date() < localBlockUntil) {
+      setServerMessage("Rezervimet janë të mbyllura deri me daten 5 Janar 2026. Per rezervim kontaktoni numrin 048 512 512");
+      return;
+    }
+
     try {
       // Check server-side availability before initiating payment
       try {
