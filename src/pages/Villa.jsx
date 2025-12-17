@@ -2,12 +2,14 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import BookingModal from "../components/BookingModal";
+import http from "../requests";
 import { VILLAS } from "../data/villas";
 
 export default function Villa() {
   const { slug } = useParams();
   const villa = VILLAS?.find((v) => v.slug === slug);
   const [show, setShow] = useState(false);
+  const [serverMessage, setServerMessage] = useState(null);
 
   // Shko lart kur ndryshon vila
   useEffect(() => {
@@ -137,9 +139,31 @@ export default function Villa() {
               <p className="text-sm text-ink/70 mt-1">deri në {capacity} mysafirë</p>
             )}
 
-            <button onClick={() => setShow(true)} className="btn-primary w-full mt-4">
+            <button
+              onClick={async () => {
+                try {
+                  const resp = await http.get('/api/bookings/available');
+                  if (resp?.data && resp.data.ok === false) {
+                    setServerMessage(resp.data.error + ' Per rezervim kontaktoni numrin 048 512 512');
+                    return;
+                  }
+                } catch (err) {
+                  // if check fails, fallback to opening modal
+                  console.warn('Availability check failed:', err?.message || err);
+                }
+                setServerMessage(null);
+                setShow(true);
+              }}
+              className="btn-primary w-full mt-4"
+            >
               Rezervo / Paguaj
             </button>
+
+            {serverMessage && (
+              <div className="mt-3 p-3 rounded-md bg-yellow-100 border border-yellow-300 text-ink text-sm">
+                {serverMessage}
+              </div>
+            )}
 
             <p className="text-xs text-ink/70 mt-3">
               S’ka tarifë të menjëhershme — konfirmimi vjen pas përfundimit të pagesës.
