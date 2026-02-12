@@ -11,8 +11,8 @@ export default function BookingModal({ villa, onClose }) {
   const [from,      setFrom]      = useState("");
   const [to,        setTo]        = useState("");
   const [guests,    setGuests]    = useState(2);
+  const [mealAddOn,  setMealAddOn]  = useState("lunch");
   const [submitting,setSubmitting]= useState(false);
-  const [serverMessage, setServerMessage] = useState(null);
 
   const nights = useMemo(() => {
     if (!from || !to) return 1;
@@ -25,7 +25,9 @@ export default function BookingModal({ villa, onClose }) {
   const basePerNight    = villa?.category === "VIP" ? 250 : 200;
   const extraPersons    = Math.max(0, Math.min(6, guests) - 2);
   const lodgingPerNight = basePerNight + extraPersons * 50;
-  const totalPerNight   = lodgingPerNight;
+  const mealPerPerson = 50;
+  const mealPerNight = mealPerPerson * Math.max(1, Number(guests) || 1);
+  const totalPerNight   = lodgingPerNight + mealPerNight;
   const totalPrice      = nights * totalPerNight;
   const totalPriceStr   = Number(totalPrice).toFixed(2);
 
@@ -33,28 +35,10 @@ export default function BookingModal({ villa, onClose }) {
     e.preventDefault();
     if (submitting) return;
 
-    // Client-side temporary block (fallback) until 2026-01-05
-    const localBlockUntil = new Date("2026-01-05T00:00:00.000Z");
-    if (new Date() < localBlockUntil) {
-      setServerMessage("Rezervimet janë të mbyllura deri me daten 5 Janar 2026. Per rezervim kontaktoni numrin 048 512 512");
-      return;
-    }
+    // proceed normally
 
     try {
-      // Check server-side availability before initiating payment
-      try {
-        const avail = await http.get('/api/bookings/available');
-        if (avail?.data && avail.data.ok === false) {
-          // show persistent message in modal instead of alert/redirect
-          setServerMessage(avail.data.error + " Per rezervim kontaktoni numrin 048 512 512");
-          return;
-        } else {
-          setServerMessage(null);
-        }
-      } catch (checkErr) {
-        // If check fails, continue to attempt payment (fallback)
-        console.warn('Availability check failed, continuing...', checkErr?.message || checkErr);
-      }
+      // proceed normally
 
       if (!firstName.trim() || !lastName.trim()) return alert(t("errName"));
       if (!email.trim()) return alert(t("errEmail"));
@@ -71,14 +55,19 @@ export default function BookingModal({ villa, onClose }) {
         to,
         nights,
         guests,
+        addons: {
+          meal: mealAddOn,
+          mealPerPerson,
+          mealPerNight,
+        },
         customer: { firstName, lastName, email, phone },
         pricing: {
           basePerNight,
           extraPersons,
           lodgingPerNight,
+          mealPerNight,
           totalPerNight,
           totalPrice: totalPriceStr,
-          breakfastIncluded: true,
           currency: "EUR",
         },
       };
@@ -128,7 +117,7 @@ export default function BookingModal({ villa, onClose }) {
                   {t("reserve")}: <span className="gradient-text">{villa?.name}</span>
                 </h3>
                 <p className="text-ink/60 text-xs sm:text-sm mt-1">
-                  {villa?.category} • {t("basePerNight", { price: basePerNight })} • {t("breakfastIncluded")}
+                  {villa?.category} • {t("basePerNight", { price: basePerNight })}
                 </p>
               </div>
               <button
@@ -214,7 +203,19 @@ export default function BookingModal({ villa, onClose }) {
               </div>
             </div>
 
-            {/* lunch/dinner options removed per request */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-[11px] sm:text-xs text-ink/60 mb-1">Shtesa (ushqim)</label>
+                <select
+                  value={mealAddOn}
+                  onChange={(e) => setMealAddOn(e.target.value)}
+                  className="w-full rounded-xl2 border border-line bg-bg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent text-sm"
+                >
+                  <option value="lunch">Dreka (+50€ / person)</option>
+                  <option value="dinner">Darka (+50€ / person)</option>
+                </select>
+              </div>
+            </div>
           </div>
 
           {/* Kolona e djathtë */}
@@ -230,7 +231,12 @@ export default function BookingModal({ villa, onClose }) {
                   <span>{t("extraPersons")} {extraPersons>0 ? `(+${extraPersons})` : ""}</span>
                   <span>{extraPersons>0 ? `+${extraPersons*50}€` : "—"}</span>
                 </li>
-                {/* Lunch and Dinner lines removed */}
+                <li className="flex justify-between gap-2">
+                  <span>
+                    {mealAddOn === "lunch" ? `Dreka (+${guests}×50€)` : `Darka (+${guests}×50€)`}
+                  </span>
+                  <span>{`+${mealPerNight}€`}</span>
+                </li>
                 <li className="border-t border-line pt-2 flex justify-between gap-2">
                   <span>{t("totalPerNight")}</span>
                   <span className="font-semibold">{totalPerNight}€</span>
@@ -259,16 +265,11 @@ export default function BookingModal({ villa, onClose }) {
                 <button
                   type="submit"
                   className="w-full sm:w-auto px-4 py-2 rounded-xl2 btn-primary disabled:opacity-60"
-                  disabled={submitting || !!serverMessage}
+                  disabled={submitting}
                 >
-                  {submitting ? t("processing") : (serverMessage ? "Mbyllur" : t("continueToPayment"))}
+                  {submitting ? t("processing") : t("continueToPayment")}
                 </button>
               </div>
-              {serverMessage && (
-                <div className="mt-3 p-3 rounded-md bg-yellow-100 border border-yellow-300 text-ink text-sm">
-                  {serverMessage}
-                </div>
-              )}
             </div>
           </div>
         </form>

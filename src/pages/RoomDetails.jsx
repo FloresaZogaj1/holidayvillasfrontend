@@ -8,7 +8,6 @@ export default function RoomDetails() {
   const { slug } = useParams();
   const villa = VILLAS_BY_SLUG[slug];
   const [show, setShow] = useState(false);
-  const [serverMessage, setServerMessage] = useState(null);
 
   if (!villa) {
     return (
@@ -166,36 +165,9 @@ export default function RoomDetails() {
             </p>
 
             <a id="book" className="sr-only" aria-hidden="true" />
-            <button
-              onClick={async () => {
-                // client-side fallback block until 2026-01-05
-                const localBlockUntil = new Date("2026-01-05T00:00:00.000Z");
-                if (new Date() < localBlockUntil) {
-                  setServerMessage("Rezervimet janë të mbyllura deri me daten 5 Janar 2026. Per rezervim kontaktoni numrin 048 512 512");
-                  return;
-                }
-                try {
-                  const resp = await http.get('/api/bookings/available');
-                  if (resp?.data && resp.data.ok === false) {
-                    setServerMessage(resp.data.error + ' Per rezervim kontaktoni numrin 048 512 512');
-                    return;
-                  }
-                } catch (err) {
-                  console.warn('Availability check failed:', err?.message || err);
-                }
-                setServerMessage(null);
-                setShow(true);
-              }}
-              className="w-full btn-primary mb-6"
-            >
+            <button onClick={() => setShow(true)} className="w-full btn-primary mb-6">
               Rezervo / Paguaj
             </button>
-
-            {serverMessage && (
-              <div className="mt-3 p-3 rounded-md bg-yellow-100 border border-yellow-300 text-ink text-sm">
-                {serverMessage}
-              </div>
-            )}
 
             <div className="rule mb-4" />
             <h4 className="font-semibold mb-3">Vila të tjera</h4>

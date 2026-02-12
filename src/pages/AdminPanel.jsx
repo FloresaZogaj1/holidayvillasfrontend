@@ -10,14 +10,14 @@ export default function AdminPanel() {
   const [error, setError] = useState("");
   const [token, setToken] = useState("");
   const [activeTab, setActiveTab] = useState("dashboard");
-
-Effect(() => {
-  const savedToken = localStorage.getItem("admin_token");
-  if (savedToken) {
-    setToken(savedToken);
-    setStep("panel");
-  }
-}, []);
+  // Run on mount: restore admin token if present
+  useEffect(() => {
+    const savedToken = localStorage.getItem("admin_token");
+    if (savedToken) {
+      setToken(savedToken);
+      setStep("panel");
+    }
+  }, []);
   // Dashboard data states
   const [stats, setStats] = useState({
     totalVillas: 0,
@@ -74,11 +74,17 @@ Effect(() => {
     }
   }, [step, activeTab]);
 
-  async function loadBookings() {
+  // loadBookings optionally accepts a params object: { from, to, status, villa, q }
+  async function loadBookings(params = {}) {
     setBookingLoading(true);
     try {
+      const qs = new URLSearchParams();
+      Object.entries(params || {}).forEach(([k, v]) => {
+        if (v || v === 0) qs.append(k, v);
+      });
+
       const [bookingsRes, statsRes] = await Promise.all([
-        http.get("/api/admin/bookings"),
+        http.get(`/api/admin/bookings${qs.toString() ? '?' + qs.toString() : ''}`),
         http.get("/api/admin/bookings/stats")
       ]);
       setBookings(bookingsRes.data);
@@ -142,17 +148,17 @@ Effect(() => {
         users: usersRes.data 
       });
       
-      const bookings = bookingsRes.data || [];
-      const revenue = bookings.reduce((sum, booking) => sum + (booking.total || 0), 0);
+  const bookingsList = bookingsRes.data || [];
+  const revenue = bookingsList.reduce((sum, booking) => sum + Number(booking.amount || 0), 0);
       
       setStats({
         totalVillas: villasRes.data.length,
-        totalBookings: bookings.length,
+        totalBookings: bookingsList.length,
         totalUsers: usersRes.data.length,
         revenue: revenue
       });
-      
-      setRecentBookings(bookings.slice(-5));
+
+      setRecentBookings(bookingsList.slice(-5));
     } catch (err) {
       console.error("Error loading dashboard data:", err);
     }
@@ -275,10 +281,10 @@ Effect(() => {
                   {recentBookings.map((booking) => (
                     <tr key={booking.id}>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">#{booking.id}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.guestEmail}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.villaId}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.checkin ? new Date(booking.checkin).toLocaleDateString() : 'N/A'}</td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">€{booking.total || 0}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.email}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.villa?.name || booking.villaSlug}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{booking.checkIn ? new Date(booking.checkIn).toLocaleDateString() : 'N/A'}</td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">€{booking.amount || 0}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -304,12 +310,66 @@ Effect(() => {
 
   // Booking Management Component
   function BookingManagement() {
+    const [selectedIds, setSelectedIds] = useState([]);
+    const [bulkAction, setBulkAction] = useState('');
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
+    const [statusFilter, setStatusFilter] = useState('');
+    const [villaFilter, setVillaFilter] = useState('');
+    const [q, setQ] = useState('');
+
     async function updateBookingStatus(id, newStatus) {
       try {
         await http.put(`/api/admin/bookings/${id}`, { status: newStatus });
         await loadBookings(); // Reload data
       } catch (err) {
         console.error("Error updating booking:", err);
+      }
+    }
+
+    function toggleSelect(id) {
+      setSelectedIds(s => s.includes(id) ? s.filter(x => x !== id) : [...s, id]);
+    }
+
+    function selectAll() {
+      if (selectedIds.length === bookings.length) setSelectedIds([]);
+      else setSelectedIds(bookings.map(b => b.id));
+    }
+
+    async function applyBulkAction() {
+      if (!bulkAction) return alert('Zgjidh veprimin');
+      if (selectedIds.length === 0) return alert('Zgjidh rezervimet');
+
+      try {
+        if (bulkAction === 'delete') {
+          await http.post('/api/admin/bookings/bulk', { ids: selectedIds, action: 'delete' });
+        } else if (bulkAction === 'mark_paid') {
+          await http.post('/api/admin/bookings/bulk', { ids: selectedIds, action: 'status', status: 'paid' });
+        } else if (bulkAction === 'mark_pending') {
+          await http.post('/api/admin/bookings/bulk', { ids: selectedIds, action: 'status', status: 'pending' });
+        }
+        setSelectedIds([]);
+        setBulkAction('');
+        await loadBookings();
+      } catch (err) {
+        console.error('Bulk action error', err);
+        alert('Veprimi deshtoi');
+      }
+    }
+
+    async function exportCSV() {
+      try {
+        const resp = await http.get('/api/admin/bookings/export', { responseType: 'blob' });
+        const url = window.URL.createObjectURL(new Blob([resp.data]));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'bookings.csv';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      } catch (err) {
+        console.error('Export error', err);
+        alert('Export failed');
       }
     }
 
@@ -338,7 +398,45 @@ Effect(() => {
     return (
       <div className="space-y-6 p-4">
         <h1 className="text-3xl font-bold text-gray-900 mb-6">Booking Management</h1>
-        
+
+        {/* Filters */}
+        <div className="flex gap-3 items-end mb-4">
+          <div>
+            <label className="block text-xs text-gray-500">From</label>
+            <input type="date" value={fromDate} onChange={e=>setFromDate(e.target.value)} className="input" />
+          </div>
+          <div>
+            <label className="block text-xs text-gray-500">To</label>
+            <input type="date" value={toDate} onChange={e=>setToDate(e.target.value)} className="input" />
+          </div>
+          <div>
+            <label className="block text-xs text-gray-500">Status</label>
+            <select value={statusFilter} onChange={e=>setStatusFilter(e.target.value)} className="input">
+              <option value="">All</option>
+              <option value="pending">Pending</option>
+              <option value="paid">Paid</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+          </div>
+          <div>
+            <label className="block text-xs text-gray-500">Villa</label>
+            <select value={villaFilter} onChange={e=>setVillaFilter(e.target.value)} className="input">
+              <option value="">All</option>
+              {villas.map(v => <option key={v.slug} value={v.slug}>{v.name}</option>)}
+            </select>
+          </div>
+          <div className="flex-1">
+            <label className="block text-xs text-gray-500">Search</label>
+            <input placeholder="Name or email" value={q} onChange={e=>setQ(e.target.value)} className="input w-full" />
+          </div>
+          <div>
+            <button className="btn-primary" onClick={() => loadBookings({ from: fromDate, to: toDate, status: statusFilter, villa: villaFilter, q })}>Filter</button>
+          </div>
+          <div>
+            <button className="border px-3 py-1 rounded" onClick={() => { setFromDate(''); setToDate(''); setStatusFilter(''); setVillaFilter(''); setQ(''); loadBookings(); }}>Reset</button>
+          </div>
+        </div>
+
         {/* Booking Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <div className="bg-white p-4 rounded-lg shadow border border-gray-200">
@@ -360,6 +458,20 @@ Effect(() => {
           <div className="bg-white p-4 rounded-lg shadow border border-gray-200">
             <p className="text-sm font-medium text-gray-600">Paid</p>
             <p className="text-2xl font-bold text-green-600">{bookingStats.paid}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-3 p-4">
+          <button className="px-3 py-1 border rounded" onClick={selectAll}>{selectedIds.length === bookings.length ? 'Deselect All' : 'Select All'}</button>
+          <select className="border px-2 py-1 rounded" value={bulkAction} onChange={e => setBulkAction(e.target.value)}>
+            <option value="">Bulk action...</option>
+            <option value="mark_paid">Mark as Paid</option>
+            <option value="mark_pending">Mark as Pending</option>
+            <option value="delete">Delete</option>
+          </select>
+          <button className="btn-primary px-3 py-1" onClick={applyBulkAction}>Apply</button>
+          <div className="ml-auto">
+            <button className="px-3 py-1 border rounded" onClick={exportCSV}>Export CSV</button>
           </div>
         </div>
 
@@ -777,7 +889,11 @@ Effect(() => {
             <div className="flex items-center space-x-4">
               <span className="text-sm text-gray-700">Welcome, Admin</span>
               <button 
-                onClick={() => setStep("login")}
+                onClick={() => {
+                  localStorage.removeItem('admin_token');
+                  setToken('');
+                  setStep('login');
+                }}
                 className="text-sm text-gray-500 hover:text-gray-700"
               >
                 Logout
