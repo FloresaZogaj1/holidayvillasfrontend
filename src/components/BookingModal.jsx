@@ -11,7 +11,7 @@ export default function BookingModal({ villa, onClose }) {
   const [from,      setFrom]      = useState("");
   const [to,        setTo]        = useState("");
   const [guests,    setGuests]    = useState(2);
-  const [mealAddOn,  setMealAddOn]  = useState("lunch");
+  const [mealAddOns, setMealAddOns] = useState({ lunch: true, dinner: false });
   const [submitting,setSubmitting]= useState(false);
 
   const nights = useMemo(() => {
@@ -26,7 +26,8 @@ export default function BookingModal({ villa, onClose }) {
   const extraPersons    = Math.max(0, Math.min(6, guests) - 2);
   const lodgingPerNight = basePerNight + extraPersons * 50;
   const mealPerPerson = 50;
-  const mealPerNight = mealPerPerson * Math.max(1, Number(guests) || 1);
+  const selectedMealsCount = (mealAddOns?.lunch ? 1 : 0) + (mealAddOns?.dinner ? 1 : 0);
+  const mealPerNight = mealPerPerson * Math.max(1, Number(guests) || 1) * selectedMealsCount;
   const totalPerNight   = lodgingPerNight + mealPerNight;
   const totalPrice      = nights * totalPerNight;
   const totalPriceStr   = Number(totalPrice).toFixed(2);
@@ -56,7 +57,10 @@ export default function BookingModal({ villa, onClose }) {
         nights,
         guests,
         addons: {
-          meal: mealAddOn,
+          meal: {
+            lunch: !!mealAddOns?.lunch,
+            dinner: !!mealAddOns?.dinner,
+          },
           mealPerPerson,
           mealPerNight,
         },
@@ -206,14 +210,24 @@ export default function BookingModal({ villa, onClose }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="block text-[11px] sm:text-xs text-ink/60 mb-1">Shtesa (ushqim)</label>
-                <select
-                  value={mealAddOn}
-                  onChange={(e) => setMealAddOn(e.target.value)}
-                  className="w-full rounded-xl2 border border-line bg-bg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-accent text-sm"
-                >
-                  <option value="lunch">Dreka (+50€ / person)</option>
-                  <option value="dinner">Darka (+50€ / person)</option>
-                </select>
+                <div className="grid gap-2 rounded-xl2 border border-line bg-bg px-3 py-2">
+                  <label className="flex items-center gap-2 text-sm text-ink/80">
+                    <input
+                      type="checkbox"
+                      checked={!!mealAddOns?.lunch}
+                      onChange={(e) => setMealAddOns((s) => ({ ...s, lunch: e.target.checked }))}
+                    />
+                    <span>{t("lunch")} (+50€ / person)</span>
+                  </label>
+                  <label className="flex items-center gap-2 text-sm text-ink/80">
+                    <input
+                      type="checkbox"
+                      checked={!!mealAddOns?.dinner}
+                      onChange={(e) => setMealAddOns((s) => ({ ...s, dinner: e.target.checked }))}
+                    />
+                    <span>{t("dinner")} (+50€ / person)</span>
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -233,9 +247,16 @@ export default function BookingModal({ villa, onClose }) {
                 </li>
                 <li className="flex justify-between gap-2">
                   <span>
-                    {mealAddOn === "lunch" ? `Dreka (+${guests}×50€)` : `Darka (+${guests}×50€)`}
+                    {selectedMealsCount === 0
+                      ? "—"
+                      : [
+                          mealAddOns?.lunch ? `${t("lunch")} (+${guests}×50€)` : null,
+                          mealAddOns?.dinner ? `${t("dinner")} (+${guests}×50€)` : null,
+                        ]
+                          .filter(Boolean)
+                          .join(", ")}
                   </span>
-                  <span>{`+${mealPerNight}€`}</span>
+                  <span>{selectedMealsCount === 0 ? "—" : `+${mealPerNight}€`}</span>
                 </li>
                 <li className="border-t border-line pt-2 flex justify-between gap-2">
                   <span>{t("totalPerNight")}</span>

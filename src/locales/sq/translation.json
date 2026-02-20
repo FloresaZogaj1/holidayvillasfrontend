@@ -2,7 +2,7 @@
   "brand": "Holiday Villas",
   "welcome": "Mirë se vini në Holiday Villas",
   "bookNow": "Rezervo tani",
-  "about": "Rreth nesh",
+  "aboutNav": "Rreth nesh",
   "contact": "Kontakt",
   "hero.subtitle": "Vila private pranë Liqenit të Batllavës",
   "footer.rights": "Të gjitha të drejtat e rezervuara.",
@@ -40,6 +40,7 @@
   "total": "Totali",
   "footnote": "Maksimumi 6 persona.",
   "cancel": "Anulo",
+  "processing": "Duke procesuar...",
   "continueToPayment": "Vazhdo te Pagesa",
 
   "footer": {
