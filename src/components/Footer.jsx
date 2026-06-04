@@ -91,7 +91,7 @@ export default function Footer() {
           </span>
 
           <div className="flex items-center gap-3">
-            <Link to="/terms" className="hover:text-accent">{t("footer.bottom.terms")}</Link>
+            <a href="/Cancellation_Refund_Privacy_Policy.pdf" target="_blank" rel="noreferrer" className="hover:text-accent">{t("footer.bottom.terms")}</a>
             <span className="opacity-40">•</span>
             <Link to="/privacy" className="hover:text-accent">{t("footer.bottom.privacy")}</Link>
           </div>
